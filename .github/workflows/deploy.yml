@@ -59,11 +59,7 @@ jobs:
           aws ssm send-command \
           --document-name "AWS-RunShellScript" \
           --targets "Key=instanceIds,Values=${{ secrets.EC2_INSTANCE_ID }}" \
-          --parameters '{
-          "commands":[
-            "bash -c \"export S3_BUCKET=${{ secrets.S3_BUCKET }} && bash /home/ec2-user/deploy.sh\""
-            ]
-          }' \
+          --parameters "commands=[\"export S3_BUCKET=${{ secrets.S3_BUCKET }}\", \"bash /home/ec2-user/deploy.sh\"]" \
           --comment "GitHub Actions deployment" \
           --region ${{ secrets.AWS_REGION }} \
           --output text
