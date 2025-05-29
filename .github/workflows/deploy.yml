@@ -71,7 +71,7 @@ jobs:
           --parameters "commands=[
             \"aws s3 cp s3://${{ secrets.S3_BUCKET }}/deploy.sh /home/ec2-user/deploy.sh\",
             \"chmod +x /home/ec2-user/deploy.sh\",
-            \"sudo -u ec2-user bash -c 'S3_BUCKET=${{ secrets.S3_BUCKET }} bash /home/ec2-user/deploy.sh'\",
+            \"export S3_BUCKET=${{ secrets.S3_BUCKET }} && bash /home/ec2-user/deploy.sh\",
             \"bash /home/ec2-user/deploy.sh\"
           ]" \
           --comment "GitHub Actions deployment" \
