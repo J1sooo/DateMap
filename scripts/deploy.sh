@@ -11,10 +11,6 @@ fi
 
 cd /home/ec2-user || exit 1
 
-# Git pull (현재 디렉토리에 .git 폴더가 존재해야 동작함)
-echo "git pull..."
-git pull origin main
-
 # S3에서 JAR 다운로드
 echo "S3_BUCKET: $S3_BUCKET"
 aws s3 cp "s3://$S3_BUCKET/app.jar" "app.jar" || exit 1
