@@ -61,7 +61,7 @@ jobs:
           --targets "Key=instanceIds,Values=${{ secrets.EC2_INSTANCE_ID }}" \
           --parameters '{
           "commands":[
-            "bash -c 'export S3_BUCKET=${{ secrets.S3_BUCKET }} && bash /home/ec2-user/deploy.sh'"
+            "bash -c \"export S3_BUCKET=${{ secrets.S3_BUCKET }} && bash /home/ec2-user/deploy.sh\""
             ]
           }' \
           --comment "GitHub Actions deployment" \
