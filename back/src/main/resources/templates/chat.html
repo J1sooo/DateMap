@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AI 소개팅 채팅</title>
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <script th:src="@{/js/chat.js}" defer></script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-left">
+        <a href="/" class="logo">DateMap</a>
+    </div>
+    <div class="navbar-right">
+        <a href="/login" class="login-btn">로그인</a>
+    </div>
+</nav>
+<div>
+<h2>AI 소개팅 채팅방</h2>
+    <a th:href="@{/}" class="back-button">←</a>
+</div>
+<main class="chat-layout">
+    <img src="/images/default-profile.jpeg" alt="상대 이미지" class="profile-photo"/>
+
+    <section class="chat-section">
+        <div class="chat-box">
+            <div class="message"
+                 th:each="msg : ${messages}"
+                 th:classappend="${msg.role != null ? msg.role.name().toLowerCase() : ''}"
+                 th:text="${msg.message}">
+            </div>
+        </div>
+
+
+        <form class="input-form" th:action="@{/api/chat/{chatroomId}(chatroomId=${chatroomId})}" method="post">
+            <button onclick="startSpeechRecognition()">🎤 말하기</button>
+            <input type="text" id="messageInput" name="message" placeholder="메시지를 입력하세요" required />
+            <button type="submit">전송</button>
+        </form>
+
+    </section>
+
+
+    <aside class="tip-section">
+        <h4>💬 TIP</h4>
+        <ul>
+            <li>공감형 대화</li>
+            <li>TMI 금지</li>
+            <li>상대에게 관심</li>
+            <li>말투 부드럽게</li>
+            <li>적당한 리액션</li>
+        </ul>
+        <form th:action="@{/api/chat/{chatroomId}/feedback(chatroomId=${chatroomId})}" method="post">
+            <button type="submit" class="end-button">종료(평가하기)</button>
+        </form>
+    </aside>
+
+</main>
+
+</body>
+</html>
