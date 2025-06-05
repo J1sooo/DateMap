@@ -1,3 +1,27 @@
+.oneLiner {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.analyze {
+    font-size: 20px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+.out-button {
+    width: 20%;
+    display: inline-block;
+    background-color: #ff71a4;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 10vh;
+}
 /*
 네비 바
 */
@@ -69,7 +93,7 @@ body {
     margin-bottom: 10px;
     margin-top : 5vh;
 }
-.feedback-card {
+.analyze-card {
     background: #e0e3e8;
     border-radius: 16px;
     padding: 40px 30px;
@@ -78,40 +102,19 @@ body {
     max-width: 700px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 .card-title {
     font-size: 22px;
     font-weight: bold;
+    margin-top: 16px;
     margin-bottom: 16px;
 }
 .card-subtitle {
     font-size: 22px;
     margin-bottom: 16px;
 }
-
-.summary {
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 10px;
+.notice-text {
+    color: #777;
+    font-size: 14px;
+    margin-top: 8px;
+    font-style: italic;
 }
-.feedback {
-    font-size: 20px;
-    line-height: 1.7;
-    white-space: pre-line;
-}
-
-.out-button {
-    width: 20%;
-    display: inline-block;
-    background-color: #ff71a4;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 8px;
-    margin-top: 10vh;
-}
-
