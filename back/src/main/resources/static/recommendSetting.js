@@ -127,6 +127,16 @@ flatpickr("#date-picker", {
     locale: "ko" // 한국어
 });
 
+const submitButton = document.querySelector("button[type='submit']");
+
+// 지역 선택 없으면 추천 버튼 비활성화
+function updateSubmitState() {
+    const selectedRegion = subregionSelect.value;
+    submitButton.disabled = !selectedRegion;
+}
+subregionSelect.addEventListener("change", updateSubmitState);
+updateSubmitState(); // 초기 상태 확인
+
 // form submit 처리
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
