@@ -24,13 +24,7 @@ public class BlindChatController {
     private final BlindChatService blindChatService;
 
 
-    @GetMapping("/chat/{chatroomId}")
-    public String showChatRoom(@PathVariable Long chatroomId, Model model) {
-        List<ChatMessage> messages = blindChatService.getChatHistory(chatroomId);
-        model.addAttribute("chatroomId", chatroomId);
-        model.addAttribute("messages", messages.stream().map(MessageDto::from).toList());
-        return "chat";
-    }
+
 
     @PostMapping("/chat/{chatroomId}")
     public String sendMessage(@PathVariable Long chatroomId, @RequestParam String message) {
@@ -45,12 +39,9 @@ public class BlindChatController {
     }
 
     @PostMapping("/chat/{chatroomId}/feedback")
-    public String createFeedback(@PathVariable Long chatroomId, Model model) {
-        BlindDateFeedback entity = blindChatService.feedbackFromGemini(chatroomId);
-        FeedbackDto dto = FeedbackDto.from(entity);
-        model.addAttribute("chatroomId", chatroomId);
-        model.addAttribute("feedback", dto);
-        return "feedback"; // 바로 렌더링
+    public String createFeedback(@PathVariable Long chatroomId) {
+        blindChatService.feedbackFromGemini(chatroomId); // Gemini 호출 + 저장
+        return "redirect:/chat/" + chatroomId + "/feedback"; // 결과 보기 페이지로 리다이렉트
     }
 
 }

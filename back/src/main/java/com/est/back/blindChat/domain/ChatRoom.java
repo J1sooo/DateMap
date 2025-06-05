@@ -30,7 +30,6 @@ public class ChatRoom {
     @Column(name = "partner_id", nullable = false)
     private Long partnerId;
 
-    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
-    private List<ChatMessage> messages;
+
 }
 

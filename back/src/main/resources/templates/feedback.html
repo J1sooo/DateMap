@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+    <meta charset="UTF-8">
+    <title>소개팅 피드백</title></head>
+<link rel="stylesheet" th:href="@{/css/feedback.css}">
 <body>
-$END$
+<nav class="navbar">
+    <div class="navbar-left">
+        <a href="/" class="logo">DateMap</a>
+    </div>
+    <div class="navbar-right">
+        <a href="/login" class="login-btn">로그인</a>
+    </div>
+</nav>
+<main class="feedback-layout">
+    <div class="score" th:text="${feedback.score + '점'}"></div>
+    <div class="feedback-card">
+        <div class="card-title">요약</div>
+        <div class="summary" th:utext="${feedback.summary}">
+        </div>
+        <div class="card-subtitle">짧은 피드백</div>
+        <div class="feedback" th:utext="${feedback.feedback}">
+        </div>
+    </div>
+</main>
+    <a th:href="@{/}" class="out-button">나가기</a>
 </body>
 </html>
