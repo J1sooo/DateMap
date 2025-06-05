@@ -66,7 +66,6 @@
             <option value="naver.com" th:selected="${joinRequestDto.email != null and #strings.endsWith(joinRequestDto.email, '@naver.com')}">naver.com</option>
             <option value="gmail.com" th:selected="${joinRequestDto.email != null and #strings.endsWith(joinRequestDto.email, '@gmail.com')}">gmail.com</option>
             <option value="daum.net" th:selected="${joinRequestDto.email != null and #strings.endsWith(joinRequestDto.email, '@daum.net')}">daum.net</option>
-            <option value="direct">직접 입력</option> </select>
           <input type="text" class="form-control" id="emailDomainDirect" placeholder="도메인 직접 입력"
                  th:value="${joinRequestDto.email != null and #strings.contains(joinRequestDto.email, '@') and !#strings.endsWith(joinRequestDto.email, '@naver.com') and !#strings.endsWith(joinRequestDto.email, '@gmail.com') and !#strings.endsWith(joinRequestDto.email, '@daum.net') ? #strings.substringAfter(joinRequestDto.email, '@') : ''}"
                  th:style="${joinRequestDto.email != null and #strings.contains(joinRequestDto.email, '@') and !#strings.endsWith(joinRequestDto.email, '@naver.com') and !#strings.endsWith(joinRequestDto.email, '@gmail.com') and !#strings.endsWith(joinRequestDto.email, '@daum.net') ? 'display:block;' : 'display:none;'}">
@@ -97,19 +96,19 @@
         <label class="form-label fw-bold">생년월일</label>
         <div class="row g-2">
           <div class="col">
-            <label for="birthYear" class="visually-hidden">출생 연도</label>
+            <label for="birthYear" class="visually-hidden">연도</label>
             <select class="form-select" id="birthYear" th:field="*{birthYear}" required>
               <option value="">년</option>
             </select>
           </div>
           <div class="col">
-            <label for="birthMonth" class="visually-hidden">출생 월</label>
+            <label for="birthMonth" class="visually-hidden">월</label>
             <select class="form-select" id="birthMonth" th:field="*{birthMonth}" required>
               <option value="">월</option>
             </select>
           </div>
           <div class="col">
-            <label for="birthDay" class="visually-hidden">출생 일</label>
+            <label for="birthDay" class="visually-hidden">일</label>
             <select class="form-select" id="birthDay" th:field="*{birthDay}" required>
               <option value="">일</option>
             </select>

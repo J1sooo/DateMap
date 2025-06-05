@@ -140,8 +140,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return "";
     }
 
-    if (typeof joinRequest !== 'undefined' && joinRequest.email) {
-        const parts = joinRequest.email.split('@');
+    if (typeof joinRequestDto !== 'undefined' && joinRequestDto.email) {
+        const parts = joinRequestDto.email.split('@');
         if (parts.length === 2) {
             emailIdInput.value = parts[0];
             const domain = parts[1];
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 emailDomainDirect.style.display = 'block';
             }
         } else {
-            emailIdInput.value = joinRequest.email;
+            emailIdInput.value = joinRequestDto.email;
             emailDomainSelect.value = '';
             emailDomainDirect.style.display = 'block';
         }
@@ -198,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
         option.textContent = i.toString();
         birthYearSelect.appendChild(option);
     }
-    if (typeof joinRequest !== 'undefined' && joinRequest.birthYear) {
-        birthYearSelect.value = joinRequest.birthYear.toString();
+    if (typeof joinRequestDto !== 'undefined' && joinRequestDto.birthYear) {
+        birthYearSelect.value = joinRequestDto.birthYear.toString();
     }
 
 
@@ -209,8 +209,8 @@ document.addEventListener('DOMContentLoaded', function () {
         option.textContent = i.toString();
         birthMonthSelect.appendChild(option);
     }
-    if (typeof joinRequest !== 'undefined' && joinRequest.birthMonth) {
-        birthMonthSelect.value = joinRequest.birthMonth.toString();
+    if (typeof joinRequestDto !== 'undefined' && joinRequestDto.birthMonth) {
+        birthMonthSelect.value = joinRequestDto.birthMonth.toString();
     }
 
     function updateDays() {
@@ -230,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             if (!isNaN(currentSelectedDay) && currentSelectedDay <= lastDay) {
                 birthDaySelect.value = currentSelectedDay.toString();
-            } else if (typeof joinRequest !== 'undefined' && joinRequest.birthDay && year === joinRequest.birthYear && month === joinRequest.birthMonth && joinRequest.birthDay <= lastDay) {
-                birthDaySelect.value = joinRequest.birthDay.toString();
+            } else if (typeof joinRequestDto !== 'undefined' && joinRequestDto.birthDay && year === joinRequestDto.birthYear && month === joinRequestDto.birthMonth && joinRequestDto.birthDay <= lastDay) {
+                birthDaySelect.value = joinRequestDto.birthDay.toString();
             } else {
                 birthDaySelect.value = '';
             }
@@ -284,8 +284,8 @@ document.addEventListener('DOMContentLoaded', function () {
             mainRegionSelect.appendChild(option);
         });
 
-        if (typeof joinRequest !== 'undefined' && joinRequest.preferArea) {
-            const initialPreferAreaMain = joinRequest.preferArea.split(' ')[0]; // 첫 번째 선호 지역의 지역
+        if (typeof joinRequestDto !== 'undefined' && joinRequestDto.preferArea) {
+            const initialPreferAreaMain = joinRequestDto.preferArea.split(' ')[0]; // 첫 번째 선호 지역의 지역
             if (Array.from(mainRegionSelect.options).some(option => option.value === initialPreferAreaMain)) {
                 mainRegionSelect.value = initialPreferAreaMain;
                 populateDetailAreasForMainRegion();
@@ -301,9 +301,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return { main: main, detail: detail };
     }
 
-    if (typeof joinRequest !== 'undefined') {
-        const initialPreferArea = parseFullRegionString(joinRequest.preferArea);
-        const initialPreferAreaDetail = parseFullRegionString(joinRequest.preferAreaDetail);
+    if (typeof joinRequestDto !== 'undefined') {
+        const initialPreferArea = parseFullRegionString(joinRequestDto.preferArea);
+        const initialPreferAreaDetail = parseFullRegionString(joinRequestDto.preferAreaDetail);
 
         if (initialPreferArea) {
             selectedRegions.push(initialPreferArea);
