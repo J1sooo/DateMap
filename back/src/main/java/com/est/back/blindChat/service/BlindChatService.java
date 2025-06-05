@@ -4,6 +4,7 @@ import com.est.back.blindChat.domain.BlindDateFeedback;
 import com.est.back.blindChat.domain.ChatMessage;
 import com.est.back.blindChat.domain.ChatRoom;
 import com.est.back.blindChat.domain.Role;
+import com.est.back.blindChat.dto.AnalyzeDto;
 import com.est.back.blindChat.dto.FeedbackDto;
 import com.est.back.blindChat.repository.BlindDateFeedbackRepository;
 import com.est.back.blindChat.repository.ChatMessageRepository;
@@ -212,6 +213,83 @@ public class BlindChatService {
 
         return new FeedbackDto(formattedSummary, feedback.getScore(), formattedFeedback);
     }
+
+    private String sendPromptToGemini(String prompt) {
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+
+        Map<String, Object> body = Map.of(
+            "contents", List.of(
+                Map.of(
+                    "role", "user",
+                    "parts", List.of(Map.of("text", prompt))
+                )
+            )
+        );
+
+        String responseJson = webClient.post()
+            .uri(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(body)
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
+
+        return extractTextFromResponse(responseJson);  // 기존 응답 파싱 메서드 사용
+    }
+
+
+    @Transactional
+    public AnalyzeDto analyzeAllFeedbacksByUsn(Long usn) {
+        usn = 1L;
+        List<BlindDateFeedback> feedbacks = blindDateFeedbackRepository.findAllByUsn(usn);
+        if (feedbacks.isEmpty()) {
+            throw new IllegalArgumentException("해당 유저의 피드백이 없습니다.");
+        }
+        for (BlindDateFeedback feedback : feedbacks) {
+            System.out.println(">> 요약: " + feedback.getSummary());
+            System.out.println(">> 피드백: " + feedback.getFeedback());
+            System.out.println(">> 점수: " + feedback.getScore());
+        }
+
+        String combined = feedbacks.stream()
+            .map(f -> String.format("요약: %s\n피드백: %s\n점수: %d", f.getSummary(), f.getFeedback(), f.getScore()))
+            .collect(Collectors.joining("\n\n"));
+
+        String prompt = """
+            이전에 사용자가 받은 여러 소개팅 피드백을 기반으로 아래 요청을 수행해줘.
+            1. 전반적인 대화 성향, 장점과 단점, 개선점 등을 종합적으로 분석해서 3줄이내로 평가해줘
+            2. 전반적인 대화 성향, 장점과 단점, 개선점 등을 분석한 것을 기준으로 소개팅 점수 100점 만점으로 점수를 매겨줘, 점수만 알려주면 돼.
+            3. 점수와 분석한 평가를 통한 한줄평가 부탁해
+            모든 답변은 자연스럽게 해줘
+            """;
+
+        // Gemini API 요청 로직 호출
+        String result = sendPromptToGemini(prompt  + combined);
+        System.out.println(result);
+        return extractAnalysisFromResponse(result);
+    }
+
+    private AnalyzeDto extractAnalysisFromResponse(String responseText) {
+
+
+
+        String[] parts = responseText.split("(?m)^\\s*\\d+\\.");
+
+        String analyze = parts.length > 1
+            ? parts[1].replaceAll("\\.\\s*", ".<br/>").replaceAll(",\\s*", ",<br/>").trim()
+            : "";
+
+        String rawScore = parts.length > 2 ? parts[2].trim() : "0점";
+        String scoreStr = rawScore.replaceAll("[^0-9]", "");
+        int score = Integer.parseInt(scoreStr);
+
+        String oneLiner = parts.length > 3 ? parts[3].trim() : "";
+
+
+        return new AnalyzeDto(analyze, oneLiner, score);
+    }
+
+
 }
 
 
