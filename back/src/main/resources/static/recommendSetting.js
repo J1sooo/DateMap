@@ -98,13 +98,15 @@ transports.forEach(transport => {
 const selectedHobbies = new Set();
 const selectedTransports = new Set();
 
-function toggleSelection(set, btn) {
+function toggleSelection(set, btn, max) {
     const value = btn.getAttribute("data-value");
 
     if (set.has(value)) {
         set.delete(value);
         btn.classList.remove("btn-primary");
         btn.classList.add("btn-outline-primary");
+    } else if (set.size >= max) {
+        alert(`취미는 최대 ${max}개까지 선택 가능합니다.`)
     } else {
         set.add(value);
         btn.classList.remove("btn-outline-primary");
@@ -114,7 +116,7 @@ function toggleSelection(set, btn) {
 
 // 버튼 이벤트 연결
 document.querySelectorAll(".hobby-btn").forEach(btn => {
-    btn.addEventListener("click", () => toggleSelection(selectedHobbies, btn));
+    btn.addEventListener("click", () => toggleSelection(selectedHobbies, btn, 3));
 });
 document.querySelectorAll(".transport-btn").forEach(btn => {
     btn.addEventListener("click", () => toggleSelection(selectedTransports, btn));
