@@ -145,7 +145,11 @@ document.querySelector("form").addEventListener("submit", (e) => {
     })
         .then(res => res.text())
         .then(data => {
-            sessionStorage.setItem("alanRequest", data);
+            // 데이터 가공
+            const rawJsonString = data.replace(/```json\n?|\n?```/g, ""); // 마크 다운 블록 제거
+            const jsonData = JSON.parse(rawJsonString); // json 변경
+
+            sessionStorage.setItem("alanRequest", jsonData.content); // string
             window.location.href = "/recommend/place";
         })
         .catch(e => {
