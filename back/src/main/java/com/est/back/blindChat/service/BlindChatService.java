@@ -4,6 +4,7 @@ import com.est.back.blindChat.domain.BlindDateFeedback;
 import com.est.back.blindChat.domain.ChatMessage;
 import com.est.back.blindChat.domain.ChatRoom;
 import com.est.back.blindChat.domain.Role;
+import com.est.back.blindChat.dto.FeedbackDto;
 import com.est.back.blindChat.repository.BlindDateFeedbackRepository;
 import com.est.back.blindChat.repository.ChatMessageRepository;
 import com.est.back.blindChat.repository.ChatRoomRepository;
@@ -34,7 +35,8 @@ public class BlindChatService {
 
 
     public BlindChatService(ChatMessageRepository chatMessageRepository,
-        ChatRoomRepository chatRoomRepository , BlindDateFeedbackRepository blindDateFeedbackRepository) {
+        ChatRoomRepository chatRoomRepository,
+        BlindDateFeedbackRepository blindDateFeedbackRepository) {
         this.chatMessageRepository = chatMessageRepository;
         this.chatRoomRepository = chatRoomRepository;
         this.blindDateFeedbackRepository = blindDateFeedbackRepository;
@@ -61,7 +63,8 @@ public class BlindChatService {
         chatMessageRepository.save(userMsg);
 
         // 2. Gemini 응답 받기
-        String reply = sendToGemini(chatroomId, "우리가 전에 나눴던 대화들이야 흐름 유지 하면서 5줄 이내로 대답해줘" + userMessage); // 프롬프트 문구 추가
+        String reply = sendToGemini(chatroomId,
+            "우리가 전에 나눴던 대화들이야 흐름 유지 하면서 5줄 이내로 대답해줘" + userMessage); // 프롬프트 문구 추가
 
         // 3. 응답 저장
         ChatMessage modelMsg = new ChatMessage();
@@ -77,7 +80,7 @@ public class BlindChatService {
     public String sendToGemini(Long chatroomId, String userMessage) {
         List<ChatMessage> history = chatMessageRepository
             .findTop5ByChatRoomIdOrderByCreatedAtDesc(chatroomId);
-        Collections.reverse(history); // 시간 순서로 바꿔줘야 함
+        Collections.reverse(history); // 시간 순서로
 
         List<Map<String, Object>> parts = history.stream()
             .map(msg -> Map.of(
@@ -92,7 +95,9 @@ public class BlindChatService {
             "parts", List.of(Map.of("text", userMessage))
         ));
 
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        String url =
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key="
+                + apiKey;
 
         Map<String, Object> body = Map.of("contents", parts);
 
@@ -127,6 +132,7 @@ public class BlindChatService {
             return "(JSON 파싱 실패)";
         }
     }
+
     @Transactional
     public void deleteChatRoom(Long chatroomId) {
         chatMessageRepository.deleteByChatRoomId(chatroomId); // 메시지 먼저 삭제
@@ -134,7 +140,7 @@ public class BlindChatService {
     }
 
     @Transactional
-    public void feedbackFromGemini(Long chatroomId) {
+    public BlindDateFeedback feedbackFromGemini(Long chatroomId) {
 
         List<Map<String, Object>> parts = getChatHistory(chatroomId).stream()
             .map(msg -> Map.of(
@@ -145,7 +151,7 @@ public class BlindChatService {
         String prompt = """
             이전에 나눈 대화를 기반으로 아래 요청을 수행해줘.
             1. 대화 내용을 3줄로 요약해줘.
-            2. 대화 흐름이 자연스러웠는지 평가해주고 부족한 부분이 있다면 피드백해줘.
+            2. 대화 흐름이 자연스러웠는지 평가해주고 부족한 부분이 있다면 소개팅 상대방의 입장으로써 피드백해줘.
             3. 대화 스타일, 태도 , 대화 흐름 등을 고려해 100점 만점으로 점수를 매겨줘, 점수만 알려주면 돼.
             모든 답변은 3줄 이내로 자연스럽게 해줘
             """;
@@ -155,7 +161,9 @@ public class BlindChatService {
             "parts", List.of(Map.of("text", prompt))
         ));
 
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        String url =
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key="
+                + apiKey;
 
         Map<String, Object> body = Map.of("contents", parts);
 
@@ -177,7 +185,6 @@ public class BlindChatService {
         String scoreStr = part.length > 3 ? part[3].replaceAll("[^0-9]", "") : "0";
         int score = Integer.parseInt(scoreStr);
 
-
         BlindDateFeedback feedbackEntity = new BlindDateFeedback();
         feedbackEntity.setCharId(1L);
         feedbackEntity.setUsn(1L);
@@ -186,10 +193,26 @@ public class BlindChatService {
         feedbackEntity.setFeedback(feedback);
         feedbackEntity.setScore(score);
 
-
         blindDateFeedbackRepository.save(feedbackEntity);
+        return feedbackEntity;
 
     }
 
+    public FeedbackDto getFeedbackByChatroomId(Long chatroomId) {
+        ChatRoom chatroom = chatRoomRepository.findById(chatroomId)
+            .orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
 
+        Long partnerId = chatroom.getPartnerId();
+
+        BlindDateFeedback feedback = blindDateFeedbackRepository.findByCharId(partnerId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 캐릭터의 피드백이 없습니다."));
+
+        String formattedSummary = feedback.getSummary().replaceAll("\\.\\s*", ".<br/>").replaceAll(",\\s*", ",<br/>");
+        String formattedFeedback = feedback.getFeedback().replaceAll("\\.\\s*", ".<br/>").replaceAll(",\\s*", ",<br/>");
+
+        return new FeedbackDto(formattedSummary, feedback.getScore(), formattedFeedback);
+    }
 }
+
+
+
