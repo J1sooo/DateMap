@@ -1,4 +1,4 @@
-package com.est.back.domain;
+package com.est.back.partner.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

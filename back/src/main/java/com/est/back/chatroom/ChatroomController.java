@@ -1,9 +1,10 @@
-package com.est.back.controller;
+package com.est.back.chatroom;
 
-import com.est.back.domain.Chatroom;
-import com.est.back.domain.Partner;
-import com.est.back.service.ChatroomService;
-import com.est.back.service.PartnerService;
+import com.est.back.chatroom.domain.Chatroom;
+import com.est.back.chatroom.dto.ChatroomDto;
+import com.est.back.chatroom.dto.ChatroomResponseDto;
+import com.est.back.partner.domain.Partner;
+import com.est.back.partner.PartnerService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,33 +26,40 @@ public class ChatroomController {
     }
 
     @PostMapping
-    public Chatroom createChatroom(@ModelAttribute Partner partner, HttpSession session) {
-        //Long usn = (Long) session.getAttribute("usn"); // 세션에 저장된 사용자 usn
-        Long usn = 1000L;// 임시 하드 코딩
+    public ChatroomResponseDto createChatroom(@ModelAttribute Partner partner, HttpSession session) {
+        //Long usn = (Long) session.getAttribute("usn");
+        Long usn = 1000L; // 임시 하드 코딩
 
         partner.setCreatedAt(LocalDateTime.now());
         Partner savedPartner = partnerService.savePartner(partner);
+        //todo: Add transaction process when partner creation fails
 
         Chatroom chatroom = Chatroom.builder()
                 .usn(usn)
                 .partnerId(savedPartner.getCharId())
                 .build();
 
-        return chatroomService.save(chatroom);
+        ChatroomDto chatroomDto = chatroomService.save(chatroom);
+
+        return ChatroomResponseDto.builder()
+                .message("채팅 시작")
+                .chatroomId(chatroomDto.getId())
+                .build();
     }
 
     @GetMapping
-    public List<Chatroom> getAllChatrooms() {
+    public List<ChatroomDto> getAllChatrooms() {
         return chatroomService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Chatroom getChatroomById(@PathVariable Long id) {
+    public ChatroomDto getChatroomById(@PathVariable Long id) {
         return chatroomService.findById(id);
     }
 
     @DeleteMapping("/{id}")
     public void deleteChatroom(@PathVariable Long id) {
         chatroomService.deleteById(id);
+        // todo delete partner
     }
 }

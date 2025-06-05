@@ -1,10 +1,13 @@
-package com.est.back.controller;
+package com.est.back.main;
 
-import com.est.back.domain.Partner;
-import com.est.back.domain.Recommend;
-import com.est.back.service.PartnerService;
-import com.est.back.service.RecommendService;
+import com.est.back.partner.domain.Partner;
+import com.est.back.partner.dto.PartnerResponseDto;
+import com.est.back.recommend.domain.Recommend;
+import com.est.back.partner.PartnerService;
+import com.est.back.recommend.RecommendService;
 
+import com.est.back.recommend.dto.RecommendRequestDto;
+import com.est.back.recommend.dto.RecommendResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,8 @@ public class MainViewController {
 
     @GetMapping("/main")
     public String viewMainPage(Model model) {
-        List<Partner> partnerList = partnerService.getAllPartners();
-        List<Recommend> recommendList = recommendService.getAllRecommends();
+        List<PartnerResponseDto> partnerList = partnerService.getAllPartners();
+        List<RecommendResponseDto> recommendList = recommendService.getAllRecommends();
 
 
         // 일단 4개만. 임시 코드

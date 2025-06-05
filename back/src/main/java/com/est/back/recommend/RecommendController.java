@@ -1,8 +1,7 @@
-package com.est.back.controller;
+package com.est.back.recommend;
 
-import com.est.back.domain.Partner;
-import com.est.back.domain.Recommend;
-import com.est.back.service.RecommendService;
+import com.est.back.recommend.domain.Recommend;
+import com.est.back.recommend.dto.RecommendResponseDto;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +32,13 @@ public class RecommendController {
 
     // GET /api/recommend
     @GetMapping
-    public List<Recommend> getAllRecommends() {
+    public List<RecommendResponseDto> getAllRecommends() {
         return recommendService.getAllRecommends();
     }
 
     // GET /api/recommend/{id}
     @GetMapping("/{id}")
-    public Recommend getRecommend(@PathVariable Long id) {
+    public RecommendResponseDto getRecommend(@PathVariable Long id) {
         return recommendService.getRecommendById(id);
     }
 
