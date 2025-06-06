@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 소개팅 상대 -->
+    <div class="section-title">소개팅 상대</div>
+    <div class="card-list">
+        <div class="card" th:each="partner : ${partners}">
+            <img th:src="${partner.imageUrl}" alt="소개팅 캐릭터 이미지" />
+            <div class="title" th:text="${partner.ageGroup} + ' / ' + ${partner.gender}">20대 / 여성</div>
+            <div class="subtitle" th:text="${partner.hobby}">독서</div>
+        </div>
+        <a href="/partner-setting" class="add-card">+</a>
+    </div>
+
+    <!-- 데이트 코스 -->
+    <div class="section-title">데이트 코스</div>
+    <div class="card-list">
+        <div class="card" th:each="recommend : ${recommends}">
+            <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지" />
+            <div class="title" th:text="${recommend.title}">서울 남산타워</div>
+            <div class="subtitle" th:text="${recommend.area}">서울</div>
+        </div>
+        <a href="/recommend-setting" class="add-card">+</a>
+    </div>
+
+</div>
+
+</body>
+</html>

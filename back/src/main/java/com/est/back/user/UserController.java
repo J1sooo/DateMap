@@ -170,8 +170,8 @@ public class UserController {
         model.addAttribute("days", days);
     }
 
-    @GetMapping({"/", "/index"})
-    public String indexPage(Model model, HttpSession session) {
+    @GetMapping({ "/index"})
+    public String mainPage(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             model.addAttribute("loggedInUser", loggedInUser);
