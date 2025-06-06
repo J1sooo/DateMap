@@ -9,7 +9,7 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 20px;
-    box-sizing: border-box; /
+    box-sizing: border-box;
 }
 
 .login-container {
@@ -90,8 +90,8 @@ h2 {
 }
 
 .custom-pink-btn:hover {
-    background-color: #FF78A5;
-    border-color: #FF78A5;
+    background-color: #e86492;
+    border-color: #e86492;
     color: white;
 }
 

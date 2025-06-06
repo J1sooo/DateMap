@@ -53,6 +53,7 @@ public class User {
     @Column(name = "join_date", nullable = false, updatable = false)
     private LocalDateTime joinDate;
 
+    @Nullable
     @Column(name = "profile_img", length = 255)
     private String profileImg;
 
@@ -62,5 +63,20 @@ public class User {
 
     public void updatePassword(String newPassword) {
         this.password = newPassword;
+    }
+
+    public void updateUserInfo(String nickName, String email, Gender gender,
+                               LocalDate dateOfBirth, String preferArea,
+                               String preferAreaDetail) {
+        this.nickName = nickName;
+        this.email = email;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.preferArea = preferArea;
+        this.preferAreaDetail = preferAreaDetail;
+    }
+
+    public void updateProfileImg(String profileImg) {
+        this.profileImg = profileImg;
     }
 }

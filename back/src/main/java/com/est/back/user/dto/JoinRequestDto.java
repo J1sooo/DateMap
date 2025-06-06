@@ -1,5 +1,6 @@
-package com.est.back.user;
+package com.est.back.user.dto;
 
+import com.est.back.user.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

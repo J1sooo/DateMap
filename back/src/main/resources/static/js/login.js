@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-    const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-    const rememberMeCheckbox = document.getElementById('rememberMe');
     const loginForm = document.querySelector('form[th\\:action="@{/login}"]');
 
     const findIdForm = document.getElementById('findIdForm');
@@ -26,25 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordResetSuccess = document.getElementById('passwordResetSuccess');
 
     const findPasswordModalEl = document.getElementById('findPasswordModal');
-
-    if (usernameInput && rememberMeCheckbox) {
-        const savedUsername = localStorage.getItem('savedUsername');
-        if (savedUsername) {
-            usernameInput.value = savedUsername;
-            rememberMeCheckbox.checked = true;
-        }
-    }
-
-    // 아이디 저장
-    if (loginForm && usernameInput && rememberMeCheckbox) {
-        loginForm.addEventListener('submit', () => {
-            if (rememberMeCheckbox.checked) {
-                localStorage.setItem('savedUsername', usernameInput.value);
-            } else {
-                localStorage.removeItem('savedUsername');
-            }
-        });
-    }
 
     if (passwordInput && loginForm) {
         passwordInput.addEventListener('keydown', (event) => {
