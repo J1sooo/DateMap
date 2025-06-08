@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>소개팅 랭킹</title>
+    <link rel="stylesheet" th:href="@{/css/ranking.css}" />
+</head>
+<body>
+
+<div class="container">
+
+    <div class="section-title">주간 랭킹</div>
+
+    <div class="top3">
+
+        <div class="card second" th:if="${rankingList.size() > 1}" th:object="${rankingList.get(1)}">
+            <div class="rank-badge">🥈</div>
+            <img th:src="*{profileImg}" alt="프로필">
+            <div class="title" th:text="*{nickname}">닉네임</div>
+            <div class="subtitle" th:text="*{score + '점'}">점수</div>
+        </div>
+
+        <div class="card first" th:if="${rankingList.size() > 0}" th:object="${rankingList.get(0)}">
+            <div class="rank-badge">🥇</div>
+            <img th:src="*{profileImg}" alt="프로필">
+            <div class="title" th:text="*{nickname}">닉네임</div>
+            <div class="subtitle" th:text="*{score + '점'}">점수</div>
+            <small class="subtitle" style="display:block; margin-top:4px;">매주 갱신됩니다.</small>
+        </div>
+
+        <div class="card third" th:if="${rankingList.size() > 2}" th:object="${rankingList.get(2)}">
+            <div class="rank-badge">🥉</div>
+            <img th:src="*{profileImg}" alt="프로필">
+            <div class="title" th:text="*{nickname}">닉네임</div>
+            <div class="subtitle" th:text="*{score + '점'}">점수</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>순위</th>
+            <th>프로필</th>
+            <th>닉네임</th>
+            <th>성별</th>
+            <th>점수</th>
+<!--            <th>달성 시각</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rank, stat : ${rankingList}" th:if="${stat.index >= 3}">
+            <td th:text="${stat.index + 1}">4</td>
+            <td><img th:src="${rank.profileImg}" class="profile-img" /></td>
+            <td th:text="${rank.nickname}">닉네임</td>
+            <td th:text="${rank.gender}" class="gender">성별</td>
+            <td th:text="${rank.score + '점'}">100점</td>
+<!--            <td th:text="${rank.achievedTime}">2025-06-01</td>-->
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
