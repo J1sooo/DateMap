@@ -25,5 +25,6 @@ public class ChatMessage {
     @Column(columnDefinition = "TEXT")
     private String message;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 }
