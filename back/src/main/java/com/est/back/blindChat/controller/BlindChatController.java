@@ -29,7 +29,7 @@ public class BlindChatController {
     @PostMapping("/chat/{chatroomId}")
     public String sendMessage(@PathVariable Long chatroomId, @RequestParam String message) {
         blindChatService.chatWithGemini(chatroomId, message);
-        return "redirect:/api/chat/" + chatroomId;
+        return "redirect:/chat/" + chatroomId;
     }
 
     @DeleteMapping("/chat/{chatroomId}")
