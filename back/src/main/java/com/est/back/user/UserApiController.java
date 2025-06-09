@@ -1,9 +1,15 @@
 package com.est.back.user;
 
+import com.est.back.user.dto.JoinRequestDto;
+import com.est.back.user.dto.UserUpdateRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.Optional;
@@ -109,7 +115,84 @@ public class UserApiController {
             return ResponseEntity.ok(Map.of("success", false, "message", e.getMessage()));
         } catch (Exception e) {
             log.error("비밀번호 직접 재설정 중 서버 오류 발생", e);
-            return ResponseEntity.status(500).body(Map.of("success", false, "message", "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."));
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "서버 오류가 발생했습니다."));
+        }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Map<String, Object>> getUserProfile(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(401).body(Map.of("success", false, "message", "로그인이 필요합니다."));
+        }
+        try {
+            User user = userService.getUserInfo(loggedInUser.getUsn());
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "user", user
+            ));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(Map.of("success", false, "message", e.getMessage()));
+        } catch (Exception e) {
+            log.error("회원 정보 조회 API 오류 발생", e);
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "서버 오류가 발생했습니다."));
+        }
+    }
+
+    @PatchMapping(value = "/profile", consumes = {"multipart/form-data"})
+    public ResponseEntity<Map<String, Object>> updateUserProfile(
+            @Valid @ModelAttribute UserUpdateRequestDto updateRequestDto,
+            BindingResult bindingResult,
+            HttpSession session,
+            @RequestParam(value = "profileImageFile", required = false) MultipartFile profileImageFile
+    ) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(401).body(Map.of("success", false, "message", "로그인이 필요합니다."));
+        }
+
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", errorMessage));
+        }
+
+        try {
+            User updatedUser = userService.updateUser(
+                    loggedInUser.getUsn(),
+                    updateRequestDto,
+                    profileImageFile
+            );
+            session.setAttribute("loggedInUser", updatedUser);
+            return ResponseEntity.ok(Map.of("success", true, "message", "회원 정보가 수정되었습니다."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", e.getMessage()));
+        } catch (Exception e) {
+            log.error("회원 정보 수정 API 오류 발생", e);
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "서버 오류가 발생했습니다."));
+        }
+    }
+    @DeleteMapping("/{usn}")
+    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable("usn") Long usn, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(401).body(Map.of("success", false, "message", "로그인이 필요합니다."));
+        }
+        if (!loggedInUser.getUsn().equals(usn)) {
+            return ResponseEntity.status(403).body(Map.of("success", false, "message", "권한이 없습니다."));
+        }
+
+        try {
+            userService.deleteUser(usn);
+            session.invalidate();
+            return ResponseEntity.ok(Map.of("success", true, "message", "회원 탈퇴가 성공적으로 처리되었습니다."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        } catch (Exception e) {
+            log.error("회원 탈퇴 API 오류 발생", e);
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "회원 탈퇴 중 서버 오류가 발생했습니다."));
         }
     }
 }

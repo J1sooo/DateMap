@@ -1,4 +1,4 @@
-package com.est.back.user;
+package com.est.back.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;
