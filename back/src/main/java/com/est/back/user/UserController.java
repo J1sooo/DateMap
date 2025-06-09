@@ -42,6 +42,7 @@ public class UserController {
         if (!model.containsAttribute("savedUserId")) {
             model.addAttribute("savedUserId", "");
         }
+        model.addAttribute("currentPage", "/login");
         return "login";
     }
 
@@ -66,10 +67,11 @@ public class UserController {
                 response.addCookie(cookie);
             }
 
-            return "redirect:/index";
+            return "redirect:/main";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("savedUserId", loginRequestDto.getUsername());
+            model.addAttribute("currentPage", "/login");
             return "login";
         }
     }
@@ -77,7 +79,7 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/index";
+        return "redirect:/main";
     }
 
     @GetMapping("/join")
@@ -86,6 +88,7 @@ public class UserController {
             model.addAttribute("joinRequestDto", new JoinRequestDto());
         }
         populateDateModelAttributes(model);
+        model.addAttribute("currentPage", "/join");
         return "join";
     }
 
@@ -93,12 +96,14 @@ public class UserController {
     public String join(@Valid @ModelAttribute JoinRequestDto joinRequestDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             populateDateModelAttributes(model);
+            model.addAttribute("currentPage", "/join");
             return "join";
         }
 
         if (!joinRequestDto.getPassword().equals(joinRequestDto.getPasswordCheck())) {
             bindingResult.rejectValue("passwordCheck", "passwordMismatch", "비밀번호가 일치하지 않습니다.");
             populateDateModelAttributes(model);
+            model.addAttribute("currentPage", "/join");
             return "join";
         }
 
@@ -106,6 +111,7 @@ public class UserController {
                 (joinRequestDto.getPreferAreaDetail() == null || joinRequestDto.getPreferAreaDetail().isEmpty())) {
             bindingResult.rejectValue("preferArea", "minSelection", "선호 지역은 최소 1개 이상 선택해야 합니다.");
             populateDateModelAttributes(model);
+            model.addAttribute("currentPage", "/join");
             return "join";
         }
 
@@ -115,6 +121,7 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             populateDateModelAttributes(model);
+            model.addAttribute("currentPage", "/join");
             return "join";
         }
     }
@@ -170,12 +177,18 @@ public class UserController {
         model.addAttribute("days", days);
     }
 
-    @GetMapping({ "/index"})
-    public String mainPage(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            model.addAttribute("loggedInUser", loggedInUser);
-        }
-        return "index";
+    @GetMapping("/chat")
+    public String chatPage() {
+        return "index"; // 실시간 채팅 html
+    }
+
+    @GetMapping("/calendar")
+    public String calendarPage() {
+        return "index"; // 데이트 코스 추천 html
+    }
+
+    @GetMapping("/trophy")
+    public String trophyPage() {
+        return "index"; // 랭킹 html
     }
 }

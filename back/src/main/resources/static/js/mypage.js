@@ -671,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.ok) {
                 const result = await response.json();
                 alert(result.message || '회원 정보가 성공적으로 수정되었습니다.');
-                window.location.href = '/index';
+                window.location.href = '/main';
             } else {
                 let errorData;
                 try {
@@ -713,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.ok) {
                 const result = await response.json();
                 alert(result.message || '회원 탈퇴가 성공적으로 처리되었습니다.');
-                window.location.href = '/login';
+                window.location.href = '/main';
             } else {
                 let errorData;
                 try {

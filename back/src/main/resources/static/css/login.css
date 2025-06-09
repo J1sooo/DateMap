@@ -1,16 +1,24 @@
+
 body {
     background-color: #ffffff;
     font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.login-page-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
+    min-height: calc(100vh - 60px);
+    width: 100%;
+    padding: 20px 0;
     box-sizing: border-box;
 }
+
 
 .login-container {
     width: 100%;
@@ -33,7 +41,6 @@ body {
 h2 {
     color: #343a40;
     font-weight: 700 !important;
-    margin-top: 2rem;
     margin-bottom: 2rem;
     text-align: left;
     font-size: 2.2rem;
@@ -41,6 +48,7 @@ h2 {
 
 .mb-3 {
     text-align: left;
+
 }
 
 .form-label {
