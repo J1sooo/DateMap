@@ -1,15 +1,15 @@
-package com.est.back.controller;
+package com.est.back.partner;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RecommendViewController {
+public class PartnerViewController {
 
-    @GetMapping("/recommend-setting")
+    @GetMapping("/partner-setting")
     public String viewPartnerSetting() {
 
-        return "recommendSetting";
+        return "partnerSetting";
     }
 
 }

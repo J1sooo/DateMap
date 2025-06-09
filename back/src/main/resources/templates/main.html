@@ -4,18 +4,33 @@
     <meta charset="UTF-8">
     <title>Main</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script th:src="@{/js/main.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
+<div class="header">
+    <a href="/main">
+        <img th:src="@{/img/main_logo.png}" alt="데이트맵 로고">
+    </a>
+    <a href="/login" class="login-btn">로그인</a>
+</div>
+
+<img class="banner" th:src="@{/img/main_banner.png}" alt="메인 배너">
 
 <div class="container">
 
     <!-- 소개팅 상대 -->
     <div class="section-title">소개팅 상대</div>
     <div class="card-list">
-        <div class="card" th:each="partner : ${partners}">
+        <div class="card" th:each="partner : ${partners}"
+             th:data-imgurl="${partner.imageUrl}"
+             th:data-gender="${partner.gender}"
+             th:data-agegroup="${partner.ageGroup}"
+             th:data-personaltype="${partner.personalType}"
+             th:data-hobby="${partner.hobby}"
+             onclick="openModalFromCard(this)">
             <img th:src="${partner.imageUrl}" alt="소개팅 캐릭터 이미지" />
-            <div class="title" th:text="${partner.ageGroup} + ' / ' + ${partner.gender}">20대 / 여성</div>
-            <div class="subtitle" th:text="${partner.hobby}">독서</div>
         </div>
         <a href="/partner-setting" class="add-card">+</a>
     </div>
@@ -24,13 +39,31 @@
     <div class="section-title">데이트 코스</div>
     <div class="card-list">
         <div class="card" th:each="recommend : ${recommends}">
-            <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지" />
-            <div class="title" th:text="${recommend.title}">서울 남산타워</div>
-            <div class="subtitle" th:text="${recommend.area}">서울</div>
+            <a th:href="@{'/recommendplace/' + ${recommend.courseId}}">
+                <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지" />
+            </a>
+            <div class="info">
+                <div class="subtitle" th:text="${recommend.area}">지역</div>
+                <div class="title" th:text="${recommend.title}">코스 제목</div>
+            </div>
         </div>
         <a href="/recommend-setting" class="add-card">+</a>
     </div>
 
+</div>
+
+<!-- 소개팅 모달 -->
+<div class="modal" id="partner-modal">
+    <div class="modal-content">
+        <img id="modal-img" src="" alt="캐릭터 이미지">
+        <div id="modal-gender"></div>
+        <div id="modal-age"></div>
+        <div id="modal-type"></div>
+        <div id="modal-hobby"></div>
+        <br>
+        <button onclick="location.href='/datechat'">소개팅 하러가기</button>
+        <button onclick="closeModal()">닫기</button>
+    </div>
 </div>
 
 </body>

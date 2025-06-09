@@ -7,9 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PartnerResponseDto {
+    private String imageUrl;
     private String gender;
     private String ageGroup;
     private String personalType;
     private String hobby;
-    private String imageUrl;
 }
