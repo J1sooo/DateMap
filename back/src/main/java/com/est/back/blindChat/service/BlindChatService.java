@@ -17,12 +17,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BlindChatService {
 
     @Value("${GEMINI_API_KEY}")
@@ -34,14 +36,6 @@ public class BlindChatService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final BlindDateFeedbackRepository blindDateFeedbackRepository;
 
-
-    public BlindChatService(ChatMessageRepository chatMessageRepository,
-        ChatRoomRepository chatRoomRepository,
-        BlindDateFeedbackRepository blindDateFeedbackRepository) {
-        this.chatMessageRepository = chatMessageRepository;
-        this.chatRoomRepository = chatRoomRepository;
-        this.blindDateFeedbackRepository = blindDateFeedbackRepository;
-    }
 
     //대화 내용 불러오기
     @Transactional
@@ -114,7 +108,7 @@ public class BlindChatService {
     }
 
     // Gemini API가 보낸 JSON 응답을 text 부분만 나오게 자르기
-    private String extractTextFromResponse(String json) {
+    public String extractTextFromResponse(String json) {
         try {
             JsonNode root = objectMapper.readTree(json);
             JsonNode textNode = root.path("candidates")
