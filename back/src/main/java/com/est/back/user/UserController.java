@@ -1,8 +1,11 @@
 package com.est.back.user;
 
+import com.est.back.user.dto.JoinRequestDto;
+import com.est.back.user.dto.LoginRequestDto;
+import com.est.back.user.dto.UserUpdateRequestDto;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest; // HttpServletRequest 임포트
-import jakarta.servlet.http.HttpServletResponse; // HttpServletResponse 임포트
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +30,6 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginPage(HttpServletRequest request, Model model) {
-       // 아이디 저장
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -44,17 +47,16 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequestDto loginRequestDto,
-                        @RequestParam(value = "rememberMe", defaultValue = "false") boolean rememberMe, // 아이디 저장 체크박스
+                        @RequestParam(value = "rememberMe", defaultValue = "false") boolean rememberMe,
                         Model model, HttpSession session,
                         HttpServletResponse response) {
         try {
             User user = userService.login(loginRequestDto);
             session.setAttribute("loggedInUser", user);
 
-            // 아이디 저장 로직
             if (rememberMe) {
                 Cookie cookie = new Cookie("savedUserId", loginRequestDto.getUsername());
-                cookie.setMaxAge(60 * 60 * 24 * 30); // 30일 동안 유효
+                cookie.setMaxAge(60 * 60 * 24 * 30);
                 cookie.setPath("/");
                 response.addCookie(cookie);
             } else {
@@ -64,7 +66,7 @@ public class UserController {
                 response.addCookie(cookie);
             }
 
-            return "redirect:/"; // 메인페이지
+            return "redirect:/index";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("savedUserId", loginRequestDto.getUsername());
@@ -75,10 +77,10 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/";
+        return "redirect:/index";
     }
 
-    @GetMapping("/join") // 회원가입 html 페이지 반환
+    @GetMapping("/join")
     public String joinPage(Model model) {
         if (!model.containsAttribute("joinRequestDto")) {
             model.addAttribute("joinRequestDto", new JoinRequestDto());
@@ -94,7 +96,6 @@ public class UserController {
             return "join";
         }
 
-        // 비밀번호 확인 로직
         if (!joinRequestDto.getPassword().equals(joinRequestDto.getPasswordCheck())) {
             bindingResult.rejectValue("passwordCheck", "passwordMismatch", "비밀번호가 일치하지 않습니다.");
             populateDateModelAttributes(model);
@@ -117,6 +118,44 @@ public class UserController {
             return "join";
         }
     }
+
+    // 회원 정보 수정
+    @GetMapping("/profile/edit")
+    public String editProfilePage(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
+            return "redirect:/login";
+        }
+
+        try {
+            User user = userService.getUserInfo(loggedInUser.getUsn());
+
+            UserUpdateRequestDto userProfileUpdateDto = new UserUpdateRequestDto();
+            userProfileUpdateDto.setUsn(user.getUsn());
+            userProfileUpdateDto.setUserId(user.getUserId());
+            userProfileUpdateDto.setNickName(user.getNickName());
+            userProfileUpdateDto.setEmail(user.getEmail());
+            userProfileUpdateDto.setGender(user.getGender());
+            if (user.getDateOfBirth() != null) {
+                userProfileUpdateDto.setBirthYear(user.getDateOfBirth().getYear());
+                userProfileUpdateDto.setBirthMonth(user.getDateOfBirth().getMonthValue());
+                userProfileUpdateDto.setBirthDay(user.getDateOfBirth().getDayOfMonth());
+            }
+            userProfileUpdateDto.setPreferArea(user.getPreferArea());
+            userProfileUpdateDto.setPreferAreaDetail(user.getPreferAreaDetail());
+            userProfileUpdateDto.setProfileImageUrl(user.getProfileImg());
+
+            model.addAttribute("userProfileUpdateDto", userProfileUpdateDto);
+            populateDateModelAttributes(model);
+            return "mypage";
+        } catch (IllegalArgumentException e) {
+            log.error("Failed to load user info for profile edit: {}", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "사용자 정보를 불러오는데 실패했습니다.");
+            return "redirect:/login";
+        }
+    }
+
     private void populateDateModelAttributes(Model model) {
         int currentYear = LocalDate.now().getYear();
         List<Integer> years = new ArrayList<>();
@@ -129,5 +168,14 @@ public class UserController {
         List<Integer> days = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31);
         model.addAttribute("months", months);
         model.addAttribute("days", days);
+    }
+
+    @GetMapping({ "/index"})
+    public String mainPage(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            model.addAttribute("loggedInUser", loggedInUser);
+        }
+        return "index";
     }
 }
