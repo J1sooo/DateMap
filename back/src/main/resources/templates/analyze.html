@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>소개팅 종합평가</title>
+  <link rel="stylesheet" th:href="@{/css/analyze.css}">
+</head>
+<body>
+<!-- 네비게이션 -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <a href="/" class="logo">DateMap</a>
+  </div>
+  <div class="navbar-right">
+    <a href="/login" class="login-btn">로그인</a>
+  </div>
+</nav>
+
+<!-- 소개팅 횟수 -->
+<div class="intro-count">소개팅 횟수 : <span th:text="${dto.count}"></span></div>
+
+<main class="analyze-layout">
+  <div class="card-title">분석 평가</div>
+  <div class="score" th:text="${dto.score + '점'}">88점</div>
+
+  <div class="oneLiner" th:utext="${dto.oneLiner}">아주 훌륭해요! 자신감을 가지세요!</div>
+
+  <div class="analyze-card">
+    <div class="card-subtitle">종합 분석</div>
+    <div class="analyze" th:utext="${dto.analyze}"></div>
+  </div>
+
+  <p class="notice-text">※ 분석 평가는 일회성으로 제공되며, 저장되지 않습니다.</p>
+
+  <a th:href="@{ / }" class="out-button">나가기</a>
+</main>
+</body>
+</html>
