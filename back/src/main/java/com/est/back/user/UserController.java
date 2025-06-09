@@ -2,6 +2,7 @@ package com.est.back.user;
 
 import com.est.back.user.dto.JoinRequestDto;
 import com.est.back.user.dto.LoginRequestDto;
+import com.est.back.user.dto.UserInfoResponseDto;
 import com.est.back.user.dto.UserUpdateRequestDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -191,4 +192,5 @@ public class UserController {
     public String trophyPage() {
         return "index"; // 랭킹 html
     }
+
 }
