@@ -179,7 +179,7 @@ public class UserController {
 
     @GetMapping("/chat")
     public String chatPage() {
-        return "index"; // 실시간 채팅 html
+        return "chat"; // 실시간 채팅 html
     }
 
     @GetMapping("/calendar")
