@@ -3,14 +3,21 @@ body {
     font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.join-page-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
+    min-height: calc(100vh - 60px);
+    width: 100%;
+    padding: 20px 0;
     box-sizing: border-box;
 }
+
 
 .join-container {
     width: 100%;

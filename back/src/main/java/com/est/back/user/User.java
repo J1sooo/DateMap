@@ -23,12 +23,15 @@ public class User {
     @Column(name = "usn", nullable = false)
     private Long usn;
 
+    @Setter
+    @Getter
     @Column(name = "user_id", nullable = false, unique = true, length = 50)
     private String userId;
 
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    @Getter
     @Column(name = "nickName", nullable = false, unique = true, length = 8)
     private String nickName;
 
