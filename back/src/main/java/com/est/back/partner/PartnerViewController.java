@@ -9,7 +9,7 @@ public class PartnerViewController {
     @GetMapping("/partner-setting")
     public String viewPartnerSetting() {
 
-        return "partnerSetting";
+        return "datesetting";
     }
 
 }
