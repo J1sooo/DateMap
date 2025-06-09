@@ -17,7 +17,7 @@
     <a th:href="@{/}" class="back-button">←</a>
 </div>
 <main class="chat-layout">
-    <img src="/images/default-profile.jpeg" alt="상대 이미지" class="profile-photo"/>
+    <img th:src="${partner.imageUrl}" alt="프로필" class="profile-photo" />
 
     <section class="chat-section">
         <div class="chat-box">
