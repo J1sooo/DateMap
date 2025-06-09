@@ -12,4 +12,7 @@ public interface BlindDateFeedbackRepository extends JpaRepository<BlindDateFeed
     Optional<BlindDateFeedback> findByCharId(Long charId);
 
     List<BlindDateFeedback> findAllByUsn(Long usn);
+
+    long countByUsn(Long usn);
+
 }

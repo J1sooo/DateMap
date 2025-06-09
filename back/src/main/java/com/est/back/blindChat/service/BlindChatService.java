@@ -266,10 +266,11 @@ public class BlindChatService {
         // Gemini API 요청 로직 호출
         String result = sendPromptToGemini(prompt  + combined);
         System.out.println(result);
-        return extractAnalysisFromResponse(result);
+        long count = blindDateFeedbackRepository.countByUsn(usn);
+        return extractAnalysisFromResponse(count,result);
     }
 
-    private AnalyzeDto extractAnalysisFromResponse(String responseText) {
+    private AnalyzeDto extractAnalysisFromResponse(long count ,String responseText) {
 
 
 
@@ -284,9 +285,12 @@ public class BlindChatService {
         int score = Integer.parseInt(scoreStr);
 
         String oneLiner = parts.length > 3 ? parts[3].trim() : "";
-
-
-        return new AnalyzeDto(analyze, oneLiner, score);
+        return AnalyzeDto.builder()
+            .analyze(analyze)
+            .oneLiner(oneLiner)
+            .score(score)
+            .count(count)
+            .build();
     }
 
 
