@@ -20,11 +20,12 @@ body {
 
 .image-box {
     position: relative;
+
 }
 
 .profile-img {
-    width: 200px;
-    height: 260px;
+    width: 20vw;
+    height: 70vh;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -33,7 +34,7 @@ body {
     bottom: 10px;
     right: 10px;
     background: white;
-    border: 1px solid #ccc;
+    border: solid #ccc;
     border-radius: 50%;
     padding: 8px;
     cursor: pointer;
@@ -46,21 +47,41 @@ body {
 }
 
 .form-section {
-    margin-bottom: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+    width : 20vw;
+    text-align: center;
+    align-items: center;
 }
 
 .form-section label {
+    display: block;
     font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 6px;
-    display: inline-block;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
+.form-section:last-child {
+    border-bottom: none;
+}
+
 
 .options {
     display: flex;
+    justify-content: center; /* 버튼을 수평 가운데로 */
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    width: 100%;
 }
+
+.options.center-fit {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    width: fit-content; /* 버튼 묶음 너비에 맞춤 */
+    margin: 0 auto;     /* 중앙 정렬 */
+}
+
 
 .option-btn {
     padding: 8px 14px;
@@ -86,4 +107,5 @@ body {
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
+    width: 30vw;
 }

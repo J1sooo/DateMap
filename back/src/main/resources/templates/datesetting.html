@@ -11,13 +11,13 @@
 
 <div th:replace="navbar :: navbar"></div>
 <div class="container">
-    <h2>소개팅 상대방 설정</h2>
+    <h2>AI 소개팅 상대방 설정</h2>
 
     <div class="content">
         <div class="image-box">
             <img th:src="@{/images/default-date-img.png}" id="preview" alt="프로필"
                  class="profile-img">
-            <button type="button" class="image-btn" onclick="changeImage()">📸</button>
+            <button type="button" class="image-btn" onclick="changeImage()">🔄</button>
 
         </div>
         <form class="form-box" th:action="@{/api/chatroom}" method="post">
