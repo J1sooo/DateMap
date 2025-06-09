@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #ffeef2;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 30px 0 10px;
+    text-align: center;
+    color: #e91e63;
+}
+
+.top3 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 100px;
+    position: relative;
+}
+
+.top3 .card {
+    background-color: white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.top3 .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #ffc5d6;
+}
+
+.top3 .title {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.top3 .subtitle {
+    font-size: 12px;
+    color: #333;
+}
+
+.top3 .rank-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: gold;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-weight: bold;
+}
+
+.top3 .first {
+    transform: translateY(0); /* 가장 위 */
+}
+
+.top3 .second {
+    transform: translateY(40px); /* 아래로 20px 내려감 */
+}
+
+.top3 .third {
+    transform: translateY(60px); /* 아래로 30px 내려감 */
+}
+
+table {
+    margin: 0 auto 70px;
+    width: 80%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ffe0eb;
+    text-align: center;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.gender {
+    font-weight: bold;
+}

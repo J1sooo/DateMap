@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${recommendPlace.title}">추천 코스</title>
+</head>
+<body>
+<h1 th:text="${recommendPlace.title}">제목</h1>
+<p th:text="${recommendPlace.area}">지역</p>
+<img th:src="${recommendPlace.imageUrl}" alt="대표 이미지" />
+<hr>
+<p th:text="${recommendPlace.content1}">내용1</p>
+<p th:text="${recommendPlace.content2}">내용2</p>
+<p th:text="${recommendPlace.content3}">내용3</p>
+<p th:text="${recommendPlace.content4}">내용4</p>
+</body>
+</html>

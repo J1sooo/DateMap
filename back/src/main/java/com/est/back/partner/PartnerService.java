@@ -16,11 +16,11 @@ public class PartnerService {
 
     private PartnerResponseDto toDto(Partner partner) {
         return PartnerResponseDto.builder()
+                .imageUrl(partner.getImageUrl())
                 .gender(partner.getGender())
                 .ageGroup(partner.getAgeGroup())
                 .personalType(partner.getPersonalType())
                 .hobby(partner.getHobby())
-                .imageUrl(partner.getImageUrl())
                 .build();
     }
 
