@@ -140,8 +140,11 @@ subregionSelect.addEventListener("change", updateSubmitState);
 updateSubmitState(); // 초기 상태 확인
 
 // form submit 처리
+const loadingOverlay = document.getElementById('loading-overlay');
+
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
+    loadingOverlay.classList.remove('d-none');
 
     // 프롬프트 생성
     const area = regions[document.getElementById("region").value] + document.getElementById("subregion").value;
@@ -150,7 +153,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     const date = document.getElementById("date-picker").value;
     const transport = Array.from(selectedTransports).join(",");
 
-    const content = `area=${area};budget_max=${budget};hobbies=${hobbies};date=${date};transport=${transport}`;
+    const content = `area=${area};budget=${budget};hobbies=${hobbies};date=${date};transport=${transport}`;
 
     fetch(`/api/alan?content=${content}`, {
         method: "GET"
@@ -162,6 +165,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             const jsonData = JSON.parse(rawJsonString); // json 변경
 
             sessionStorage.setItem("alanRequest", jsonData.content); // string
+            loadingOverlay.classList.add('d-none');
             window.location.href = "/recommend/place";
         })
         .catch(e => {
