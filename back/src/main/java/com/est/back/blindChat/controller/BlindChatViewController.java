@@ -5,6 +5,10 @@ import com.est.back.blindChat.dto.AnalyzeDto;
 import com.est.back.blindChat.dto.FeedbackDto;
 import com.est.back.blindChat.dto.MessageDto;
 import com.est.back.blindChat.service.BlindChatService;
+import com.est.back.partner.PartnerRepository;
+import com.est.back.partner.PartnerService;
+import com.est.back.partner.domain.Partner;
+import com.est.back.user.User;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +23,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class BlindChatViewController {
 
     private final BlindChatService blindChatService;
+    private final PartnerRepository partnerRepository;
 
     @GetMapping("/chat/{chatroomId}")
     public String showChatRoom(@PathVariable Long chatroomId, Model model) {
         List<ChatMessage> messages = blindChatService.getChatHistory(chatroomId);
         model.addAttribute("messages", messages.stream().map(MessageDto::from).toList());
+        Partner partner = partnerRepository.findPartnerByChatroomId(chatroomId);
+
+        model.addAttribute("imageUrl", partner.getImageUrl());
+        model.addAttribute("partner", partner);
+        model.addAttribute("chatroomId", chatroomId);
         return "chat";
     }
 
@@ -36,8 +46,8 @@ public class BlindChatViewController {
 
     @GetMapping("/analyze")
     public String analyze(Model model, HttpSession session) {
-//        Long usn = (Long) session.getAttribute("usn");
-        Long usn = 1L;
+        User user = (User) session.getAttribute("loggedInUser");
+        Long usn = user.getUsn();
         AnalyzeDto result = blindChatService.analyzeAllFeedbacksByUsn(usn);
         model.addAttribute("dto", result);
         return "analyze";

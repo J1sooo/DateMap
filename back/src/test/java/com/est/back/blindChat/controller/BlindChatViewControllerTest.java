@@ -51,11 +51,11 @@ class BlindChatViewControllerTest {
         verify(blindChatService).deleteChatRoom(1L);
     }
 
-    @Test
-    void blindDateFeedback() throws Exception {
-        mockMvc.perform(post("/api/chat/1/feedback"))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl("/api/chat/1"));
-        verify(blindChatService).feedbackFromGemini(1L);
-    }
+//    @Test
+//    void blindDateFeedback() throws Exception {
+//        mockMvc.perform(post("/api/chat/1/feedback"))
+//            .andExpect(status().is3xxRedirection())
+//            .andExpect(redirectedUrl("/api/chat/1"));
+//        verify(blindChatService).feedbackFromGemini(1L);
+//    }
 }

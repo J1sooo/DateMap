@@ -9,6 +9,8 @@ import com.est.back.blindChat.dto.FeedbackDto;
 import com.est.back.blindChat.repository.BlindDateFeedbackRepository;
 import com.est.back.blindChat.repository.ChatMessageRepository;
 import com.est.back.blindChat.repository.ChatRoomRepository;
+import com.est.back.chatroom.ChatroomRepository;
+import com.est.back.chatroom.domain.Chatroom;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -33,6 +35,7 @@ public class BlindChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final WebClient webClient = WebClient.create();
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatroomRepository chatroomRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final BlindDateFeedbackRepository blindDateFeedbackRepository;
 
@@ -135,7 +138,7 @@ public class BlindChatService {
     }
 
     @Transactional
-    public BlindDateFeedback feedbackFromGemini(Long chatroomId) {
+    public BlindDateFeedback feedbackFromGemini(Long chatroomId ,Long usn) {
 
         List<Map<String, Object>> parts = getChatHistory(chatroomId).stream()
             .map(msg -> Map.of(
@@ -146,7 +149,7 @@ public class BlindChatService {
         String prompt = """
             이전에 나눈 대화를 기반으로 아래 요청을 수행해줘.
             1. 대화 내용을 3줄로 요약해줘.
-            2. 대화 흐름이 자연스러웠는지 평가해주고 부족한 부분이 있다면 소개팅 상대방의 입장으로써 피드백해줘.
+            2. 대화 흐름이 자연스러웠는지 평가해주고 부족한 부분이 있다면 소개팅 상대방의 입장으로써 나를 피드백해줘.
             3. 대화 스타일, 태도 , 대화 흐름 등을 고려해 100점 만점으로 점수를 매겨줘, 점수만 알려주면 돼.
             모든 답변은 3줄 이내로 자연스럽게 해줘
             """;
@@ -179,10 +182,15 @@ public class BlindChatService {
         String feedback = part.length > 2 ? part[2].trim() : "";
         String scoreStr = part.length > 3 ? part[3].replaceAll("[^0-9]", "") : "0";
         int score = Integer.parseInt(scoreStr);
+        Chatroom chatroom = chatroomRepository.findById(chatroomId)
+            .orElseThrow(() -> new RuntimeException("Chatroom not found"));
+
+        Long charId = chatroom.getPartnerId();  // 여기가 핵심
 
         BlindDateFeedback feedbackEntity = new BlindDateFeedback();
-        feedbackEntity.setCharId(1L);
-        feedbackEntity.setUsn(1L);
+
+        feedbackEntity.setCharId(charId);
+        feedbackEntity.setUsn(usn);
         feedbackEntity.setCreatedAt(LocalDateTime.now());
         feedbackEntity.setSummary(summary);
         feedbackEntity.setFeedback(feedback);
@@ -234,7 +242,6 @@ public class BlindChatService {
 
     @Transactional
     public AnalyzeDto analyzeAllFeedbacksByUsn(Long usn) {
-        usn = 1L;
         List<BlindDateFeedback> feedbacks = blindDateFeedbackRepository.findAllByUsn(usn);
         if (feedbacks.isEmpty()) {
             throw new IllegalArgumentException("해당 유저의 피드백이 없습니다.");
