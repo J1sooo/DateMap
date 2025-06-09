@@ -155,7 +155,7 @@ public class UserController {
 
             model.addAttribute("userProfileUpdateDto", userProfileUpdateDto);
             populateDateModelAttributes(model);
-            return "mypage";
+            return "modifyprofile";
         } catch (IllegalArgumentException e) {
             log.error("Failed to load user info for profile edit: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "사용자 정보를 불러오는데 실패했습니다.");

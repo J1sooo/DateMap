@@ -33,7 +33,7 @@
   <div class="navbar-right">
     <th:block th:if="${session.loggedInUser != null}">
       <span class="navbar-user-info">
-        <a href="/mypage" th:href="@{/mypage}" class="navbar-user-nickname">
+        <a href="/" th:href="@{/}" class="navbar-user-nickname">
           <span th:text="${session.loggedInUser.nickName}"></span>
         </a>
         <span>님 안녕하세요</span>
