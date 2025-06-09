@@ -17,12 +17,13 @@
 </div>
 
 <img class="banner" th:src="@{/img/main_banner.png}" alt="메인 배너">
-
+  
 <div class="container">
 
     <!-- 소개팅 상대 -->
     <div class="section-title">소개팅 상대</div>
     <div class="card-list">
+
         <div class="card" th:each="partner : ${partners}"
              th:data-imgurl="${partner.imageUrl}"
              th:data-gender="${partner.gender}"

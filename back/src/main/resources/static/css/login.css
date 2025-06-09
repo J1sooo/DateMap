@@ -1,0 +1,196 @@
+body {
+    background-color: #ffffff;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 0;
+    text-align: center;
+}
+
+.login-header {
+    text-align: left;
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.login-header .d-flex {
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+h2 {
+    color: #343a40;
+    font-weight: 700 !important;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    font-size: 2.2rem;
+}
+
+.mb-3 {
+    text-align: left;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #ced4da;
+    box-shadow: none;
+}
+
+.d-flex.justify-content-between.align-items-center.mb-4 {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem !important;
+    flex-wrap: nowrap;
+}
+
+.form-check-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.text-decoration-none.text-secondary {
+    color: #6c757d !important;
+    font-size: 0.9rem;
+}
+
+.text-decoration-none.text-secondary:hover {
+    color: #FF78A5 !important;
+}
+
+.custom-pink-btn {
+    background-color: #FF78A5;
+    border-color: #FF78A5;
+    color: white;
+    border-radius: 0.25rem;
+    font-size: 1.2rem;
+    padding: 0.8rem 1rem;
+    font-weight: normal !important;
+}
+
+.custom-pink-btn:hover {
+    background-color: #e86492;
+    border-color: #e86492;
+    color: white;
+}
+
+.custom-pink-btn:focus {
+    box-shadow: none;
+}
+
+
+.custom-pink-outline-btn {
+    border-color: #ced4da;
+    color: #495057;
+    background-color: transparent;
+    border-radius: 0.25rem;
+    font-size: 1.2rem;
+    padding: 0.8rem 1rem;
+    font-weight: normal !important;
+}
+
+.custom-pink-outline-btn:hover {
+    background-color: #f8f9fa;
+    color: #495057;
+    border-color: #adb5bd;
+}
+
+.custom-pink-outline-btn:focus {
+    box-shadow: none;
+}
+
+.alert {
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.modal-content {
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal-title {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.modal-body {
+    padding-top: 1rem;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+
+.modal-body .btn-primary, .modal-body .btn-success {
+    background-color: #FF78A5;
+    border-color: #FF78A5;
+    border-radius: 0.5rem;
+}
+
+.modal-body .btn-primary:hover, .modal-body .btn-success:hover {
+    background-color: #FF78A5;
+    border-color: #FF78A5;
+}
+
+.modal-body .btn-secondary {
+    border-radius: 0.5rem;
+}
+
+@media (max-width: 576px) {
+    .login-container {
+        padding: 0 15px;
+    }
+
+    .login-header .d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .login-header p.text-secondary {
+        text-align: left;
+        margin-top: 5px;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .d-flex.justify-content-between.align-items-center.mb-4 > div:last-child {
+        margin-top: 10px;
+    }
+}
