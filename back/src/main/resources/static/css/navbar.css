@@ -1,0 +1,137 @@
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    font-family: Arial, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    height: 50px;
+}
+
+.navbar-left {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    height: 30px;
+    margin-right: 15px;
+}
+
+.navbar-logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.navbar-center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-center-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar-icon-button:hover {
+    color: #FF78A5;
+}
+
+.navbar-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    white-space: nowrap;
+}
+
+.navbar-user-info {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar-user-nickname {
+    text-decoration: underline;
+    color: #333;
+    cursor: pointer;
+}
+
+.navbar-user-nickname:hover {
+    color: #FF78A5;
+}
+
+.navbar-auth-button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar-auth-button:hover {
+    background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        height: auto;
+        position: static;
+    }
+
+    .navbar-left,
+    .navbar-right {
+        position: static;
+        transform: none;
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .navbar-left {
+        margin-top: 0;
+    }
+
+    .navbar-center-wrapper {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .navbar-center-buttons {
+        gap: 15px;
+    }
+}

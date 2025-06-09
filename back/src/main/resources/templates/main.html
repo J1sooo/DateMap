@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script th:src="@{/js/main.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 </head>
 <body>
+<div th:replace="navbar :: navbar"></div>
 
 <div class="header">
     <a href="/main">
@@ -17,7 +21,7 @@
 </div>
 
 <img class="banner" th:src="@{/img/main_banner.png}" alt="메인 배너">
-  
+
 <div class="container">
 
     <!-- 소개팅 상대 -->

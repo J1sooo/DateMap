@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>네비게이션 바</title>
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<nav th:fragment="navbar" class="navbar-container">
+  <div class="navbar-left">
+    <a href="/main" th:href="@{/main}">
+      <img th:src="@{/images/logo.png}" alt="데이트맵 로고" class="navbar-logo">
+    </a>
+    <a href="/main" th:href="@{/main}" class="navbar-logo-text">데이트맵</a>
+  </div>
+
+  <div class="navbar-center-wrapper">
+    <div class="navbar-center-buttons" th:if="${session.loggedInUser != null}">
+      <a href="/chat" th:href="@{/chat}" class="navbar-icon-button" title="채팅">
+        <i class="fas fa-comment-dots"></i>
+      </a>
+      <a href="/calendar" th:href="@{/calendar}" class="navbar-icon-button" title="캘린더">
+        <i class="fas fa-calendar-alt"></i>
+      </a>
+      <a href="/trophy" th:href="@{/trophy}" class="navbar-icon-button" title="트로피">
+        <i class="fas fa-trophy"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <th:block th:if="${session.loggedInUser != null}">
+      <span class="navbar-user-info">
+        <a href="/mypage" th:href="@{/mypage}" class="navbar-user-nickname">
+          <span th:text="${session.loggedInUser.nickName}"></span>
+        </a>
+        <span>님 안녕하세요</span>
+      </span>
+      <a href="/logout" th:href="@{/logout}" class="navbar-auth-button">로그아웃</a>
+    </th:block>
+
+    <th:block th:if="${session.loggedInUser == null and currentPage != '/join' and currentPage != '/login'}">
+      <a href="/login" th:href="@{/login}" class="navbar-auth-button">로그인</a>
+    </th:block>
+
+    <th:block th:if="${session.loggedInUser == null and currentPage == '/login'}">
+      <span class="navbar-message">썸에서 연애까지, 데이트맵과 함께 하세요!</span>
+    </th:block>
+  </div>
+</nav>
+
+</body>
+</html>
