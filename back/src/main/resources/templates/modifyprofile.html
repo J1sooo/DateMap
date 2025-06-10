@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>마이페이지(회원정보수정)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/join.css}">
+  <link rel="stylesheet" th:href="@{/css/modifyprofile.css}">
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="bg-white">
+
+<div th:replace="~{navbar :: navbar}">
+
+</div> <div class="profile-edit-page-content">
+  <div class="profile-edit-container">
+    <div class="join-header">
+    </div>
+
+    <div class="card-body">
+      <form id="editProfileForm" enctype="multipart/form-data">
+        <div class="profile-header-section mb-4">
+          <div class="profile-image-area">
+            <img id="profileImagePreview"
+                 th:src="${userProfileUpdateDto.profileImageUrl != null and !userProfileUpdateDto.profileImageUrl.isEmpty() ? userProfileUpdateDto.profileImageUrl : '/images/default_profile.png'}"
+                 alt="프로필 이미지"
+                 class="profile-image-rect">
+            <input type="file" id="profileImageInput" name="profileImageFile" accept="image/*" class="hidden-input">
+            <button type="button" id="editImageBtn" class="btn btn-pink-outline mt-2">이미지 수정</button>
+          </div>
+          <div class="profile-info-area">
+            <p class="profile-name">
+              <span th:text="${userProfileUpdateDto.nickName}"></span>
+              <span th:text="${userProfileUpdateDto.gender != null ? (userProfileUpdateDto.gender.name() == 'MALE' ? '남자' : '여자') : ''}"></span>
+            </p>
+            <p class="profile-text" th:text="${userProfileUpdateDto.email}"></p>
+            <p class="profile-text" th:text="${userProfileUpdateDto.birthYear != null ? userProfileUpdateDto.birthYear + '.' + userProfileUpdateDto.birthMonth + '.' + userProfileUpdateDto.birthDay : ''}"></p>
+            <p class="profile-text" th:if="${userProfileUpdateDto.preferArea != null}" th:text="${userProfileUpdateDto.preferArea}"></p>
+            <p class="profile-text" th:if="${userProfileUpdateDto.preferAreaDetail != null}" th:text="${userProfileUpdateDto.preferAreaDetail}"></p>
+          </div>
+        </div>
+        <hr class="my-4">
+
+        <div class="mb-3">
+          <label for="userId" class="form-label fw-bold">아이디</label>
+          <input type="text" class="form-control bg-light" id="userId" name="userId" th:value="${userProfileUpdateDto.userId}" disabled>
+        </div>
+
+        <div class="mb-3">
+          <label for="nickName" class="form-label fw-bold">닉네임</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="nickName" name="nickName" th:value="${userProfileUpdateDto.nickName}" placeholder="닉네임 8자 이내 입력" required>
+            <button class="btn btn-outline-secondary" type="button" id="checkNickNameBtn">중복확인</button>
+          </div>
+          <div id="nickNameValidationMessage" class="text-danger mt-1"></div>
+          <div id="nickNameStatus" class="mt-1"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="emailIdInput" class="form-label fw-bold">이메일</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="emailIdInput" placeholder="이메일 작성" required
+                   th:value="${userProfileUpdateDto.email != null and #strings.contains(userProfileUpdateDto.email, '@') ? #strings.substringBefore(userProfileUpdateDto.email, '@') : (userProfileUpdateDto.email != null ? userProfileUpdateDto.email : '')}">
+            <span class="input-group-text">@</span>
+            <select class="form-select" id="emailDomainSelect">
+              <option value="">선택</option>
+              <option value="naver.com" th:selected="${userProfileUpdateDto.email != null and #strings.endsWith(userProfileUpdateDto.email, '@naver.com')}">naver.com</option>
+              <option value="gmail.com" th:selected="${userProfileUpdateDto.email != null and #strings.endsWith(userProfileUpdateDto.email, '@gmail.com')}">gmail.com</option>
+              <option value="daum.net" th:selected="${userProfileUpdateDto.email != null and #strings.endsWith(userProfileUpdateDto.email, '@daum.net')}">daum.net</option>
+            </select>
+            <input type="text" class="form-control" id="emailDomainDirect" placeholder="도메인 직접 입력"
+                   th:value="${userProfileUpdateDto.email != null and #strings.contains(userProfileUpdateDto.email, '@') and !(#strings.endsWith(userProfileUpdateDto.email, '@naver.com') or #strings.endsWith(userProfileUpdateDto.email, '@gmail.com') or #strings.endsWith(userProfileUpdateDto.email, '@daum.net')) ? #strings.substringAfter(userProfileUpdateDto.email, '@') : ''}"
+                   th:style="${userProfileUpdateDto.email != null and #strings.contains(userProfileUpdateDto.email, '@') and !(#strings.endsWith(userProfileUpdateDto.email, '@naver.com') or #strings.endsWith(userProfileUpdateDto.email, '@gmail.com') or #strings.endsWith(userProfileUpdateDto.email, '@daum.net')) ? 'display:block;' : 'display:none;'}"
+            >
+            <button class="btn btn-outline-secondary" type="button" id="checkEmailBtn">중복확인</button>
+          </div>
+          <input type="hidden" id="fullEmail" name="email">
+          <div id="emailValidationMessage" class="text-danger mt-1"></div>
+          <div id="emailStatus" class="mt-1"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">성별</label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderMale" value="MALE" required
+                     th:checked="${userProfileUpdateDto.gender != null and userProfileUpdateDto.gender.name() == 'MALE'}">
+              <label class="form-check-label" for="genderMale">남성</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="FEMALE" required
+                     th:checked="${userProfileUpdateDto.gender != null and userProfileUpdateDto.gender.name() == 'FEMALE'}">
+              <label class="form-check-label" for="genderFemale">여성</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">생년월일</label>
+          <div class="row g-2">
+            <div class="col">
+              <label for="birthYear" class="visually-hidden">연도</label>
+              <select class="form-select" id="birthYear" name="birthYear" required>
+                <option value="">년</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="birthMonth" class="visually-hidden">월</label>
+              <select class="form-select" id="birthMonth" name="birthMonth" required>
+                <option value="">월</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="birthDay" class="visually-hidden">일</label>
+              <select class="form-select" id="birthDay" name="birthDay" required>
+                <option value="">일</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">선호 지역 (최대 2개 선택)</label>
+          <div id="selectedRegionsDisplay" class="d-flex flex-wrap mb-2">
+          </div>
+          <div class="region-select-container">
+            <div class="region-select-column">
+              <select class="form-select" id="mainRegionSelect">
+                <option value="">지역 선택</option>
+              </select>
+            </div>
+            <div class="region-select-column">
+              <select class="form-select" id="detailRegionSelect" disabled>
+                <option value="">구/군 선택</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary" id="addRegionBtn">추가</button>
+          </div>
+          <input type="hidden" name="preferArea" id="preferAreaInput">
+          <input type="hidden" name="preferAreaDetail" id="preferAreaDetailInput">
+          <small id="regionCountMessage" class="form-text text-muted mt-1">0 / 2 선택됨</small>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="mb-3">
+          <label for="currentPassword" class="form-label fw-bold">기존 비밀번호</label>
+          <input type="password" class="form-control" id="currentPassword" name="currentPassword">
+          <div id="currentPasswordError" class="text-danger mt-1" style="display: none;"></div>
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label fw-bold">수정할 비밀번호</label>
+          <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="영문/숫자 포함 8-20자" >
+          <div id="newPasswordValidationMessage" class="text-danger mt-1"></div>
+        </div>
+        <div class="mb-3">
+          <label for="newPasswordCheck" class="form-label fw-bold">비밀번호 재확인</label>
+          <input type="password" class="form-control" id="newPasswordCheck" name="newPasswordCheck">
+          <div id="newPasswordMismatch" class="text-danger mt-1" style="display: none;"></div>
+        </div>
+
+        <div class="d-grid gap-3 mt-5">
+          <button type="submit" class="btn btn-primary py-3 fw-bold custom-pink-btn">회원 정보 수정하기</button>
+
+          <p class="text-center mt-4 mb-0">탈퇴 하시면 모든 정보는 삭제 됩니다.</p>
+
+          <button type="button" id="withdrawBtn" class="btn btn-outline-secondary py-3 fw-bold mt-2">탈퇴하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="withdrawModalLabel">회원 탈퇴 확인</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          정말 회원 탈퇴하시겠습니까? 탈퇴하시면 모든 정보가 삭제되며 되돌릴 수 없습니다.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-danger" id="confirmWithdrawBtn">탈퇴하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script th:inline="javascript">
+    const userProfileUpdateDto = [[${userProfileUpdateDto}]];
+  </script>
+  <script th:src="@{/js/modifyprofile.js}"></script>
+</body>
+</html>

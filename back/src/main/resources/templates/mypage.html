@@ -22,7 +22,7 @@
       <div class="address" th:text="${userInfo.preferArea}">선호지역</div>
     </div>
     <!-- 프로필 수정 버튼 -->
-    <a href="/modifyprofile" class="edit-btn">프로필 수정</a>
+    <a th:href="@{/profile/edit}" class="edit-btn">프로필 수정</a>
   </div>
   <hr>
   <!-- 소개팅 상대 -->

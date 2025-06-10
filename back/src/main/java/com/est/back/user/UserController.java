@@ -2,7 +2,6 @@ package com.est.back.user;
 
 import com.est.back.user.dto.JoinRequestDto;
 import com.est.back.user.dto.LoginRequestDto;
-import com.est.back.user.dto.UserInfoResponseDto;
 import com.est.back.user.dto.UserUpdateRequestDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -156,7 +155,7 @@ public class UserController {
 
             model.addAttribute("userProfileUpdateDto", userProfileUpdateDto);
             populateDateModelAttributes(model);
-            return "mypage";
+            return "modifyprofile";
         } catch (IllegalArgumentException e) {
             log.error("Failed to load user info for profile edit: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "사용자 정보를 불러오는데 실패했습니다.");
@@ -180,17 +179,11 @@ public class UserController {
 
     @GetMapping("/chat")
     public String chatPage() {
-        return "chat"; // 실시간 채팅 html
+        return "datesetting"; // 실시간 채팅 html
     }
 
     @GetMapping("/calendar")
     public String calendarPage() {
-        return "index"; // 데이트 코스 추천 html
+        return "/aiRecommend/recommendSetting"; // 데이트 코스 추천 html
     }
-
-    @GetMapping("/trophy")
-    public String trophyPage() {
-        return "index"; // 랭킹 html
-    }
-
 }

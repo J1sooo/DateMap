@@ -46,11 +46,11 @@ public class RankingService {
     // 주간 랭킹 갱신 로직 (스케줄러에서 호출)
     public List<Ranking> calculateWeeklyTop10() {
         String query = """
-            SELECT u.usn, u.nickname, u.gender, u.profileImg, f.score, MIN(f.createdAt) as achievedTime
+            SELECT u.usn, u.nickName, u.gender, u.profileImg, f.score, MIN(f.createdAt) as achievedTime
             FROM BlindDateFeedback f
             JOIN User u ON f.usn = u.usn
             WHERE f.createdAt >= :oneWeekAgo
-            GROUP BY u.usn, u.nickname, u.gender, u.profileImg, f.score
+            GROUP BY u.usn, u.nickName, u.gender, u.profileImg, f.score
             HAVING f.score = MAX(f.score)
             ORDER BY f.score DESC, achievedTime ASC
         """;
