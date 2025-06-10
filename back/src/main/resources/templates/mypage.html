@@ -5,6 +5,7 @@
   <title>마이페이지</title>
   <link rel="stylesheet" th:href="@{/css/mypage.css}" />
   <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -12,20 +13,38 @@
 
 <div class="container">
 
-  <!-- 프로필 정보 -->
-  <div class="profile-section">
-    <img class="avatar" th:src="${userInfo.profileImg}" alt="프로필 사진">
-    <div class="info">
-      <div class="name" th:text="${userInfo.nickName}">닉네임</div>
-      <div class="email" th:text="${userInfo.email}">이메일</div>
-      <div class="join-date" th:text="${userInfo.dateOfBirth}">생년월일</div>
-      <div class="address" th:text="${userInfo.preferArea}">선호지역</div>
+  <div class="profile-header-section">
+    <div class="profile-image-area">
+      <img id="profileImagePreview"
+           th:src="${userInfo.profileImg != null and !userInfo.profileImg.isEmpty() ? userInfo.profileImg : '/images/default_profile.png'}"
+           alt="프로필 사진"
+           class="profile-image-rect">
     </div>
-    <!-- 프로필 수정 버튼 -->
-    <a th:href="@{/profile/edit}" class="edit-btn">프로필 수정</a>
+    <div class="profile-info-area">
+      <p class="profile-name">
+        <span th:text="${userInfo.nickName}"></span>
+        <span th:if="${userInfo.gender != null}">
+            <span th:text="${userInfo.gender== 'MALE' ? '남자' : (userInfo.gender == 'FEMALE' ? '여자' : '')}"></span>
+        </span>
+      </p>
+      <p class="profile-text" th:text="${userInfo.email}"></p>
+      <p class="profile-text" th:text="${userInfo.dateOfBirth}"></p>
+
+      <p class="profile-text" th:if="${userInfo.preferArea != null}">
+        <span th:text="${userInfo.preferArea}"></span>
+      </p>
+      <p class="profile-text" th:if="${userInfo.preferAreaDetail != null and !userInfo.preferAreaDetail.isEmpty()}">
+        <span th:text="${userInfo.preferAreaDetail}"></span>
+      </p>
+    </div>
+    <div class="button-group">
+      <a th:href="@{/profile/edit}" class="edit-btn">프로필 수정</a>
+      <a th:href="@{/analyze}" class="edit-btn">종합 분석 평가</a>
+      <!-- 구현 후 코드 수정 필요 -->
+      <a th:href="@{/}" class="edit-btn">매칭 서비스</a>
+    </div>
   </div>
   <hr>
-  <!-- 소개팅 상대 -->
   <div class="section">
     <div class="section-title">소개팅 상대</div>
     <div class="card-list">
@@ -36,7 +55,6 @@
     </div>
   </div>
   <hr>
-  <!-- 코스 컬렉션 -->
   <div class="section">
     <div class="section-title">나의 데이트 코스</div>
     <div class="card-list">

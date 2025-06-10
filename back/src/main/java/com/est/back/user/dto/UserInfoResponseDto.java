@@ -16,16 +16,18 @@ public class UserInfoResponseDto {
     private final String gender;
     private final String dateOfBirth;
     private final String preferArea;
+    private final String preferAreaDetail;
 
     @Builder
     public UserInfoResponseDto(String profileImg, String nickName, String email,
-                          String gender, String dateOfBirth, String preferArea) {
+                          String gender, String dateOfBirth, String preferArea, String preferAreaDetail) {
         this.profileImg = profileImg;
         this.nickName = nickName;
         this.email = email;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.preferArea = preferArea;
+        this.preferAreaDetail = preferAreaDetail;
     }
 
     public static UserInfoResponseDto from(User user) {
@@ -36,6 +38,7 @@ public class UserInfoResponseDto {
                 .gender(user.getGender().name()) // MALE or FEMALE
                 .dateOfBirth(user.getDateOfBirth().toString()) // or formatted
                 .preferArea(user.getPreferArea())
+                .preferAreaDetail(user.getPreferAreaDetail())
                 .build();
     }
 }
