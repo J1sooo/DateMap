@@ -27,7 +27,7 @@
       <div class="profile-header-section mb-4">
         <div class="profile-image-area">
           <img id="profileImagePreview"
-               th:src="${userProfileUpdateDto.profileImageUrl != null and !userProfileUpdateDto.profileImageUrl.isEmpty() ? userProfileUpdateDto.profileImageUrl : '/images/default_profile.png'}"
+               th:src="${userProfileUpdateDto.profileImageUrl}"
                alt="프로필 이미지"
                class="profile-image-rect">
           <input type="file" id="profileImageInput" name="profileImageFile" accept="image/*" class="hidden-input">
