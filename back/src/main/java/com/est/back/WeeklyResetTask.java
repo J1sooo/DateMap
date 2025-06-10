@@ -23,7 +23,7 @@ public class WeeklyResetTask {
         blindDateFeedbackRepository.deleteAll();
         chatroomRepository.deleteAll();
         partnerRepository.deleteAllExceptFixedIds();
-        System.out.println("✅ 테이블 데이터 초기화 완료");
+        System.out.println("테이블 데이터 초기화 완료");
     }
 }
 
