@@ -75,7 +75,7 @@ public class UserService {
                 .dateOfBirth(joinRequestDto.getDateOfBirth())
                 .preferArea(joinRequestDto.getPreferArea())
                 .preferAreaDetail(joinRequestDto.getPreferAreaDetail())
-                .profileImg(String.format("https://%s3.ap-northeast-2.amazonaws.com/default_profile.png", bucketName))
+                .profileImg(String.format("https://%s.s3.ap-northeast-2.amazonaws.com/default_profile.png", bucketName))
                 .build();
 
         userRepository.save(user);
