@@ -73,11 +73,11 @@ body {
 }
 
 .top3 .second {
-    transform: translateY(40px); /* 아래로 20px 내려감 */
+    transform: translateY(40px); /* 아래로 40px 내려감 */
 }
 
 .top3 .third {
-    transform: translateY(60px); /* 아래로 30px 내려감 */
+    transform: translateY(60px); /* 아래로 60px 내려감 */
 }
 
 table {
