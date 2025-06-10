@@ -158,20 +158,15 @@ public class UserService {
         }
 
         // 프로필 이미지
-        String currentProfileImageUrl = user.getProfileImg();
-        if (profileImageFile != null && !profileImageFile.isEmpty()) {
-            try {
-                if (currentProfileImageUrl != null && !currentProfileImageUrl.isEmpty()) {
-                    deleteProfileImageFile(currentProfileImageUrl);
-                }
-                String newImageUrl = imageUploadService.uploadFile(profileImageFile);
-                user.updateProfileImg(newImageUrl);
-                log.info("사용자 USN {} 새 프로필 이미지 업로드됨: {}", usn, newImageUrl);
-            } catch (IOException e) {
-                log.error("프로필 이미지 업로드 중 오류 발생", e);
-                throw new IllegalStateException("프로필 이미지 업로드에 실패했습니다. 다시 시도해주세요.");
-            }
+        try {
+            String newImageUrl = imageUploadService.uploadFile(profileImageFile);
+            user.updateProfileImg(newImageUrl);
+            log.info("사용자 USN {} 새 프로필 이미지 업로드됨: {}", usn, newImageUrl);
+        } catch (IOException e) {
+            log.error("프로필 이미지 업로드 중 오류 발생", e);
+            throw new IllegalStateException("프로필 이미지 업로드에 실패했습니다. 다시 시도해주세요.");
         }
+
 
         user.updateUserInfo(
                 updateRequestDto.getNickName(),
@@ -206,19 +201,10 @@ public class UserService {
         }
     }
 
-    // 프로필 이미지 삭제
-    private void deleteProfileImageFile(String imageUrl) {
-
-    }
     @Transactional
     public void deleteUser(Long usn) {
         User user = userRepository.findByUsn(usn)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-
-        if (user.getProfileImg() != null && !user.getProfileImg().isEmpty() && !user.getProfileImg().equals("/images/default_profile.png")) {
-            deleteProfileImageFile(user.getProfileImg());
-            log.info("사용자 USN {} 프로필 이미지 파일 삭제 완료.", usn);
-        }
 
         userRepository.delete(user);
         log.info("사용자 USN {} 회원 탈퇴 성공.", usn);
