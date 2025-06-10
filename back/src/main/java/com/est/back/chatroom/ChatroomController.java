@@ -5,14 +5,23 @@ import com.est.back.chatroom.dto.ChatroomDto;
 import com.est.back.chatroom.dto.ChatroomResponseDto;
 import com.est.back.partner.domain.Partner;
 import com.est.back.partner.PartnerService;
+import com.est.back.user.User;
 import jakarta.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
-@RestController
+@Controller
 @RequestMapping("/api/chatroom")
 public class ChatroomController {
 
@@ -25,27 +34,34 @@ public class ChatroomController {
         this.partnerService = partnerService;
     }
 
-    @PostMapping
-    public ChatroomResponseDto createChatroom(@ModelAttribute Partner partner, HttpSession session) {
-        //Long usn = (Long) session.getAttribute("usn");
-        Long usn = 1000L; // 임시 하드 코딩
 
+
+    @PostMapping
+    public String createChatroom(@ModelAttribute Partner partner,HttpSession session) {
+
+        User user = (User) session.getAttribute("loggedInUser");
+        Long usn = user.getUsn();
+
+
+        // 1. Partner 저장
         partner.setCreatedAt(LocalDateTime.now());
         Partner savedPartner = partnerService.savePartner(partner);
-        //todo: Add transaction process when partner creation fails
 
+        // 2. Chatroom 생성
         Chatroom chatroom = Chatroom.builder()
-                .usn(usn)
-                .partnerId(savedPartner.getCharId())
-                .build();
-
+            .usn(usn)
+            .partnerId(savedPartner.getCharId())
+            .build();
         ChatroomDto chatroomDto = chatroomService.save(chatroom);
 
-        return ChatroomResponseDto.builder()
-                .message("채팅 시작")
-                .chatroomId(chatroomDto.getId())
-                .build();
+        // 4. Gemini에게 첫 메시지 전송 → chatMessage 저장
+        chatroomService.firstSendToGemini(chatroomDto.getId(), savedPartner);
+        System.out.println("받은 imageUrl = " + partner.getImageUrl());
+
+        // 5. chatroomId 반환
+        return "redirect:/chat/" + chatroomDto.getId();
     }
+
 
     @GetMapping
     public List<ChatroomDto> getAllChatrooms() {

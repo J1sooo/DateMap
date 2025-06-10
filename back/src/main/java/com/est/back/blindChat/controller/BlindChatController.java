@@ -5,6 +5,8 @@ import com.est.back.blindChat.domain.ChatMessage;
 import com.est.back.blindChat.dto.FeedbackDto;
 import com.est.back.blindChat.dto.MessageDto;
 import com.est.back.blindChat.service.BlindChatService;
+import com.est.back.user.User;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -39,8 +41,10 @@ public class BlindChatController {
     }
 
     @PostMapping("/chat/{chatroomId}/feedback")
-    public String createFeedback(@PathVariable Long chatroomId) {
-        blindChatService.feedbackFromGemini(chatroomId); // Gemini 호출 + 저장
+    public String createFeedback(@PathVariable Long chatroomId , HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        Long usn = user.getUsn();
+        blindChatService.feedbackFromGemini(chatroomId , usn); // Gemini 호출 + 저장
         return "redirect:/chat/" + chatroomId + "/feedback"; // 결과 보기 페이지로 리다이렉트
     }
 

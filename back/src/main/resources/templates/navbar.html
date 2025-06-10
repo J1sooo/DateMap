@@ -21,10 +21,10 @@
       <a href="/chat" th:href="@{/chat}" class="navbar-icon-button" title="채팅">
         <i class="fas fa-comment-dots"></i>
       </a>
-      <a href="/calendar" th:href="@{/calendar}" class="navbar-icon-button" title="캘린더">
+      <a href="/calendar" th:href="@{/calendar}" class="navbar-icon-button" title="데이트코스추천">
         <i class="fas fa-calendar-alt"></i>
       </a>
-      <a href="/trophy" th:href="@{/trophy}" class="navbar-icon-button" title="트로피">
+      <a href="/ranking" th:href="@{/ranking}" class="navbar-icon-button" title="랭킹">
         <i class="fas fa-trophy"></i>
       </a>
     </div>
@@ -33,7 +33,7 @@
   <div class="navbar-right">
     <th:block th:if="${session.loggedInUser != null}">
       <span class="navbar-user-info">
-        <a href="/" th:href="@{/}" class="navbar-user-nickname">
+        <a href="/mypage" th:href="@{/mypage}" class="navbar-user-nickname">
           <span th:text="${session.loggedInUser.nickName}"></span>
         </a>
         <span>님 안녕하세요</span>

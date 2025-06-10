@@ -47,6 +47,12 @@ public class RecommendService {
                 .orElse(null);
     }
 
+    public List<RecommendResponseDto> getRecommendsByUsn(Long usn) {
+        return repository.findAllByUsn(usn).stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
     public void deleteRecommendById(Long id) {
         repository.deleteById(id);
     }

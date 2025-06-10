@@ -1,0 +1,100 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 20%;
+    object-fit: cover;
+}
+
+.info {
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.edit-btn {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.section-title .inactive {
+    color: #ddd;
+    margin-left: 20px;
+}
+
+.card-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card-list img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-overlay {
+    position: relative;
+}
+
+.card-overlay .overlay-text {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    width: 100%;
+    font-size: 12px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 0 0 10px 10px;
+}
+
+.clickable-card {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.clickable-card:hover {
+    transform: scale(1.05);
+}

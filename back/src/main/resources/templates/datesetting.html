@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>소개팅 설정</title>
+    <link rel="stylesheet" th:href="@{/css/datesetting.css}">
+</head>
+<body>
+<div class="container">
+    <h2>소개팅 상대방 설정</h2>
+
+    <div class="content">
+        <div class="image-box">
+            <img th:src="@{/images/default-date-img.png}" id="preview" alt="프로필"
+                 class="profile-img">
+            <button type="button" class="image-btn" onclick="changeImage()">📸</button>
+
+        </div>
+        <form class="form-box" th:action="@{/api/chatroom}" method="post">
+
+            <!-- 성별 -->
+            <div class="form-section">
+                <label>성별</label>
+                <!-- 성별 버튼 구역 -->
+                <div class="options" id="gender-options">
+                    <button type="button" class="option-btn" data-gender="male">남성</button>
+                    <button type="button" class="option-btn" data-gender="female">여성</button>
+                </div>
+
+            </div>
+
+            <!-- 나이 -->
+            <div class="form-section">
+                <label>나이</label>
+                <div class="options">
+                    <button type="button" class="option-btn">20대</button>
+                    <button type="button" class="option-btn">30대</button>
+                    <button type="button" class="option-btn">40대</button>
+                    <button type="button" class="option-btn">50대</button>
+                    <input type="hidden" name="ageGroup">
+                </div>
+            </div>
+
+            <!-- 성격 -->
+            <div class="form-section">
+                <label>성격</label>
+                <div class="options">
+                    <button type="button" class="option-btn">내향적</button>
+                    <button type="button" class="option-btn">외향적</button>
+                </div>
+            </div>
+
+            <!-- 취미 -->
+            <div class="form-section">
+                <label>취미</label>
+                <div class="options multi">
+                    <button type="button" class="option-btn">운동</button>
+                    <button type="button" class="option-btn">반려동물</button>
+                    <button type="button" class="option-btn">게임</button>
+                    <button type="button" class="option-btn">드라이브</button>
+                    <button type="button" class="option-btn">술</button>
+                    <button type="button" class="option-btn">독서</button>
+                </div>
+            </div>
+
+            <input type="hidden" name="personalType">
+            <input type="hidden" id="genderInput" name="gender" />
+            <input type="hidden" name="imageUrl" id="imageUrl" th:value="@{/images/default-date-img.png}"/>
+            <input type="hidden" name="hobby">
+
+            <button type="submit" class="submit-btn">대화 시작</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/datesetting.js}"></script>
+</body>
+</html>

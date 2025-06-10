@@ -179,16 +179,11 @@ public class UserController {
 
     @GetMapping("/chat")
     public String chatPage() {
-        return "chat"; // 실시간 채팅 html
+        return "datesetting"; // 실시간 채팅 html
     }
 
     @GetMapping("/calendar")
     public String calendarPage() {
-        return "index"; // 데이트 코스 추천 html
-    }
-
-    @GetMapping("/trophy")
-    public String trophyPage() {
-        return "index"; // 랭킹 html
+        return "/aiRecommend/recommendSetting"; // 데이트 코스 추천 html
     }
 }

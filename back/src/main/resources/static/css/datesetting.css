@@ -1,0 +1,89 @@
+body {
+    font-family: sans-serif;
+    background: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container {
+    padding: 30px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    width: 100%;
+    align-items: flex-start;}
+
+.image-box {
+    position: relative;
+}
+
+.profile-img {
+    width: 200px;
+    height: 260px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.image-btn {
+    bottom: 10px;
+    right: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.form-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-section label {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.option-btn {
+    padding: 8px 14px;
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.option-btn.selected {
+    background-color: #ff71a4;
+    color: white;
+    border-color: #ff71a4;
+}
+
+.submit-btn {
+    margin-top: 30px;
+    padding: 12px 24px;
+    background-color: #ff71a4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}

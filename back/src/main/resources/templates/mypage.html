@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>마이페이지</title>
+  <link rel="stylesheet" th:href="@{/css/mypage.css}" />
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+</head>
+<body>
+
+<div th:replace="navbar :: navbar"></div>
+
+<div class="container">
+
+  <!-- 프로필 정보 -->
+  <div class="profile-section">
+    <img class="avatar" th:src="${userInfo.profileImg}" alt="프로필 사진">
+    <div class="info">
+      <div class="name" th:text="${userInfo.nickName}">닉네임</div>
+      <div class="email" th:text="${userInfo.email}">이메일</div>
+      <div class="join-date" th:text="${userInfo.dateOfBirth}">생년월일</div>
+      <div class="address" th:text="${userInfo.preferArea}">선호지역</div>
+    </div>
+    <!-- 프로필 수정 버튼 -->
+    <a th:href="@{/profile/edit}" class="edit-btn">프로필 수정</a>
+  </div>
+  <hr>
+  <!-- 소개팅 상대 -->
+  <div class="section">
+    <div class="section-title">소개팅 상대</div>
+    <div class="card-list">
+      <a th:each="partner, iterStat : ${partnerList}"
+         th:href="@{'/analyze'(feedbackId=${partner.id})}">
+        <img th:src="${partner.imageUrl}" alt="상대 이미지" class="clickable-card">
+      </a>
+    </div>
+  </div>
+  <hr>
+  <!-- 코스 컬렉션 -->
+  <div class="section">
+    <div class="section-title">나의 데이트 코스</div>
+    <div class="card-list">
+      <a th:each="course : ${recommendList}" th:href="@{'/recommendplace'(courseId=${course.courseId})}">
+        <img th:src="${course.imageUrl}" alt="코스 썸네일" class="clickable-card">
+      </a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
