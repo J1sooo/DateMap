@@ -26,8 +26,6 @@ public class BlindChatController {
     private final BlindChatService blindChatService;
 
 
-
-
     @PostMapping("/chat/{chatroomId}")
     public String sendMessage(@PathVariable Long chatroomId, @RequestParam String message) {
         blindChatService.chatWithGemini(chatroomId, message);
@@ -44,6 +42,9 @@ public class BlindChatController {
     public String createFeedback(@PathVariable Long chatroomId , HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         Long usn = user.getUsn();
+        if (!blindChatService.isChatroomOwner(chatroomId, usn)) {
+            return "redirect:/main";
+        }
         blindChatService.feedbackFromGemini(chatroomId , usn); // Gemini 호출 + 저장
         return "redirect:/chat/" + chatroomId + "/feedback"; // 결과 보기 페이지로 리다이렉트
     }

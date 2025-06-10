@@ -26,7 +26,15 @@ public class BlindChatViewController {
     private final PartnerRepository partnerRepository;
 
     @GetMapping("/chat/{chatroomId}")
-    public String showChatRoom(@PathVariable Long chatroomId, Model model) {
+    public String showChatRoom(@PathVariable Long chatroomId, Model model , HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if(user == null){
+            return "redirect:/login";
+        }
+        Long usn = user.getUsn();
+        if (!blindChatService.isChatroomOwner(chatroomId, usn)) {
+            return "redirect:/main";
+        }
         List<ChatMessage> messages = blindChatService.getChatHistory(chatroomId);
         model.addAttribute("messages", messages.stream().map(MessageDto::from).toList());
         Partner partner = partnerRepository.findPartnerByChatroomId(chatroomId);
@@ -38,8 +46,16 @@ public class BlindChatViewController {
     }
 
     @GetMapping("/chat/{chatroomId}/feedback")
-    public String showFeedback(@PathVariable Long chatroomId, Model model) {
+    public String showFeedback(@PathVariable Long chatroomId, Model model,HttpSession session) {
         FeedbackDto dto = blindChatService.getFeedbackByChatroomId(chatroomId); // DB 조회
+        User user = (User) session.getAttribute("loggedInUser");
+        if(user == null){
+            return "redirect:/login";
+        }
+        Long usn = user.getUsn();
+        if (!blindChatService.isChatroomOwner(chatroomId, usn)) {
+            return "redirect:/main";
+        }
         model.addAttribute("feedback", dto);
         return "feedback"; // Thymeleaf 템플릿
     }
@@ -48,6 +64,9 @@ public class BlindChatViewController {
     public String analyze(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         Long usn = user.getUsn();
+        if(usn == null){
+            return "redirect:/login";
+        }
         AnalyzeDto result = blindChatService.analyzeAllFeedbacksByUsn(usn);
         model.addAttribute("dto", result);
         return "analyze";

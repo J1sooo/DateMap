@@ -40,8 +40,10 @@ public class ChatroomController {
     public String createChatroom(@ModelAttribute Partner partner,HttpSession session) {
 
         User user = (User) session.getAttribute("loggedInUser");
+        if(user == null){
+            return "redirect:/login";
+        }
         Long usn = user.getUsn();
-
 
         // 1. Partner 저장
         partner.setCreatedAt(LocalDateTime.now());
