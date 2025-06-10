@@ -10,8 +10,23 @@
 <div id="result"></div>
 
 <button onclick="history.back()">뒤로가기</button>
-<button>저장하기</button>
+<button onclick=openSave()>저장하기</button>
 
-<script src="/recommendPlace.js"></script>
+<div id="loading-overlay" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 z-3">
+    <div class="position-absolute top-0 end-0 mt-4 me-5">
+        <button type="button" class="btn-close" aria-label="Close" onclick=closeSave()></button>
+    </div>
+    <div class="position-absolute top-50 start-50 translate-middle text-center">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">파일을 선택하세요</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+        <label for="title"></label>
+            <input type="text" id="title" placeholder="제목을 입력하세요"/>
+        <button id="saveRecommend-btn">저장하기</button>
+    </div>
+</div>
+
+<script src="/recommendPlace.js" defer></script>
 </body>
 </html>

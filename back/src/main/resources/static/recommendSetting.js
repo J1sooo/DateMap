@@ -164,6 +164,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             const rawJsonString = data.replace(/```json\n?|\n?```/g, ""); // 마크 다운 블록 제거
             const jsonData = JSON.parse(rawJsonString); // json 변경
 
+            sessionStorage.setItem("recommendArea", regions[document.getElementById("region").value]); // string
             sessionStorage.setItem("alanRequest", jsonData.content); // string
             loadingOverlay.classList.add('d-none');
             window.location.href = "/recommend/place";
