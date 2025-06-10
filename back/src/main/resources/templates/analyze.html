@@ -13,7 +13,7 @@
 <div th:replace="navbar :: navbar"></div>
 
 <!-- 소개팅 횟수 -->
-<div class="intro-count">소개팅 횟수 : <span th:text="${dto.count}"></span></div>
+<div class="intro-count">소개팅 횟수 : <span th:text="${dto.count + '회'}"></span></div>
 
 <main class="analyze-layout">
   <div class="card-title">분석 평가</div>
@@ -24,11 +24,11 @@
   <div class="analyze-card">
     <div class="card-subtitle">종합 분석</div>
     <div class="analyze" th:utext="${dto.analyze}"></div>
+    <p class="notice-text">※ 분석 평가는 일회성으로 제공되며, 저장되지 않습니다.</p>
+    <a th:href="@{/main}" class="out-button">나가기</a>
   </div>
 
-  <p class="notice-text">※ 분석 평가는 일회성으로 제공되며, 저장되지 않습니다.</p>
 
-  <a th:href="@{ / }" class="out-button">나가기</a>
 </main>
 </body>
 </html>
