@@ -31,7 +31,7 @@
 
 
         <form class="input-form" th:action="@{/api/chat/{chatroomId}(chatroomId=${chatroomId})}" method="post">
-            <button onclick="startSpeechRecognition()">🎤 말하기</button>
+            <button type="button" onclick="startSpeechRecognition()">🎤 말하기</button>
             <input type="text" id="messageInput" name="message" placeholder="메시지를 입력하세요" required />
             <button type="submit">전송</button>
         </form>

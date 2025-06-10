@@ -22,12 +22,16 @@ document.querySelectorAll('.options').forEach(group => {
 const maleImages = [
   "/images/partner/male1.png",
   "/images/partner/male2.png",
-  "/images/partner/male3.png"
+  "/images/partner/male3.png",
+  "/images/partner/male4.png",
+  "/images/partner/male5.png"
 ];
 const femaleImages = [
   "/images/partner/female1.png",
   "/images/partner/female2.png",
-  "/images/partner/female3.png"
+  "/images/partner/female3.png",
+  "/images/partner/female4.png",
+  "/images/partner/female5.png"
 ];
 
 function getRandomImage(gender) {

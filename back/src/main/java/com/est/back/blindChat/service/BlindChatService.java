@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +46,11 @@ public class BlindChatService {
     public List<ChatMessage> getChatHistory(Long chatroomId) {
         return chatMessageRepository.findByChatRoomIdOrderByCreatedAtAsc(chatroomId);
     }
+    public boolean isChatroomOwner(Long chatroomId, Long usn) {
+        Optional<ChatRoom> chatRoomOpt = chatRoomRepository.findById(chatroomId);
+        return chatRoomOpt.isPresent() && chatRoomOpt.get().getUsn().equals(usn);
+    }
+
 
     //사용자가 보낸 메시지 와 Gemini API의 응답을 DB에 저장
     @Transactional
@@ -147,11 +153,11 @@ public class BlindChatService {
             ))
             .collect(Collectors.toList());
         String prompt = """
-            이전에 나눈 대화를 기반으로 아래 요청을 수행해줘.
-            1. 대화 내용을 3줄로 요약해줘.
-            2. 대화 흐름이 자연스러웠는지 평가해주고 부족한 부분이 있다면 소개팅 상대방의 입장으로써 나를 피드백해줘.
-            3. 대화 스타일, 태도 , 대화 흐름 등을 고려해 100점 만점으로 점수를 매겨줘, 점수만 알려주면 돼.
-            모든 답변은 3줄 이내로 자연스럽게 해줘
+            이전 소개팅 대화를 기반으로 아래 요청을 수행해줘.
+            1. 전체 대화를 3줄로 요약해줘.
+            2. 소개팅에서 나의 말투와 대답이 자연스러웠는지, 상대와 잘 어울렸는지 평가해줘. 어색했던 부분이 있다면 짧게 피드백해줘.
+            3. user의 대화 스타일, 태도, 흐름을 고려해 100점 만점으로 점수를 매겨줘. 점수만 알려줘.
+            모든 답변은 3줄 이내로 간결하고 자연스럽게 해줘.
             """;
 
         parts.add(Map.of(

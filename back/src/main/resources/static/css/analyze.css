@@ -20,68 +20,12 @@
     font-weight: bold;
     cursor: pointer;
     border-radius: 8px;
-    margin-top: 10vh;
 }
-/*
-네비 바
-*/
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 10px 30px;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.navbar-left .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-}
-
-.navbar-center .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
-}
-
-.navbar-center .nav-links a {
-    text-decoration: none;
-    color: #444;
-    font-weight: 500;
-}
-
-.navbar-center .nav-links a:hover {
-    color: #38a169;
-}
-
-.navbar-right .login-btn {
-    padding: 6px 12px;
-    background-color: #ff71a4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.navbar-right .login-btn:hover {
-    background-color: #ff71a4;
-}
-
 
 .analyze-layout {
     width: 100%;
-
     margin: 0;
     padding: 0;
-    background-color: #fff;
     text-align: center;
     align-items: center;
     align-content: center;
@@ -98,12 +42,9 @@
 .analyze-card {
     width : 80%;
     height : 40vh;
-    background: #e0e3e8;
     border-radius: 16px;
     padding: 40px 30px;
-    margin: 0 auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+    margin: 0 auto;}
 .card-title {
     font-size: 22px;
     font-weight: bold;
@@ -113,7 +54,6 @@
 .card-subtitle {
     font-size: 22px;
     font-weight: bold;
-    margin-bottom: 16px;
 }
 .intro-count {
     text-align: right;
@@ -124,6 +64,6 @@
 .notice-text {
     color: #777;
     font-size: 14px;
-    margin-top: 8px;
+    margin-top: 10vh;
     font-style: italic;
 }
