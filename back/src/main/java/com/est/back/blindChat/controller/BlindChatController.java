@@ -45,7 +45,6 @@ public class BlindChatController {
     public String createFeedback(@PathVariable Long chatroomId , HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         Long usn = user.getUsn();
-        System.out.println("로그인 유저 usn = " + user.getUsn());
         if (!blindChatService.isChatroomOwner(chatroomId, usn)) {
             return "redirect:/main";
         }

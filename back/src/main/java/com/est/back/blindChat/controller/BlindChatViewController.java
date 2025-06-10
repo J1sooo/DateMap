@@ -64,6 +64,9 @@ public class BlindChatViewController {
     public String analyze(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         Long usn = user.getUsn();
+        if(usn == null){
+            return "redirect:/login";
+        }
         AnalyzeDto result = blindChatService.analyzeAllFeedbacksByUsn(usn);
         model.addAttribute("dto", result);
         System.out.println(result);
