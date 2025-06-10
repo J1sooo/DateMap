@@ -26,6 +26,8 @@ public class BlindChatController {
     private final BlindChatService blindChatService;
 
 
+
+
     @PostMapping("/chat/{chatroomId}")
     public String sendMessage(@PathVariable Long chatroomId, @RequestParam String message) {
         blindChatService.chatWithGemini(chatroomId, message);
