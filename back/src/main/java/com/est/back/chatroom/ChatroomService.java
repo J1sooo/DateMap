@@ -8,6 +8,8 @@ import com.est.back.blindChat.repository.ChatRoomRepository;
 import com.est.back.chatroom.domain.Chatroom;
 import com.est.back.chatroom.dto.ChatroomDto;
 import com.est.back.partner.domain.Partner;
+import com.est.back.user.User;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -68,9 +70,9 @@ public class ChatroomService {
     }
 
     @Transactional
-    public void firstSendToGemini(Long chatroomId, Partner partner) {
+    public void firstSendToGemini(Long chatroomId, Partner partner, String nickName) {
         // 캐릭터 설명을 Gemini에 전달할 user 프롬프트로 구성
-        String introPrompt = generateIntroPrompt(partner);
+        String introPrompt = generateIntroPrompt(partner ,nickName);
 
         List<Map<String, Object>> parts = new ArrayList<>();
 
@@ -109,14 +111,17 @@ public class ChatroomService {
     }
 
 
-    private String generateIntroPrompt(Partner partner) {
+    private String generateIntroPrompt(Partner partner , String nickName) {
         return String.format(
-            "지금부터 소개팅 상황극을 시작할거야. 너의 역할은 다음과 같아:\n\n" +
+            "지금부터 소개팅 상황극을 시작할거야. 내 이름은 %s야.\n\n" +
+                "너는 지금 소개팅 상대고, 너의 역할은 다음과 같아:\n" +
+                "- 이름: 이름은 너가 한국 이름으로 아무나 지정해줘" +
                 "- 성별: %s\n" +
                 "- 나이대: %s\n" +
                 "- 성격: %s\n" +
                 "- 취미: %s\n\n" +
-                "이 역할을 바탕으로 소개팅 첫 대사를 자연스럽게, 호감 있게 시작해줘.",
+                "이 역할에 맞게 나에게 소개팅 첫 대사를 자연스럽고 호감 있게 해줘.",
+            nickName,
             partner.getGender(),
             partner.getAgeGroup(),
             partner.getPersonalType(),

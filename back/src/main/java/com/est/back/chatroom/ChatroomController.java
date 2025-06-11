@@ -44,6 +44,7 @@ public class ChatroomController {
             return "redirect:/login";
         }
         Long usn = user.getUsn();
+        String nickName = user.getNickName();
 
         // 1. Partner 저장
         partner.setCreatedAt(LocalDateTime.now());
@@ -57,7 +58,7 @@ public class ChatroomController {
         ChatroomDto chatroomDto = chatroomService.save(chatroom);
 
         // 4. Gemini에게 첫 메시지 전송 → chatMessage 저장
-        chatroomService.firstSendToGemini(chatroomDto.getId(), savedPartner);
+        chatroomService.firstSendToGemini(chatroomDto.getId(), savedPartner, nickName);
         System.out.println("받은 imageUrl = " + partner.getImageUrl());
 
         // 5. chatroomId 반환

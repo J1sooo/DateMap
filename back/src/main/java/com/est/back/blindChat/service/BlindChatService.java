@@ -68,7 +68,8 @@ public class BlindChatService {
 
         // 2. Gemini 응답 받기
         String reply = sendToGemini(chatroomId,
-            "우리가 전에 나눴던 대화들이야 흐름 유지 하면서 5줄 이내로 대답해줘" + userMessage); // 프롬프트 문구 추가
+            "우리가 전에 나눴던 대화들이야 흐름 유지 하면서 5줄 이내로 대답해줘\n" + userMessage
+        +"만약 추가적인 정보가 필요한 경우 실제 정보가 없어도 너 스스로 상상해서 채워줘\n"); // 프롬프트 문구 추가
 
         // 3. 응답 저장
         ChatMessage modelMsg = new ChatMessage();
@@ -83,7 +84,7 @@ public class BlindChatService {
     @Transactional
     public String sendToGemini(Long chatroomId, String userMessage) {
         List<ChatMessage> history = chatMessageRepository
-            .findTop5ByChatRoomIdOrderByCreatedAtDesc(chatroomId);
+            .findTop10ByChatRoomIdOrderByCreatedAtDesc(chatroomId);
         Collections.reverse(history); // 시간 순서로
 
         List<Map<String, Object>> parts = history.stream()
@@ -155,7 +156,7 @@ public class BlindChatService {
         String prompt = """
             이전 소개팅 대화를 기반으로 아래 요청을 수행해줘.
             1. 전체 대화를 3줄로 요약해줘.
-            2. 소개팅에서 나의 말투와 대답이 자연스러웠는지, 상대와 잘 어울렸는지 평가해줘. 어색했던 부분이 있다면 짧게 피드백해줘.
+            2. 소개팅에서 user의 말투와 대답이 자연스러웠는지,대화 흐름에 잘 어울렸는지 평가해줘. 어색했던 부분이 있다면 짧게 피드백해줘.
             3. user의 대화 스타일, 태도, 흐름을 고려해 100점 만점으로 점수를 매겨줘. 점수만 알려줘.
             모든 답변은 3줄 이내로 간결하고 자연스럽게 해줘.
             """;
