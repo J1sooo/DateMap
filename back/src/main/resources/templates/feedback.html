@@ -4,29 +4,23 @@
     <meta charset="UTF-8">
     <title>소개팅 피드백</title></head>
 <link rel="stylesheet" th:href="@{/css/feedback.css}">
+<link rel="stylesheet" th:href="@{/css/navbar.css}">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <body>
-<nav class="navbar">
-    <div class="navbar-left">
-        <a href="/" class="logo">DateMap</a>
-    </div>
-    <div class="navbar-right">
-        <a href="/login" class="login-btn">로그인</a>
-    </div>
-</nav>
+<div th:replace="navbar :: navbar"></div>
 <main class="feedback-layout">
-    <div class="score" th:text="${feedback.score + '점'}"></div>
+    <div class="score">소개팅 피드백</div>
     <div class="feedback-card">
-        <div class="card-title">요약</div>
+        <div class="card-title">소개팅 요약</div>
         <div class="summary" th:utext="${feedback.summary}">
         </div>
         <div class="card-subtitle">짧은 피드백</div>
         <div class="feedback" th:utext="${feedback.feedback}">
         </div>
+        <div class="score" th:text="${feedback.score + '/100'}"></div>
     </div>
 </main>
-<form th:action="@{/api/analyze/request}" method="post">
-    <button type="submit" class="end-button">종료(평가하기)</button>
-</form>
-    <a th:href="@{/}" class="out-button">나가기</a>
+<a th:href="@{/main}" class="out-button">나가기</a>
 </body>
 </html>

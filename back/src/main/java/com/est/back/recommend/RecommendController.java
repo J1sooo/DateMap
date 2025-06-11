@@ -52,7 +52,7 @@ public class RecommendController {
 
     // GET /api/recommend/{id}
     @GetMapping("/{id}")
-    public RecommendResponseDto getRecommend(@PathVariable Long id) {
+    public RecommendResponseDto getRecommend(@PathVariable Long id){
         return recommendService.getRecommendById(id);
     }
 

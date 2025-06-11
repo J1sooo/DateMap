@@ -3,6 +3,7 @@ package com.est.back.user;
 import com.est.back.s3.ImageUploadService;
 import com.est.back.user.dto.JoinRequestDto;
 import com.est.back.user.dto.LoginRequestDto;
+import com.est.back.user.dto.UserInfoResponseDto;
 import com.est.back.user.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -185,6 +186,12 @@ public class UserService {
     public User getUserInfo(Long usn) {
         return userRepository.findByUsn(usn)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+    }
+
+    public UserInfoResponseDto getUserInfoDto(Long usn) {
+        User user = userRepository.findByUsn(usn)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다: " + usn));
+        return UserInfoResponseDto.from(user);
     }
 
     private void validatePassword(String password) {

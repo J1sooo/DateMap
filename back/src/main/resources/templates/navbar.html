@@ -18,13 +18,13 @@
 
   <div class="navbar-center-wrapper">
     <div class="navbar-center-buttons" th:if="${session.loggedInUser != null}">
-      <a href="/chat" th:href="@{/chat}" class="navbar-icon-button" title="채팅">
+      <a href="/chat" th:href="@{/partner-setting}" class="navbar-icon-button" title="채팅">
         <i class="fas fa-comment-dots"></i>
       </a>
-      <a href="/calendar" th:href="@{/calendar}" class="navbar-icon-button" title="캘린더">
+      <a href="/calendar" th:href="@{/calendar}" class="navbar-icon-button" title="데이트코스추천">
         <i class="fas fa-calendar-alt"></i>
       </a>
-      <a href="/trophy" th:href="@{/trophy}" class="navbar-icon-button" title="트로피">
+      <a href="/ranking" th:href="@{/ranking}" class="navbar-icon-button" title="랭킹">
         <i class="fas fa-trophy"></i>
       </a>
     </div>

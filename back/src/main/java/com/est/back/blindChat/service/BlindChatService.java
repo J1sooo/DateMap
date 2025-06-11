@@ -9,6 +9,10 @@ import com.est.back.blindChat.dto.FeedbackDto;
 import com.est.back.blindChat.repository.BlindDateFeedbackRepository;
 import com.est.back.blindChat.repository.ChatMessageRepository;
 import com.est.back.blindChat.repository.ChatRoomRepository;
+import com.est.back.chatroom.ChatroomRepository;
+import com.est.back.chatroom.domain.Chatroom;
+import com.est.back.partner.PartnerRepository;
+import com.est.back.partner.domain.Partner;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -16,13 +20,16 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BlindChatService {
 
     @Value("${GEMINI_API_KEY}")
@@ -31,17 +38,11 @@ public class BlindChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final WebClient webClient = WebClient.create();
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatroomRepository chatroomRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final BlindDateFeedbackRepository blindDateFeedbackRepository;
+    private final PartnerRepository partnerRepository;
 
-
-    public BlindChatService(ChatMessageRepository chatMessageRepository,
-        ChatRoomRepository chatRoomRepository,
-        BlindDateFeedbackRepository blindDateFeedbackRepository) {
-        this.chatMessageRepository = chatMessageRepository;
-        this.chatRoomRepository = chatRoomRepository;
-        this.blindDateFeedbackRepository = blindDateFeedbackRepository;
-    }
 
     //대화 내용 불러오기
     @Transactional
@@ -49,9 +50,16 @@ public class BlindChatService {
         return chatMessageRepository.findByChatRoomIdOrderByCreatedAtAsc(chatroomId);
     }
 
+    public boolean isChatroomOwner(Long chatroomId, Long usn) {
+        Optional<ChatRoom> chatRoomOpt = chatRoomRepository.findById(chatroomId);
+        return chatRoomOpt.isPresent() && chatRoomOpt.get().getUsn().equals(usn);
+    }
+
+
     //사용자가 보낸 메시지 와 Gemini API의 응답을 DB에 저장
     @Transactional
     public void chatWithGemini(Long chatroomId, String userMessage) {
+        Partner partner = partnerRepository.findPartnerByChatroomId(chatroomId);
 
         ChatRoom chatRoom = chatRoomRepository.findById(chatroomId)
             .orElseThrow(() -> new IllegalArgumentException("채팅방을 찾을 수 없습니다."));
@@ -65,7 +73,16 @@ public class BlindChatService {
 
         // 2. Gemini 응답 받기
         String reply = sendToGemini(chatroomId,
-            "우리가 전에 나눴던 대화들이야 흐름 유지 하면서 5줄 이내로 대답해줘" + userMessage); // 프롬프트 문구 추가
+            "이건 너가 맡은 소개팅 상황극의 역할이고\n"
+                + "성별: " + (partner.getGender().equals("male") ? "남성" : "여성") + "\n"
+                + "나이대: " + partner.getAgeGroup() + "\n"
+                + "성격: " + partner.getPersonalType() + "\n"
+                + "취미: " + partner.getHobby() + "\n\n"
+                + "대답할 때는 너의 정보를 고려해서 답변해줘.\n"
+                + "만약 추가적인 정보가 필요한 경우 실제 정보가 없어도 너 스스로 상상해서 채워줘.\n\n"
+                + "그리고 우리가 전에 나눴던 대화들을 이용해서 흐름 유지하면서 5줄 이내로 대답해줘.\n"
+                + userMessage
+        );
 
         // 3. 응답 저장
         ChatMessage modelMsg = new ChatMessage();
@@ -80,7 +97,7 @@ public class BlindChatService {
     @Transactional
     public String sendToGemini(Long chatroomId, String userMessage) {
         List<ChatMessage> history = chatMessageRepository
-            .findTop5ByChatRoomIdOrderByCreatedAtDesc(chatroomId);
+            .findTop10ByChatRoomIdOrderByCreatedAtDesc(chatroomId);
         Collections.reverse(history); // 시간 순서로
 
         List<Map<String, Object>> parts = history.stream()
@@ -114,7 +131,7 @@ public class BlindChatService {
     }
 
     // Gemini API가 보낸 JSON 응답을 text 부분만 나오게 자르기
-    private String extractTextFromResponse(String json) {
+    public String extractTextFromResponse(String json) {
         try {
             JsonNode root = objectMapper.readTree(json);
             JsonNode textNode = root.path("candidates")
@@ -141,7 +158,7 @@ public class BlindChatService {
     }
 
     @Transactional
-    public BlindDateFeedback feedbackFromGemini(Long chatroomId) {
+    public BlindDateFeedback feedbackFromGemini(Long chatroomId, Long usn) {
 
         List<Map<String, Object>> parts = getChatHistory(chatroomId).stream()
             .map(msg -> Map.of(
@@ -150,11 +167,11 @@ public class BlindChatService {
             ))
             .collect(Collectors.toList());
         String prompt = """
-            이전에 나눈 대화를 기반으로 아래 요청을 수행해줘.
-            1. 대화 내용을 3줄로 요약해줘.
-            2. 대화 흐름이 자연스러웠는지 평가해주고 부족한 부분이 있다면 소개팅 상대방의 입장으로써 피드백해줘.
-            3. 대화 스타일, 태도 , 대화 흐름 등을 고려해 100점 만점으로 점수를 매겨줘, 점수만 알려주면 돼.
-            모든 답변은 3줄 이내로 자연스럽게 해줘
+            이전 소개팅 대화를 기반으로 아래 요청을 수행해줘.
+            1. 전체 대화를 3줄로 요약해줘.
+            2. 소개팅에서 user의 말투와 대답이 자연스러웠는지,대화 흐름에 잘 어울렸는지 평가해줘. 어색했던 부분이 있다면 짧게 피드백해주는데 피드백에 user라는 키워드 대신에 당신이라고 해줘.
+            3. user의 대화 스타일, 태도, 흐름을 고려해 100점 만점으로 점수를 매겨줘. 점수만 알려줘.
+            모든 답변은 3줄 이내로 간결하고 자연스럽게 해줘.
             """;
 
         parts.add(Map.of(
@@ -185,10 +202,15 @@ public class BlindChatService {
         String feedback = part.length > 2 ? part[2].trim() : "";
         String scoreStr = part.length > 3 ? part[3].replaceAll("[^0-9]", "") : "0";
         int score = Integer.parseInt(scoreStr);
+        Chatroom chatroom = chatroomRepository.findById(chatroomId)
+            .orElseThrow(() -> new RuntimeException("Chatroom not found"));
+
+        Long charId = chatroom.getPartnerId();  // 여기가 핵심
 
         BlindDateFeedback feedbackEntity = new BlindDateFeedback();
-        feedbackEntity.setCharId(1L);
-        feedbackEntity.setUsn(1L);
+
+        feedbackEntity.setCharId(charId);
+        feedbackEntity.setUsn(usn);
         feedbackEntity.setCreatedAt(LocalDateTime.now());
         feedbackEntity.setSummary(summary);
         feedbackEntity.setFeedback(feedback);
@@ -208,14 +230,18 @@ public class BlindChatService {
         BlindDateFeedback feedback = blindDateFeedbackRepository.findByCharId(partnerId)
             .orElseThrow(() -> new IllegalArgumentException("해당 캐릭터의 피드백이 없습니다."));
 
-        String formattedSummary = feedback.getSummary().replaceAll("\\.\\s*", ".<br/>").replaceAll(",\\s*", ",<br/>");
-        String formattedFeedback = feedback.getFeedback().replaceAll("\\.\\s*", ".<br/>").replaceAll(",\\s*", ",<br/>");
+        String formattedSummary = feedback.getSummary().replaceAll("\\.\\s*", ".<br/>")
+            .replaceAll(",\\s*", ",<br/>");
+        String formattedFeedback = feedback.getFeedback().replaceAll("\\.\\s*", ".<br/>")
+            .replaceAll(",\\s*", ",<br/>");
 
         return new FeedbackDto(formattedSummary, feedback.getScore(), formattedFeedback);
     }
 
     private String sendPromptToGemini(String prompt) {
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        String url =
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key="
+                + apiKey;
 
         Map<String, Object> body = Map.of(
             "contents", List.of(
@@ -240,7 +266,6 @@ public class BlindChatService {
 
     @Transactional
     public AnalyzeDto analyzeAllFeedbacksByUsn(Long usn) {
-        usn = 1L;
         List<BlindDateFeedback> feedbacks = blindDateFeedbackRepository.findAllByUsn(usn);
         if (feedbacks.isEmpty()) {
             throw new IllegalArgumentException("해당 유저의 피드백이 없습니다.");
@@ -252,7 +277,8 @@ public class BlindChatService {
         }
 
         String combined = feedbacks.stream()
-            .map(f -> String.format("요약: %s\n피드백: %s\n점수: %d", f.getSummary(), f.getFeedback(), f.getScore()))
+            .map(f -> String.format("요약: %s\n피드백: %s\n점수: %d", f.getSummary(), f.getFeedback(),
+                f.getScore()))
             .collect(Collectors.joining("\n\n"));
 
         String prompt = """
@@ -264,15 +290,13 @@ public class BlindChatService {
             """;
 
         // Gemini API 요청 로직 호출
-        String result = sendPromptToGemini(prompt  + combined);
+        String result = sendPromptToGemini(prompt + combined);
         System.out.println(result);
         long count = blindDateFeedbackRepository.countByUsn(usn);
-        return extractAnalysisFromResponse(count,result);
+        return extractAnalysisFromResponse(count, result);
     }
 
-    private AnalyzeDto extractAnalysisFromResponse(long count ,String responseText) {
-
-
+    private AnalyzeDto extractAnalysisFromResponse(long count, String responseText) {
 
         String[] parts = responseText.split("(?m)^\\s*\\d+\\.");
 
