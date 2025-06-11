@@ -49,8 +49,8 @@
   <div class="section">
     <div class="section-title">소개팅 상대</div>
     <div class="card-list">
-      <a th:each="partner, iterStat : ${partnerList}"
-         th:href="@{'/analyze'(feedbackId=${partner.id})}">
+      <a th:each="partner : ${partnerList}"
+         th:href="@{'/chat/' + ${partner.chatId} + '/feedback'}">
         <img th:src="${partner.imageUrl}" alt="상대 이미지" class="clickable-card">
       </a>
     </div>

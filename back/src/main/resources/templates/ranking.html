@@ -12,12 +12,14 @@
 
 <div th:replace="navbar :: navbar"></div>
 
-<div class="container">
+<main class="container">
 
-    <div class="section-title">주간 랭킹 TOP 10</div>
+    <header class="ranking-header">
+        <h1 class="section-title">주간 랭킹 TOP 10</h1>
+        <h2 class="section-subtitle">매주 월요일 0시에 초기화 됩니다.</h2>
+    </header>
 
-    <div class="top3">
-
+    <section class="top3">
         <div class="card second" th:if="${rankingList.size() > 1}" th:object="${rankingList.get(1)}">
             <div class="rank-badge">🥈</div>
             <img th:src="*{profileImg}" alt="프로필">
@@ -38,30 +40,32 @@
             <div class="title" th:text="*{nickname}">닉네임</div>
             <div class="subtitle" th:text="*{score + '점'}">점수</div>
         </div>
-    </div>
+    </section>
 
-    <table>
-        <thead>
-        <tr>
-            <th>순위</th>
-            <th>프로필</th>
-            <th>닉네임</th>
-            <th>성별</th>
-            <th>점수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="rank, stat : ${rankingList}" th:if="${stat.index >= 3}">
-            <td th:text="${stat.index + 1}">4</td>
-            <td><img th:src="${rank.profileImg}" class="profile-img" /></td>
-            <td th:text="${rank.nickname}">닉</td>
-            <td th:text="${rank.gender}" class="gender">성</td>
-            <td th:text="${rank.score + '점'}">점</td>
-        </tr>
-        </tbody>
-    </table>
+    <section class="ranking-table">
+        <table>
+            <thead>
+            <tr>
+                <th>순위</th>
+                <th>프로필</th>
+                <th>닉네임</th>
+                <th>성별</th>
+                <th>점수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rank, stat : ${rankingList}" th:if="${stat.index >= 3}">
+                <td th:text="${stat.index + 1}">4</td>
+                <td><img th:src="${rank.profileImg}" class="profile-img" /></td>
+                <td th:text="${rank.nickname}">닉</td>
+                <td th:text="${rank.gender}" class="gender">성</td>
+                <td th:text="${rank.score + '점'}">점</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
 
-</div>
+</main>
 
 </body>
 </html>
