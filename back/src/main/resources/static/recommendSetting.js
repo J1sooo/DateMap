@@ -74,7 +74,7 @@ const hobbyContainer = document.getElementById("hobby-buttons");
 hobbies.forEach(hobby => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "btn btn-outline-primary hobby-btn";
+    button.className = "btn btn-outline-primary hobby-btn me-2 mb-2";
     button.setAttribute("data-value", hobby);
     button.textContent = hobby;
     hobbyContainer.appendChild(button);
@@ -88,7 +88,7 @@ const transportContainer = document.getElementById("transport-buttons");
 transports.forEach(transport => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "btn btn-outline-primary transport-btn";
+    button.className = "btn btn-outline-primary transport-btn me-2 mb-2";
     button.setAttribute("data-value", transport);
     button.textContent = transport;
     transportContainer.appendChild(button);
@@ -103,14 +103,14 @@ function toggleSelection(set, btn, max) {
 
     if (set.has(value)) {
         set.delete(value);
-        btn.classList.remove("btn-primary");
+        btn.classList.remove("selected-button");
         btn.classList.add("btn-outline-primary");
     } else if (set.size >= max) {
         alert(`취미는 최대 ${max}개까지 선택 가능합니다.`)
     } else {
         set.add(value);
         btn.classList.remove("btn-outline-primary");
-        btn.classList.add("btn-primary");
+        btn.classList.add("selected-button");
     }
 }
 
@@ -164,6 +164,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             const rawJsonString = data.replace(/```json\n?|\n?```/g, ""); // 마크 다운 블록 제거
             const jsonData = JSON.parse(rawJsonString); // json 변경
 
+            sessionStorage.setItem("recommendArea", regions[document.getElementById("region").value]); // string
             sessionStorage.setItem("alanRequest", jsonData.content); // string
             loadingOverlay.classList.add('d-none');
             window.location.href = "/recommend/place";
