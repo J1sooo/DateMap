@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Main</title>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script th:src="@{/js/main.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,17 @@
 
 <div th:replace="navbar :: navbar"></div>
 
-<img class="banner" th:src="@{/img/main_banner.png}" alt="메인 배너">
+
+<div class="banner-container">
+    <img class="banner" th:src="@{/img/main_banner.png}" alt="메인 배너">
+    <div class="dark-overlay"></div>
+    <h1>“사랑도, 코스도, AI가 도와줘요” </h1>
+    <h2>AI가 당신의 취향과 성향을 분석해,</h2>
+    <h2>가장 어울리는 대화 상대와 데이트 장소까지 추천해드려요.</h2>
+    <h2> 지금, 당신의 연애를 시작해보세요. </h2>
+    <button class="banner-text-left" onclick="scrollToBottom()">소개팅 하기</button>
+    <button class="banner-text-right" onclick="scrollToBottom()" >데이트 코스 짜기</button>
+</div>
 
 <div class="container">
 
@@ -27,7 +38,7 @@
              th:data-personaltype="${partner.personalType}"
              th:data-hobby="${partner.hobby}"
              onclick="openModalFromCard(this)">
-            <img th:src="${partner.imageUrl}" alt="소개팅 캐릭터 이미지" />
+            <img th:src="${partner.imageUrl}" alt="소개팅 캐릭터 이미지"/>
         </div>
         <a href="/partner-setting" class="add-card">+</a>
     </div>
@@ -37,7 +48,7 @@
     <div class="card-list">
         <div class="card" th:each="recommend : ${recommends}">
             <a th:href="@{'/recommendplace/' + ${recommend.courseId}}">
-                <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지" />
+                <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지"/>
             </a>
             <div class="info">
                 <div class="subtitle" th:text="${recommend.area}">지역</div>
@@ -50,18 +61,29 @@
 </div>
 
 <!-- 소개팅 모달 -->
-<div class="modal" id="partner-modal">
-    <div class="modal-content">
-        <img id="modal-img" src="" alt="캐릭터 이미지">
-        <div id="modal-gender"></div>
-        <div id="modal-age"></div>
-        <div id="modal-type"></div>
-        <div id="modal-hobby"></div>
-        <br>
-        <button onclick="location.href='/datechat'">소개팅 하러가기</button>
-        <button onclick="closeModal()">닫기</button>
+<form id="partnerForm" th:action="@{/api/chatroom}" method="post">
+    <div class="modal" id="partner-modal">
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="캐릭터 이미지">
+
+            <input type="hidden" name="imageUrl" id="form-imageUrl">
+            <input type="hidden" name="gender" id="form-gender">
+            <input type="hidden" name="ageGroup" id="form-age">
+            <input type="hidden" name="personalType" id="form-type">
+            <input type="hidden" name="hobby" id="form-hobby">
+
+            <div id="modal-gender" ></div>
+            <div id="modal-age"></div>
+            <div id="modal-type"></div>
+            <div id="modal-hobby"></div>
+
+            <br>
+            <button type="submit">소개팅 하러가기</button>
+            <button type="button" onclick="closeModal()">닫기</button>
+        </div>
     </div>
-</div>
+</form>
+
 
 </body>
 </html>
