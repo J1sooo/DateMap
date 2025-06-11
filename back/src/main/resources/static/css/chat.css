@@ -25,6 +25,47 @@ h2 {
     object-fit: cover;
     border-radius: 10px;
 }
+.profile-hover-box {
+    position: relative;
+    display: inline-block;
+    width: 25vw;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 36px;
+    text-align: center;
+    padding: 10px;
+    white-space: pre-line;
+}
+
+.profile-hover-box:hover .profile-overlay {
+    opacity: 1;
+}
+
+
 
 .back-button {
     margin-top : 40px;

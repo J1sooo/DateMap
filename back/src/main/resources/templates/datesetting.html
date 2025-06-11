@@ -29,6 +29,7 @@
                 <div class="options" id="gender-options">
                     <button type="button" class="option-btn" data-gender="male">남성</button>
                     <button type="button" class="option-btn" data-gender="female">여성</button>
+                    <input type="hidden" id="genderInput" name="gender" />
                 </div>
 
             </div>
@@ -51,6 +52,7 @@
                 <div class="options">
                     <button type="button" class="option-btn">내향적</button>
                     <button type="button" class="option-btn">외향적</button>
+                    <input type="hidden" name="personalType">
                 </div>
             </div>
 
@@ -64,13 +66,12 @@
                     <button type="button" class="option-btn">드라이브</button>
                     <button type="button" class="option-btn">술</button>
                     <button type="button" class="option-btn">독서</button>
+                    <input type="hidden" name="hobby">
+
                 </div>
             </div>
 
-            <input type="hidden" name="personalType">
-            <input type="hidden" id="genderInput" name="gender" />
             <input type="hidden" name="imageUrl" id="imageUrl" th:value="@{/images/default-date-img.png}"/>
-            <input type="hidden" name="hobby">
 
             <button type="submit" class="submit-btn">대화 시작</button>
         </form>
