@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RecommendRepository extends JpaRepository<Recommend, Long> {
     List<Recommend> findAllByUsn(Long usn);
+    List<Recommend> findTop4ByOrderByCourseIdDesc();
 }
