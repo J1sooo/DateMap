@@ -48,7 +48,8 @@
   </div>
   <hr>
   <div class="section">
-    <div class="section-title">소개팅 상대</div>
+    <div class="section-title">소개팅 상대 <span th:text="'(' + ${feedbackCount} + '회)'"></span>
+    </div>
     <div class="card-list">
       <a th:each="partner : ${partnerList}"
          th:href="@{'/chat/' + ${partner.chatId} + '/feedback'}">
