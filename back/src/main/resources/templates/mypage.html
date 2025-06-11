@@ -41,14 +41,14 @@
     <div class="button-group">
       <a th:href="@{/profile/edit}" class="edit-btn">프로필 수정</a>
       <a th:href="@{/analyze}" class="analyze-btn" id="analyze-btn" th:attr="data-count=${partnerCount}">종합 분석 평가</a>
-
       <!-- 구현 후 코드 수정 필요 -->
       <a th:href="@{/}" class="edit-btn">매칭 서비스</a>
     </div>
   </div>
   <hr>
   <div class="section">
-    <div class="section-title">소개팅 상대</div>
+    <div class="section-title">소개팅 상대 <span th:text="'(' + ${feedbackCount} + '회)'"></span>
+    </div>
     <div class="card-list">
       <a th:each="partner : ${partnerList}"
          th:href="@{'/chat/' + ${partner.chatId} + '/feedback'}">
