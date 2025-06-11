@@ -69,8 +69,26 @@ body {
     cursor: pointer;
     margin-bottom: 10px;
     text-decoration: none;
-    display: inline-block;
+    /*display: none;*/
     text-align: center;
+}
+.analyze-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    display: none;
+    text-align: center;
+}
+
+.analyze-btn:hover {
+    background-color: #e86492;
+    color: #ffffff;
+    border-color: #e86492;
 }
 
 .edit-btn:hover {

@@ -69,6 +69,8 @@ public class BlindChatViewController {
         }
         AnalyzeDto result = blindChatService.analyzeAllFeedbacksByUsn(usn);
         model.addAttribute("dto", result);
+        System.out.println(result);
+        System.out.println(result.getAnalyze() + result.getScore() + result.getOneLiner());
         return "analyze";
     }
 }
