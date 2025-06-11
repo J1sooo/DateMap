@@ -38,6 +38,7 @@ public class MypageViewController {
         //평가 받은 상대 정보
         List<MypagePartnerResponseDto> partners = mypageService.getMyPartners(usn);
         model.addAttribute("partnerList", partners);
+        model.addAttribute("partnerCount", partners.size());
 
         //내 코스 정보
         List<RecommendResponseDto> recommends = recommendService.getRecommendsByUsn(usn);

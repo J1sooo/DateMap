@@ -5,6 +5,7 @@
   <title>마이페이지</title>
   <link rel="stylesheet" th:href="@{/css/mypage.css}" />
   <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <script th:src="@{/js/mypage.js}" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -39,7 +40,7 @@
     </div>
     <div class="button-group">
       <a th:href="@{/profile/edit}" class="edit-btn">프로필 수정</a>
-      <a th:href="@{/analyze}" class="edit-btn">종합 분석 평가</a>
+      <a th:href="@{/analyze}" class="analyze-btn" id="analyze-btn" th:attr="data-count=${partnerCount}">종합 분석 평가</a>
       <!-- 구현 후 코드 수정 필요 -->
       <a th:href="@{/}" class="edit-btn">매칭 서비스</a>
     </div>
