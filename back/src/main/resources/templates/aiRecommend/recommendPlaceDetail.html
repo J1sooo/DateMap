@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI 추천 데이트 코스</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .btn-primary {
+            background-color: #ff71a4;
+            border-color: #ff71a4;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff5893;
+            border-color: #ff5893;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 70px;
+            border-left: 3px solid #ff71a4;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -79px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            background-color: #ff71a4;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<div class="container p-5">
+    <h4 class="mb-4 text-center" th:text="${title}">추천 코스 제목</h4>
+
+    <div class="text-center mb-4">
+        <img th:if="${imageUrl != ''}"
+             th:src="@{${imageUrl}}"
+             alt="대표 이미지"
+             class="img-fluid rounded"
+             style="max-height: 300px;">
+    </div>
+
+    <div class="timeline" id="result">
+        <div class="timeline-item" th:each="content, iterStat : ${contents}">
+            <h6 class="fw-bold mb-1" th:text="${labels[iterStat.index]}">시간대</h6>
+            <div>
+                <div><strong th:text="${content.name}">장소 이름</strong></div>
+                <div><span th:text="'설명: ' + ${content.description}">장소 설명</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-outline-secondary" onclick="history.back()">뒤로가기</button>
+        <button class="btn btn-primary" onclick="copyUrl()">공유하기</button>
+    </div>
+
+</div>
+<script src="/recommendPlaceDetail.js" defer></script>
+</body>
+</html>
