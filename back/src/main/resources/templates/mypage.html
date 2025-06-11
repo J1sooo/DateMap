@@ -60,7 +60,7 @@
   <div class="section">
     <div class="section-title">나의 데이트 코스</div>
     <div class="card-list">
-      <a th:each="course : ${recommendList}" th:href="@{'/recommendplace'(courseId=${course.courseId})}">
+      <a th:each="course : ${recommendList}" th:href="@{'/recommendplace/' + ${course.courseId}}">
         <img th:src="${course.imageUrl}" alt="코스 썸네일" class="clickable-card">
       </a>
     </div>
