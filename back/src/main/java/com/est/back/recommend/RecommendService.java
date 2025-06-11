@@ -31,21 +31,6 @@ public class RecommendService {
                 .build();
     }
 
-    public List<RecommendResponseDto> getUserCourses(Long usn) {
-        List<Recommend> courses = repository.findAllByUsn(usn).stream()
-                .sorted((r1, r2) -> Long.compare(r2.getCourseId(), r1.getCourseId())) // 최신순 정렬
-                .limit(4) // 가장 최근 4개만
-                .collect(Collectors.toList());
-
-        return courses.stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public Recommend saveRecommend(Recommend recommend) {
-        return repository.save(recommend);
-    }
-
     public List<RecommendResponseDto> getAllRecommends() {
         return repository.findAll().stream()
                 .map(this::toDto)
@@ -62,6 +47,27 @@ public class RecommendService {
         return repository.findAllByUsn(usn).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<RecommendResponseDto> getUserCourses(Long usn) {
+        List<Recommend> courses = repository.findAllByUsn(usn).stream()
+                .sorted((r1, r2) -> Long.compare(r2.getCourseId(), r1.getCourseId())) // 최신순 정렬
+                .limit(4) // 가장 최근 4개만
+                .collect(Collectors.toList());
+
+        return courses.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<RecommendResponseDto> getRecentRecommends() {
+        return repository.findTop4ByOrderByCourseIdDesc().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public Recommend saveRecommend(Recommend recommend) {
+        return repository.save(recommend);
     }
 
     public void deleteRecommendById(Long id) {
