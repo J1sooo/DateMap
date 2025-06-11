@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @Builder
 public class MypagePartnerResponseDto {
-    private Long id;
+    private Long id;//feedbackId
+    private Long chatId;
     private String summary;
     private String feedback;
     private Integer score;
