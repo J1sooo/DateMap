@@ -52,7 +52,7 @@
     <div class="card-list">
       <a th:each="partner : ${partnerList}"
          th:href="@{'/chat/' + ${partner.chatId} + '/feedback'}">
-        <img th:src="${partner.imageUrl}" alt="상대 이미지" class="clickable-card">
+        <img th:src="${partner.imageUrl != null and !partner.imageUrl.isEmpty() ? partner.imageUrl : '/images/default_profile.png'}" alt="코스 썸네일" class="clickable-card">
       </a>
     </div>
   </div>
@@ -61,7 +61,7 @@
     <div class="section-title">나의 데이트 코스</div>
     <div class="card-list">
       <a th:each="course : ${recommendList}" th:href="@{'/recommendplace/' + ${course.courseId}}">
-        <img th:src="${course.imageUrl}" alt="코스 썸네일" class="clickable-card">
+        <img th:src="${course.imageUrl != null and !course.imageUrl.isEmpty() ? course.imageUrl : '/images/default-date-img.png'}" alt="코스 썸네일" class="clickable-card">
       </a>
     </div>
   </div>

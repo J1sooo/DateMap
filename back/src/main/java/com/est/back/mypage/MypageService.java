@@ -23,7 +23,10 @@ public class MypageService {
     private final ChatroomRepository chatroomRepository;
 
     public List<MypagePartnerResponseDto> getMyPartners(Long usn) {
-        List<BlindDateFeedback> feedbackList = feedbackRepository.findAllByUsn(usn);
+        List<BlindDateFeedback> feedbackList = feedbackRepository.findAllByUsn(usn).stream()
+                .sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId())) // ID 내림차순 (최신순)
+                .limit(4) // 최대 4개
+                .collect(Collectors.toList());
 
         return feedbackList.stream().map(feedback -> {
 
@@ -46,4 +49,5 @@ public class MypageService {
                     .build();
         }).collect(Collectors.toList());
     }
+
 }

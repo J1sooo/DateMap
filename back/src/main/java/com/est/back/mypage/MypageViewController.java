@@ -41,7 +41,7 @@ public class MypageViewController {
         model.addAttribute("partnerCount", partners.size());
 
         //내 코스 정보
-        List<RecommendResponseDto> recommends = recommendService.getRecommendsByUsn(usn);
+        List<RecommendResponseDto> recommends = recommendService.getUserCourses(usn);
         model.addAttribute("recommendList", recommends);
 
         return "mypage";
