@@ -5,19 +5,29 @@ const contentJsonData = JSON.parse(contentStringData); // content json 변경
 
 const container = document.getElementById("result");
 
+const titleMap = ["오전 장소", "점심 식사", "오후 장소", "저녁 식사"];
+
 // AI 응답 출력
 document.addEventListener("DOMContentLoaded", () => {
-    Object.values(contentJsonData).forEach(item => {
-        const div = document.createElement("div");
-        const h3 = document.createElement("h3");
-        const p = document.createElement("p");
+    console.log(contentJsonData);
+    Object.values(contentJsonData).forEach((item, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "timeline-item";
 
-        h3.textContent = item.name;
-        p.textContent = item.description;
+        const title = document.createElement("h6");
+        title.className = "fw-bold mb-1";
+        title.textContent = titleMap[index];
 
-        div.appendChild(h3);
-        div.appendChild(p);
-        container.appendChild(div);
+        const name = document.createElement("div");
+        name.innerHTML = `<strong>${item.name}</strong>`;
+
+        const desc = document.createElement("div");
+        desc.innerHTML = `<span>설명: ${item.description}</span>`;
+
+        wrapper.appendChild(title);
+        wrapper.appendChild(name);
+        wrapper.appendChild(desc);
+        container.appendChild(wrapper);
     });
 })
 
