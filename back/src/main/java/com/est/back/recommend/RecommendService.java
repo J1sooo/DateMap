@@ -2,21 +2,21 @@ package com.est.back.recommend;
 
 import com.est.back.recommend.domain.Recommend;
 import com.est.back.recommend.dto.RecommendResponseDto;
+import com.est.back.s3.ImageUploadService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class RecommendService {
 
     private final RecommendRepository repository;
-
-    @Autowired
-    public RecommendService(RecommendRepository repository) {
-        this.repository = repository;
-    }
+    private final ImageUploadService imageUploadService;
 
     private RecommendResponseDto toDto(Recommend recommend) {
         return RecommendResponseDto.builder()
@@ -71,6 +71,9 @@ public class RecommendService {
     }
 
     public void deleteRecommendById(Long id) {
+        Recommend recommend = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("recommend not found"));
+        imageUploadService.deleteFile(recommend.getImageUrl());
         repository.deleteById(id);
     }
 
