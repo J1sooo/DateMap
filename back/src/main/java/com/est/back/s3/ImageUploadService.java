@@ -20,6 +20,11 @@ public class ImageUploadService {
     private String bucketName;
 
     public String uploadFile(MultipartFile file) throws IOException {
+
+        // 아무 파일도 선택되지 않은 경우
+        if (file == null || file.isEmpty()) {
+            return null;
+        }
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -34,4 +39,5 @@ public class ImageUploadService {
         // S3 파일 URL 반환
         return String.format("https://%s.s3.amazonaws.com/%s", bucketName, fileName);
     }
+
 }
