@@ -28,9 +28,9 @@ function openModalFromCard(card) {
     showModal(imageUrl, gender, ageGroup, personalType, hobby);
 }
 
-function scrollToBottom() {
+function scrollToBottom(x) {
     window.scrollTo({
-        top: document.body.scrollHeight,
+        top: x,
         behavior: 'smooth' // 부드럽게 스크롤
     });
 }
