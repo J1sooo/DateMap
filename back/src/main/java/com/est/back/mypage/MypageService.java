@@ -22,6 +22,11 @@ public class MypageService {
     private final PartnerRepository partnerRepository;
     private final ChatroomRepository chatroomRepository;
 
+    public int getFeedbackCount(Long usn){
+        int feedbackCount = feedbackRepository.findAllByUsn(usn).size();
+        return feedbackCount;
+    }
+
     public List<MypagePartnerResponseDto> getMyPartners(Long usn) {
         List<BlindDateFeedback> feedbackList = feedbackRepository.findAllByUsn(usn).stream()
                 .sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId())) // ID 내림차순 (최신순)

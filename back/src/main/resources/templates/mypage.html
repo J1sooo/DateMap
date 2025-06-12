@@ -5,8 +5,8 @@
   <title>마이페이지</title>
   <link rel="stylesheet" th:href="@{/css/mypage.css}" />
   <link rel="stylesheet" th:href="@{/css/navbar.css}">
-  <script th:src="@{/js/mypage.js}" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script th:src="@{/js/mypage.js}" defer></script>
 </head>
 <body>
 
@@ -48,7 +48,8 @@
   </div>
   <hr>
   <div class="section">
-    <div class="section-title">소개팅 상대</div>
+    <div class="section-title">소개팅 상대 <span th:text="'(' + ${feedbackCount} + '회)'"></span>
+    </div>
     <div class="card-list">
       <a th:each="partner : ${partnerList}"
          th:href="@{'/chat/' + ${partner.chatId} + '/feedback'}">
@@ -57,14 +58,24 @@
     </div>
   </div>
   <hr>
+  <!-- 나의 데이트 코스 영역 -->
   <div class="section">
     <div class="section-title">나의 데이트 코스</div>
     <div class="card-list">
-      <a th:each="course : ${recommendList}" th:href="@{'/recommendplace/' + ${course.courseId}}">
-        <img th:src="${course.imageUrl != null and !course.imageUrl.isEmpty() ? course.imageUrl : '/images/default-date-img.png'}" alt="코스 썸네일" class="clickable-card">
-      </a>
+      <div th:each="course : ${recommendList}" class="course-card">
+        <a th:href="@{'/recommendplace/' + ${course.courseId}}">
+          <img th:src="${course.imageUrl != null and !course.imageUrl.isEmpty() ? course.imageUrl : '/images/default-date-img.png'}"
+               alt="코스 썸네일" class="clickable-card">
+        </a>
+        <div class="button-row-horizontal">
+          <button class="uniform-btn edit-btn" type="button" th:attr="data-course-id=${course.courseId}">수정</button>
+          <button class="uniform-btn delete-btn" type="button" th:attr="data-course-id=${course.courseId}">삭제</button>
+        </div>
+      </div>
     </div>
   </div>
+
+
 
 </div>
 
