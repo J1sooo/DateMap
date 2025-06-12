@@ -70,6 +70,12 @@ public class RecommendService {
         return repository.save(recommend);
     }
 
+    public boolean isOwner(Long courseId, Long usn) {
+        return repository.findById(courseId)
+                .map(course -> course.getUsn().equals(usn))
+                .orElse(false);
+    }
+
     public void deleteRecommendById(Long id) {
         repository.deleteById(id);
     }
