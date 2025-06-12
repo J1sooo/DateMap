@@ -1,5 +1,6 @@
 package com.est.back.recommend.domain;
 
+import com.est.back.recommend.dto.RecommendResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;

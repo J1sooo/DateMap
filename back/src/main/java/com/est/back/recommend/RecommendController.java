@@ -6,6 +6,7 @@ import com.est.back.s3.ImageUploadService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,4 +69,10 @@ public class RecommendController {
         recommendService.deleteRecommendById(id);
     }
 
+    // Patch /api/recommend/{id}
+    @PatchMapping("/{id}")
+    public ResponseEntity<RecommendResponseDto> updateRecommend(@PathVariable Long id, @RequestParam MultipartFile image) throws IOException {
+        RecommendResponseDto responseDto = recommendService.updateImage(id, image);
+        return ResponseEntity.ok(responseDto);
+    }
 }

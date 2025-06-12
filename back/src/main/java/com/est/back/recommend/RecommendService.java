@@ -4,10 +4,12 @@ import com.est.back.recommend.domain.Recommend;
 import com.est.back.recommend.dto.RecommendResponseDto;
 import com.est.back.s3.ImageUploadService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,7 @@ public class RecommendService {
         return repository.save(recommend);
     }
 
+    @Transactional
     public void deleteRecommendById(Long id) {
         Recommend recommend = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("recommend not found"));
@@ -81,4 +84,13 @@ public class RecommendService {
         repository.deleteAll();
     }
 
+    @Transactional
+    public RecommendResponseDto updateImage(Long id, MultipartFile image) throws IOException {
+        Recommend recommend = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("recommend not found"));
+        imageUploadService.deleteFile(recommend.getImageUrl());
+
+        recommend.setImageUrl(imageUploadService.uploadFile(image));
+        return RecommendResponseDto.fromRecommend(recommend);
+    }
 }
