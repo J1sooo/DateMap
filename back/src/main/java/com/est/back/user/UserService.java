@@ -1,5 +1,6 @@
 package com.est.back.user;
 
+import com.est.back.s3.ImageUploadService;
 import com.est.back.user.dto.JoinRequestDto;
 import com.est.back.user.dto.LoginRequestDto;
 import com.est.back.user.dto.UserInfoResponseDto;
@@ -13,11 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,9 +25,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ImageUploadService imageUploadService;
 
-    @Value("${upload.path.profile-images}")
-    private String uploadPath;
+    @Value("${AWS_S3_BUCKET}")
+    private String bucketName;
 
     @Transactional
     public User login(LoginRequestDto loginRequestDto) {
@@ -78,6 +76,7 @@ public class UserService {
                 .dateOfBirth(joinRequestDto.getDateOfBirth())
                 .preferArea(joinRequestDto.getPreferArea())
                 .preferAreaDetail(joinRequestDto.getPreferAreaDetail())
+                .profileImg(String.format("https://%s.s3.ap-northeast-2.amazonaws.com/default_profile.png", bucketName))
                 .build();
 
         userRepository.save(user);
@@ -160,20 +159,15 @@ public class UserService {
         }
 
         // 프로필 이미지
-        String currentProfileImageUrl = user.getProfileImg();
-        if (profileImageFile != null && !profileImageFile.isEmpty()) {
-            try {
-                if (currentProfileImageUrl != null && !currentProfileImageUrl.isEmpty()) {
-                    deleteProfileImageFile(currentProfileImageUrl);
-                }
-                String newImageUrl = saveProfileImageFile(profileImageFile);
-                user.updateProfileImg(newImageUrl);
-                log.info("사용자 USN {} 새 프로필 이미지 업로드됨: {}", usn, newImageUrl);
-            } catch (IOException e) {
-                log.error("프로필 이미지 업로드 중 오류 발생", e);
-                throw new IllegalStateException("프로필 이미지 업로드에 실패했습니다. 다시 시도해주세요.");
-            }
+        try {
+            String newImageUrl = imageUploadService.uploadFile(profileImageFile);
+            user.updateProfileImg(newImageUrl);
+            log.info("사용자 USN {} 새 프로필 이미지 업로드됨: {}", usn, newImageUrl);
+        } catch (IOException e) {
+            log.error("프로필 이미지 업로드 중 오류 발생", e);
+            throw new IllegalStateException("프로필 이미지 업로드에 실패했습니다. 다시 시도해주세요.");
         }
+
 
         user.updateUserInfo(
                 updateRequestDto.getNickName(),
@@ -214,53 +208,10 @@ public class UserService {
         }
     }
 
-    private String saveProfileImageFile(MultipartFile file) throws IOException {
-        Path uploadPathDir = Paths.get(uploadPath);
-        if (!Files.exists(uploadPathDir)) {
-            Files.createDirectories(uploadPathDir);
-        }
-
-        String originalFilename = file.getOriginalFilename();
-        String fileExtension = "";
-        if (originalFilename != null && originalFilename.contains(".")) {
-            fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        }
-        String fileName = UUID.randomUUID() + fileExtension;
-        Path filePath = uploadPathDir.resolve(fileName);
-
-        Files.copy(file.getInputStream(), filePath);
-
-        return "/images/profile/" + fileName;
-    }
-
-    private void deleteProfileImageFile(String imageUrl) {
-        if (imageUrl == null || imageUrl.isEmpty()) {
-            return;
-        }
-
-        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-        Path filePath = Paths.get(uploadPath, fileName);
-
-        try {
-            if (Files.exists(filePath)) {
-                Files.delete(filePath);
-                log.info("프로필 이미지 파일 삭제 성공: {}", filePath);
-            } else {
-                log.warn("삭제하려는 프로필 이미지 파일이 존재하지 않습니다: {}", filePath);
-            }
-        } catch (IOException e) {
-            log.error("프로필 이미지 파일 삭제 중 오류 발생: {}", filePath, e);
-        }
-    }
     @Transactional
     public void deleteUser(Long usn) {
         User user = userRepository.findByUsn(usn)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-
-        if (user.getProfileImg() != null && !user.getProfileImg().isEmpty() && !user.getProfileImg().equals("/images/default_profile.png")) {
-            deleteProfileImageFile(user.getProfileImg());
-            log.info("사용자 USN {} 프로필 이미지 파일 삭제 완료.", usn);
-        }
 
         userRepository.delete(user);
         log.info("사용자 USN {} 회원 탈퇴 성공.", usn);
