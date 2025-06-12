@@ -23,6 +23,7 @@ public class ImageUploadService {
     private String bucketName;
 
     public String uploadFile(MultipartFile file) throws IOException {
+
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()

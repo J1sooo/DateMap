@@ -88,17 +88,17 @@
 
 .navbar-auth-button {
     padding: 8px 15px;
-    border: 1px solid #ccc;
+    border: #FF78A5;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #FF78A5;
     cursor: pointer;
     font-size: 14px;
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
 }
 
 .navbar-auth-button:hover {
-    background-color: #f0f0f0;
+    background-color: #e86492;
 }
 
 @media (max-width: 768px) {
