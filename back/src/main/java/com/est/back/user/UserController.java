@@ -54,6 +54,7 @@ public class UserController {
         try {
             User user = userService.login(loginRequestDto);
             session.setAttribute("loggedInUser", user);
+            session.setAttribute("usn", user.getUsn());
 
             if (rememberMe) {
                 Cookie cookie = new Cookie("savedUserId", loginRequestDto.getUsername());
