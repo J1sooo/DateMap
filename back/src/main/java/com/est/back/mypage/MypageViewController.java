@@ -25,11 +25,11 @@ public class MypageViewController {
     @GetMapping("/mypage")
     public String viewMypage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
-        Long usn = user.getUsn();
-
-        if (usn == null) {
+        if(user == null){
             return "redirect:/login";
         }
+        Long usn = user.getUsn();
+
 
         //프로필 정보
         UserInfoResponseDto userInfo = userService.getUserInfoDto(usn);
