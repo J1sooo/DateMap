@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/navbar.js}" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script th:inline="javascript">
@@ -79,6 +80,15 @@
         </div>
     </div>
 </form>
+<!--<div id="notificationPopup" class="notification-popup">-->
+<!--    <ul id="notificationList"></ul>-->
+<!--    <div id="noNotificationsMessage" class="no-notifications" style="display: none;">알림이 없습니다.</div>-->
+<!--    <button id="markAllAsReadButton" class="mark-as-read-button" style="display: none;">모두 읽음 처리</button>-->
+<!--</div>-->
+
 
 </body>
+<script th:inline="javascript">
+  window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
 </html>

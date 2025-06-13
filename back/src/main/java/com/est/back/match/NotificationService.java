@@ -53,12 +53,16 @@ public class NotificationService {
     public void markAllNotificationsAsRead(String userId) {
         List<NotificationMessageDto> notifications = userNotifications.get(userId);
         if (notifications != null) {
-            notifications.forEach(n -> n.setRead(true));
-            System.out.println("NotificationService (메모리): " + userId + "의 모든 알림 읽음 처리.");
-            // 읽음 처리 후 읽지 않은 알림 개수를 푸시
+            // 삭제 방식: 읽은 알림은 리스트에서 제거
+            notifications.removeIf(NotificationMessageDto::isRead); // 기존 읽은 것 제거
+            notifications.forEach(n -> n.setRead(true));             // 새로 읽은 것으로 표시
+            notifications.removeIf(NotificationMessageDto::isRead); // 다시 제거
+
+            System.out.println("📭 읽은 알림 삭제됨 - 남은 개수: " + notifications.size());
             getUnreadNotificationCount(userId);
         }
     }
+
 
     // 특정 채팅방 관련 알림을 읽음 처리
     public void markChatNotificationsAsRead(String userId, String chatRoomId) {
@@ -92,4 +96,9 @@ public class NotificationService {
         );
         return (int) unreadCount;
     }
+
+    public List<NotificationMessageDto> getAllNotifications(String userId) {
+        return userNotifications.getOrDefault(userId, Collections.emptyList());
+    }
+
 }
