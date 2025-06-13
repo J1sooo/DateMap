@@ -63,4 +63,41 @@ public class RankingService {
                 .build()
         ).collect(Collectors.toList());
     }
+
+    // 소개팅 참여 횟수
+    @Cacheable(value = "Ranking", key = "'top10ByCount'")
+    public List<RankingDto> getRankingByCount() {
+        String query = """
+            SELECT
+                u.usn,
+                u.nickName,
+                u.gender,
+                u.profile_img,
+                MAX(f.score) AS max_score,           
+                MIN(f.created_at) AS first_feedback_time, 
+                COUNT(f.id) AS feedback_count      -- 각 사용자의 피드백 제출 횟수
+            FROM blind_date_feedback f
+            JOIN USER u ON f.usn = u.usn
+            WHERE f.created_at >= :weekStart
+            GROUP BY u.usn, u.nickName, u.gender, u.profile_img
+            -- 피드백 횟수 내림차순
+            ORDER BY feedback_count DESC, max_score DESC, u.nickName ASC
+            LIMIT 10
+        """;
+
+        List<Object[]> result = em.createNativeQuery(query)
+                .setParameter("weekStart", getWeekStartTime())
+                .getResultList();
+
+        return result.stream().map(row -> RankingDto.builder()
+                .usn(((Number) row[0]).longValue())
+                .nickname((String) row[1])
+                .gender((String) row[2])
+                .profileImg((String) row[3])
+                .score(((Number) row[4]).intValue())
+                .achievedTime(row[5].toString())
+                .count(((Number) row[6]).longValue())
+                .build()
+        ).collect(Collectors.toList());
+    }
 }
