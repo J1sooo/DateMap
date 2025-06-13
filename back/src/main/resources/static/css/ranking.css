@@ -111,9 +111,7 @@ body {
 }
 
 .top3 .info-area {
-    background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin-top: -50px;
     padding: 35px 10px 10px;
     width: 100%;
