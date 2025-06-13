@@ -177,9 +177,4 @@ public class UserController {
         model.addAttribute("months", months);
         model.addAttribute("days", days);
     }
-
-    @GetMapping("/chat")
-    public String chatPage() {
-        return "datesetting"; // 실시간 채팅 html
-    }
 }
