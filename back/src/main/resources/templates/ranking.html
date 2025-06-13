@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div th:replace="navbar :: navbar"></div>
+<div th:replace="~{navbar :: navbar}"></div>
 
 <main class="container">
 
@@ -57,7 +57,12 @@
             <tr th:each="rank, stat : ${rankingList}" th:if="${stat.index >= 3}">
                 <td th:text="${stat.index + 1}">4</td>
                 <td><img th:src="${rank.profileImg}" class="profile-img" /></td>
-                <td th:text="${rank.nickname}">닉</td>
+                <td>
+                    <span th:text="${rank.nickname}">닉</span>
+                    <button class="chat-button" th:data-nickname="${rank.nickname}">
+                        <i class="fas fa-comment-dots"></i>
+                    </button>
+                </td>
                 <td th:text="${rank.gender}" class="gender">성</td>
                 <td th:text="${rank.score + '점'}">점</td>
             </tr>
@@ -67,5 +72,6 @@
 
 </main>
 
+<script src="/js/ranking.js"></script>
 </body>
 </html>

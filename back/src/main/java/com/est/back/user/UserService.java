@@ -216,4 +216,12 @@ public class UserService {
         userRepository.delete(user);
         log.info("사용자 USN {} 회원 탈퇴 성공.", usn);
     }
+
+    public Optional<User> findByUserId(String userId) {
+        return userRepository.findByUserId(userId);
+    }
+
+    public Optional<User> findByNickName(String nickName) {
+        return userRepository.findByNickName(nickName);
+    }
 }

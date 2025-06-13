@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>일대일 채팅</title>
+  <link rel="stylesheet" th:href="@{/css/matchchat.css}">
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+</head>
+<body>
+<div th:replace="~{navbar :: navbar}"></div>
+
+<main class="chat-main-container">
+  <a th:href="@{/main}" class="back-button">←</a>
+  <div class="chat-layout">
+    <div class="profile-area">
+      <div class="profile-image-container">
+        <img th:src="${myProfile.profileImg}" alt="내 프로필 이미지" class="profile-photo"/>
+      </div>
+      <div class="profile-nickname" th:text="${myProfile.nickName} + ' 님'"></div>
+    </div>
+    <section class="chat-section">
+      <h2 class="chat-title">일대일 채팅방</h2>
+      <div class="chat-box" id="chatBox">
+        <div class="message"
+             th:each="msg : ${messages}"
+             th:classappend="${msg.role != null ? msg.role.name().toLowerCase() : ''}"
+             th:text="${msg.message}">
+        </div>
+      </div>
+      <form class="input-form" onsubmit="sendMessage(event)">
+        <input type="hidden" id="chatroomId" th:value="${chatroomId}">
+        <input type="hidden" id="myNickname" th:value="${myProfile.nickName}">
+        <input type="hidden" id="partnerNickname" th:value="${partnerProfile.nickName}">
+        <button type="button" onclick="startSpeechRecognition()">🎤 말하기</button>
+        <input type="text" id="messageInput" placeholder="메시지를 입력하세요" required/>
+        <button type="submit">전송</button>
+      </form>
+      <form th:action="@{/matchchat/{chatroomId}/end}" method="post">
+        <button type="submit" class="end-button">대화종료</button>
+      </form>
+    </section>
+    <div class="profile-area">
+      <div class="profile-image-container">
+        <img th:src="${partnerProfile.profileImg}" alt="상대방 프로필 이미지" class="profile-photo"/>
+      </div>
+      <div class="profile-nickname" th:text="${partnerProfile.nickName} + ' 님'"></div>
+    </div>
+  </div>
+</main>
+
+<script th:inline="javascript">
+  var chatroomId = /*[[${chatroomId}]]*/ null;
+  var myNickname = /*[[${myProfile.nickName}]]*/ null;
+  var partnerNickname = /*[[${partnerProfile.nickName}]]*/ null;
+  var loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
+<script src="/js/matchchat.js"></script>
+</body>
+</html>
