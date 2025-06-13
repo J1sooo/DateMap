@@ -59,6 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    document.getElementById("closeUpdate").addEventListener('click', () => {
+        updateOverlay.classList.add('d-none');
+    })
+
     document.getElementById("updateRecommend-btn").addEventListener('click', () => {
         const courseId = hiddenCourseIdInput.value;
         const image = document.getElementById("formFile")?.files[0];
@@ -86,11 +90,5 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(err => {
                 alert("수정 실패: " + err.message);
             });
-
     });
 });
-
-function closeSave() {
-    loadingOverlay.classList.add('d-none');
-}
-
