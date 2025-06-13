@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MatchChatMessageDto {
+public class MatchChatMessageDto {      // 채팅 메시지 한 건
 
     public enum MessageType {
         ENTER, TALK, QUIT

@@ -31,8 +31,6 @@ public class WebSocketChatHandler {
         String senderNickname = chatMessage.getSenderNickname();
         String senderUserId = (String) headerAccessor.getSessionAttributes().get("userId");
 
-        System.out.println("채팅 메시지 수신 - 방: " + chatRoomId + ", 발신자: " + senderNickname + ", 내용: " + chatMessage.getMessage());
-
         // 채팅방에 메시지 전송
         messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, chatMessage);
 
@@ -86,34 +84,27 @@ public class WebSocketChatHandler {
         String chatRoomId = chatMessage.getChatRoomId();
         String senderUserId = (String) headerAccessor.getSessionAttributes().get("userId");
 
-        System.out.println("웹소켓 메시지: " + senderNickname + " 님이 채팅방 " + chatRoomId + "을 떠남.");
-
         Map<String, String> participants = chatRoomService.getParticipants(chatRoomId);
         if (participants != null) {
-            String userIdToRemove = null;
-            for (Map.Entry<String, String> entry : participants.entrySet()) {
-                if (entry.getValue().equals(senderNickname) && entry.getKey().equals(senderUserId)) {
-                    userIdToRemove = entry.getKey();
-                    break;
-                }
-            }
-            if (userIdToRemove != null) {
-                participants.remove(userIdToRemove); //나간 사용자 제거
+            // 현재 나가는 사용자의 ID를 participants 맵에서 제거
+            participants.remove(senderUserId);
 
-                if (!participants.isEmpty()) {
-                    chatMessage.setSenderNickname("System"); // 시스템 메시지로 변경
-                    chatMessage.setType(MatchChatMessageDto.MessageType.QUIT);
-                    chatMessage.setMessage(senderNickname + " 님이 채팅방을 나갔습니다.");
-                    messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, chatMessage);
-                } else {
-                    chatRoomService.removeChatRoom(chatRoomId);
-                }
+            // 나가는 사용자 외에 다른 참가자가 남아있는지 확인
+            if (!participants.isEmpty()) {
+                // 남아있는 다른 참가자에게만 나감 메시지 전송
+                chatMessage.setSenderNickname("System");
+                chatMessage.setType(MatchChatMessageDto.MessageType.QUIT);
+                chatMessage.setMessage(senderNickname + " 님이 채팅방을 나갔습니다.");
+                messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, chatMessage);
+            } else {
+                // 더 이상 참가자가 없으면 채팅방 제거
+                chatRoomService.removeChatRoom(chatRoomId);
             }
         }
     }
 
     @EventListener
-    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {   // 예기치 않은 연결 끊김(브라우저 닫기 등)
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.wrap(event.getMessage());
 
         String nickname = (String) headerAccessor.getSessionAttributes().get("nickname");
