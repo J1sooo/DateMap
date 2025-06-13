@@ -123,8 +123,29 @@ body {
 .card-list {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
+    overflow-x: auto;         /* 가로 스크롤 */
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    scrollbar-width: thin;         /* Firefox */
+    scrollbar-color: #999 #f0f0f0; /* Firefox */
 }
+
+/* 크롬/사파리용 스크롤바 스타일 */
+.card-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.card-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.card-list::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+
 
 .card-list img {
     width: 150px;
