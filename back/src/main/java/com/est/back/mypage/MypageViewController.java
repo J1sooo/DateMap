@@ -40,8 +40,8 @@ public class MypageViewController {
         model.addAttribute("partnerList", partners);
         model.addAttribute("partnerCount", partners.size());
         //파트너 수
-        int feedbackCount = mypageService.getFeedbackCount(usn);
-        model.addAttribute("feedbackCount", feedbackCount);
+//        int feedbackCount = mypageService.getFeedbackCount(usn);
+//        model.addAttribute("feedbackCount", feedbackCount);
 
         //내 코스 정보
         List<RecommendResponseDto> recommends = recommendService.getUserCourses(usn);
