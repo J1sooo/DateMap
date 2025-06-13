@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <title>Main</title>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script th:src="@{/js/main.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script th:inline="javascript">
+        var loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+    </script>
 </head>
 <body>
 
-<div th:replace="~{navbar :: navbar}"></div>
+<nav th:replace="~{navbar :: navbar}"></nav>
 
 
 <div class="banner-container">
@@ -42,7 +45,6 @@
         </div>
         <a href="/partner-setting" class="add-card">+</a>
     </div>
-
     <!-- 데이트 코스 -->
     <div id="scroll2" class="section-title">데이트 코스</div>
     <div class="card-list">
@@ -57,7 +59,6 @@
         </div>
         <a href="/recommend/setting" class="add-card">+</a>
     </div>
-
 </div>
 
 <!-- 소개팅 모달 -->
@@ -65,25 +66,21 @@
     <div class="modal" id="partner-modal">
         <div class="modal-content">
             <img id="modal-img" src="" alt="캐릭터 이미지">
-
             <input type="hidden" name="imageUrl" id="form-imageUrl">
             <input type="hidden" name="gender" id="form-gender">
             <input type="hidden" name="ageGroup" id="form-age">
             <input type="hidden" name="personalType" id="form-type">
             <input type="hidden" name="hobby" id="form-hobby">
-
-            <div id="modal-gender" ></div>
+            <div id="modal-gender"></div>
             <div id="modal-age"></div>
             <div id="modal-type"></div>
             <div id="modal-hobby"></div>
-
             <br>
             <button type="submit">소개팅 하러가기</button>
             <button type="button" onclick="closeModal()">닫기</button>
         </div>
     </div>
 </form>
-
 
 </body>
 </html>

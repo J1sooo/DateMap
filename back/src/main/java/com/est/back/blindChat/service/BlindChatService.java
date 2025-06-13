@@ -168,10 +168,12 @@ public class BlindChatService {
             .collect(Collectors.toList());
         String prompt = """
             이전 소개팅 대화를 기반으로 아래 요청을 수행해줘.
+            각 항목은 반드시 "1.", "2.", "3."으로 시작해줘.
+            
             1. 전체 대화를 3줄로 요약해줘.
-            2. 소개팅에서 user의 말투와 대답이 자연스러웠는지,대화 흐름에 잘 어울렸는지 평가해줘. 어색했던 부분이 있다면 짧게 피드백해주는데 피드백에 user라는 키워드 대신에 당신이라고 해줘.
-            3. user의 대화 스타일, 태도, 흐름을 고려해 100점 만점으로 점수를 매겨줘. 점수만 알려줘.
-            모든 답변은 3줄 이내로 간결하고 자연스럽게 해줘.
+            2. 소개팅에서 user의 말투와 대답이 자연스러웠는지 평가해줘. 당신이라고 불러줘.
+            3. user의 대화 스타일과 태도를 고려해 100점 만점으로 점수를 매겨줘. 점수만 알려줘.
+            답변은 3줄 이내로 간결하게 해주고 user라는 단어 말고 내 이름으로 말해줘.
             """;
 
         parts.add(Map.of(
@@ -205,7 +207,7 @@ public class BlindChatService {
         Chatroom chatroom = chatroomRepository.findById(chatroomId)
             .orElseThrow(() -> new RuntimeException("Chatroom not found"));
 
-        Long charId = chatroom.getPartnerId();  // 여기가 핵심
+        Long charId = chatroom.getPartnerId();
 
         BlindDateFeedback feedbackEntity = new BlindDateFeedback();
 

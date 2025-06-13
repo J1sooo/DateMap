@@ -138,3 +138,25 @@ th {
 .gender {
     font-weight: bold;
 }
+
+.chat-button {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    vertical-align: middle;
+}
+
+.chat-button:hover {
+    background-color: #d81b60;
+}
