@@ -22,11 +22,11 @@
     <h2>AI가 당신의 취향과 성향을 분석해,</h2>
     <h2>가장 어울리는 대화 상대와 데이트 장소까지 추천해드려요.</h2>
     <h2> 지금, 당신의 연애를 시작해보세요. </h2>
-    <button class="banner-text-left" onclick="scrollToBottom(750)">소개팅 하기</button>
-    <button class="banner-text-right" onclick="scrollToBottom(document.body.scrollHeight)" >데이트 코스 짜기</button>
+    <button class="banner-text-left" onclick="scrollToBottom('scroll1')">소개팅 하기</button>
+    <button class="banner-text-right" onclick="scrollToBottom('scroll2')" >데이트 코스 짜기</button>
 </div>
 
-<div class="container">
+<div id="scroll1" class="container">
 
     <!-- 소개팅 상대 -->
     <div class="section-title">소개팅 상대</div>
@@ -44,7 +44,7 @@
     </div>
 
     <!-- 데이트 코스 -->
-    <div class="section-title">데이트 코스</div>
+    <div id="scroll2" class="section-title">데이트 코스</div>
     <div class="card-list">
         <div class="card" th:each="recommend : ${recommends}">
             <a th:href="@{'/recommend/place/' + ${recommend.courseId}}">
