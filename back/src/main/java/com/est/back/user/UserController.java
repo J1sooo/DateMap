@@ -182,9 +182,4 @@ public class UserController {
     public String chatPage() {
         return "datesetting"; // 실시간 채팅 html
     }
-
-    @GetMapping("/calendar")
-    public String calendarPage() {
-        return "/aiRecommend/recommendSetting"; // 데이트 코스 추천 html
-    }
 }

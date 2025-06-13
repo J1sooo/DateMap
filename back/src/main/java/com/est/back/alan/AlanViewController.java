@@ -15,11 +15,11 @@ public class AlanViewController {
         if(user == null){
             return "redirect:/login";
         }
-        return "aiRecommend/recommendSetting";
+        return "recommendSetting";
     }
 
     @GetMapping("/place")
     public String recommend() {
-        return "aiRecommend/recommendPlace";
+        return "recommendPlace";
     }
 }
