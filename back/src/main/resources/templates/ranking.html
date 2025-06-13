@@ -19,28 +19,12 @@
         <h2 class="section-subtitle">매주 월요일 0시에 초기화 됩니다.</h2>
     </header>
 
-    <section class="top3">
-        <div class="card second" th:if="${rankingList.size() > 1}" th:object="${rankingList.get(1)}">
-            <div class="rank-badge">🥈</div>
-            <img th:src="*{profileImg}" alt="프로필">
-            <div class="title" th:text="*{nickname}">닉네임</div>
-            <div class="subtitle" th:text="*{score + '점'}">점수</div>
-        </div>
+    <div class="ranking-buttons">
+        <button id="scoreRankingBtn" class="ranking-button active">최고 점수</button>
+        <button id="countRankingBtn" class="ranking-button">소개팅 횟수</button>
+    </div>
 
-        <div class="card first" th:if="${rankingList.size() > 0}" th:object="${rankingList.get(0)}">
-            <div class="rank-badge">🥇</div>
-            <img th:src="*{profileImg}" alt="프로필">
-            <div class="title" th:text="*{nickname}">닉네임</div>
-            <div class="subtitle" th:text="*{score + '점'}">점수</div>
-        </div>
-
-        <div class="card third" th:if="${rankingList.size() > 2}" th:object="${rankingList.get(2)}">
-            <div class="rank-badge">🥉</div>
-            <img th:src="*{profileImg}" alt="프로필">
-            <div class="title" th:text="*{nickname}">닉네임</div>
-            <div class="subtitle" th:text="*{score + '점'}">점수</div>
-        </div>
-    </section>
+    <section class="top3" id="top3Ranking"></section>
 
     <section class="ranking-table">
         <table>
@@ -50,28 +34,15 @@
                 <th>프로필</th>
                 <th>닉네임</th>
                 <th>성별</th>
-                <th>점수</th>
-            </tr>
+                <th id="rankingValueHeader">점수</th> </tr>
             </thead>
-            <tbody>
-            <tr th:each="rank, stat : ${rankingList}" th:if="${stat.index >= 3}">
-                <td th:text="${stat.index + 1}">4</td>
-                <td><img th:src="${rank.profileImg}" class="profile-img" /></td>
-                <td>
-                    <span th:text="${rank.nickname}">닉</span>
-                    <button class="chat-button" th:data-nickname="${rank.nickname}">
-                        <i class="fas fa-comment-dots"></i>
-                    </button>
-                </td>
-                <td th:text="${rank.gender}" class="gender">성</td>
-                <td th:text="${rank.score + '점'}">점</td>
-            </tr>
+            <tbody id="rankingTableBody">
             </tbody>
         </table>
     </section>
 
 </main>
 
-<script src="/js/ranking.js"></script>
+<script th:src="@{/js/ranking.js}"></script>
 </body>
 </html>
