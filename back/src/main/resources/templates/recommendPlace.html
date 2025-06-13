@@ -44,7 +44,9 @@
 <div th:replace="~{navbar :: navbar}"></div>
 
 <div class="container p-5">
-    <h4 class="mb-4 text-center">데이트 코스</h4>
+    <div id="top" class="mb-4 text-center">
+        <h4>데이트 코스</h4>
+    </div>
 
     <div id="result" class="timeline"></div>
 
@@ -53,7 +55,7 @@
         <button class="btn btn-primary" onclick=openSave()>저장하기</button>
     </div>
 
-    <div id="loading-overlay" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 z-3">
+    <div id="save-overlay" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 z-3">
         <div class="position-absolute top-0 end-0 mt-4 me-5">
             <button type="button" class="btn-close" aria-label="Close" onclick=closeSave()></button>
         </div>
@@ -72,6 +74,6 @@
     </div>
 
 </div>
-<script src="/recommendPlace.js" defer></script>
+<script src="/js/recommendPlace.js" defer></script>
 </body>
 </html>

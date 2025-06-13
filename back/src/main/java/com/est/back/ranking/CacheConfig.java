@@ -1,4 +1,4 @@
-package com.est.back.config;
+package com.est.back.ranking;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,6 @@
 const contentStringData = sessionStorage.getItem("alanRequest");
 const area = sessionStorage.getItem("recommendArea");
+const areaDetail = sessionStorage.getItem("areaDetail");
 
 const contentJsonData = JSON.parse(contentStringData); // content json 변경
 
@@ -9,7 +10,11 @@ const titleMap = ["오전 장소", "점심 식사", "오후 장소", "저녁 식
 
 // AI 응답 출력
 document.addEventListener("DOMContentLoaded", () => {
-    console.log(contentJsonData);
+    const topTitle = document.getElementById("top");
+    const dateArea = document.createElement("h6");
+    dateArea.textContent = areaDetail;
+    topTitle.appendChild(dateArea);
+
     Object.values(contentJsonData).forEach((item, index) => {
         const wrapper = document.createElement("div");
         wrapper.className = "timeline-item";
@@ -32,14 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // save 팝업창 열고 닫기
-const loadingOverlay = document.getElementById('loading-overlay');
+const saveOverlay = document.getElementById('save-overlay');
 
 function openSave() {
-    loadingOverlay.classList.remove('d-none');
+    saveOverlay.classList.remove('d-none');
 }
 
 function closeSave() {
-    loadingOverlay.classList.add('d-none');
+    saveOverlay.classList.add('d-none');
 }
 
 document.getElementById("saveRecommend-btn").addEventListener('click', () => {
@@ -50,7 +55,7 @@ document.getElementById("saveRecommend-btn").addEventListener('click', () => {
     const formData = new FormData();
     formData.append("image", file); // 파일 전송
     formData.append("title", title);
-    formData.append("area", area);
+    formData.append("area", areaDetail);
     Object.values(contentJsonData).forEach((item, index) => {
         formData.append(`content${index + 1}`, JSON.stringify(item));
     })
@@ -59,8 +64,11 @@ document.getElementById("saveRecommend-btn").addEventListener('click', () => {
         body: formData
     }).then(res => {
         if (!res.ok) throw new Error("저장 실패");
+        return res.json();
+    }).then(data =>{
+        const id = data.courseId;
         alert("저장되었습니다");
-        location.replace(`/index`); // 임시 경로
+        location.replace(`/recommend/place/${id}`);
     }).catch(e => {
         console.log(e.message);
         // alert("에러: " + e.message)
