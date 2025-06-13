@@ -88,7 +88,7 @@
 
 .navbar-auth-button {
     padding: 8px 15px;
-    border: #FF78A5;
+    border: 1px solid #FF78A5;
     border-radius: 5px;
     background-color: #FF78A5;
     cursor: pointer;
@@ -99,6 +99,24 @@
 
 .navbar-auth-button:hover {
     background-color: #e86492;
+    border-color: #e86492;
+}
+
+.navbar-logout-button {
+    padding: 8px 15px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.navbar-logout-button:hover {
+    background-color: #f8f8f8;
+    color: #000000;
+    border-color: #000000;
 }
 
 @media (max-width: 768px) {
