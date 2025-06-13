@@ -37,15 +37,12 @@ public class NotificationService {
                 .build();
 
         userNotifications.computeIfAbsent(recipientUserId, k -> new CopyOnWriteArrayList<>()).add(notification);
-        System.out.println("NotificationService (메모리): " + recipientUserId + "에게 새 알림 저장됨: " + message + (chatRoomId != null ? " (채팅방: " + chatRoomId + ")" : ""));
-
 
         messagingTemplate.convertAndSendToUser(
                 recipientUserId,
                 "/queue/notifications",
                 notification
         );
-        System.out.println("NotificationService (웹소켓): " + recipientUserId + "에게 알림 푸시됨: " + message);
 
         getUnreadNotificationCount(recipientUserId);
     }
@@ -78,7 +75,6 @@ public class NotificationService {
                 }
             }
             if (markedCount > 0) {
-                System.out.println("NotificationService (메모리): " + userId + "의 채팅방 " + chatRoomId + " 알림 " + markedCount + "개 읽음 처리.");
                 getUnreadNotificationCount(userId);
             }
         }
@@ -87,7 +83,6 @@ public class NotificationService {
     public int getUnreadNotificationCount(String userId) {
         List<NotificationMessageDto> notifications = userNotifications.getOrDefault(userId, Collections.emptyList());
         long unreadCount = notifications.stream().filter(n -> !n.isRead()).count();
-        System.out.println("NotificationService (메모리): " + userId + "의 읽지 않은 알림 개수: " + unreadCount);
 
         messagingTemplate.convertAndSendToUser(
                 userId,

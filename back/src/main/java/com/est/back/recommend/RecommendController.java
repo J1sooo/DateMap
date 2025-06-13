@@ -29,8 +29,7 @@ public class RecommendController {
     public Recommend createRecommend(@ModelAttribute Recommend recommend,
                                      @RequestParam(value = "image", required = false) MultipartFile image,
                                      HttpSession session) throws IOException {
-        //Long usn = (Long) session.getAttribute("usn"); // 세션에 저장된 사용자 usn
-        Long usn = 1000L;// 임시 하드 코딩
+        Long usn = (Long) session.getAttribute("usn"); // 세션에 저장된 사용자 usn
         recommend.setUsn(usn);
         recommend.setSavedAt(LocalDateTime.now()); // 저장 시간 자동 입력
 

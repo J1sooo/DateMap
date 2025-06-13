@@ -1,16 +1,23 @@
+// com.est.back.ranking.dto.RankingDto
 package com.est.back.ranking.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RankingDto {
     private Long usn;
     private String nickname;
     private String gender;
     private String profileImg;
-    private Integer score;
-    private String achievedTime; // 문자열로 포맷해서 응답
+    private int score; // 점수
+    private String achievedTime;
+    private long count; // 소개팅 참여 횟수
 }

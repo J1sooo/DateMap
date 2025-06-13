@@ -23,6 +23,10 @@ public class ImageUploadService {
     private String bucketName;
 
     public String uploadFile(MultipartFile file) throws IOException {
+        // 아무 파일도 선택되지 않은 경우
+        if (file == null || file.isEmpty()) {
+            return null;
+        }
 
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
@@ -46,7 +50,6 @@ public class ImageUploadService {
 
     public void deleteFile(String imgUrl) {
         String key = extractKeyFromUrl(imgUrl);
-        System.out.println(key);
         if (key == null) return;
 
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()

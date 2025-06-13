@@ -16,7 +16,8 @@
 </head>
 <body>
 
-<nav th:replace="navbar :: navbar"></nav>
+<nav th:replace="~{navbar :: navbar}"></nav>
+
 
 <div class="banner-container">
     <img class="banner" th:src="@{/img/main_banner.png}" alt="메인 배너">
@@ -25,11 +26,12 @@
     <h2>AI가 당신의 취향과 성향을 분석해,</h2>
     <h2>가장 어울리는 대화 상대와 데이트 장소까지 추천해드려요.</h2>
     <h2> 지금, 당신의 연애를 시작해보세요. </h2>
-    <button class="banner-text-left" onclick="scrollToBottom()">소개팅 하기</button>
-    <button class="banner-text-right" onclick="scrollToBottom()">데이트 코스 짜기</button>
+    <button class="banner-text-left" onclick="scrollToBottom('scroll1')">소개팅 하기</button>
+    <button class="banner-text-right" onclick="scrollToBottom('scroll2')" >데이트 코스 짜기</button>
 </div>
 
-<div class="container">
+<div id="scroll1" class="container">
+
     <!-- 소개팅 상대 -->
     <div class="section-title">소개팅 상대</div>
     <div class="card-list">
@@ -45,10 +47,10 @@
         <a href="/partner-setting" class="add-card">+</a>
     </div>
     <!-- 데이트 코스 -->
-    <div class="section-title">데이트 코스</div>
+    <div id="scroll2" class="section-title">데이트 코스</div>
     <div class="card-list">
         <div class="card" th:each="recommend : ${recommends}">
-            <a th:href="@{'/recommendplace/' + ${recommend.courseId}}">
+            <a th:href="@{'/recommend/place/' + ${recommend.courseId}}">
                 <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지"/>
             </a>
             <div class="info">

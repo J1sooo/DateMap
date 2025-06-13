@@ -77,7 +77,6 @@ public class WebSocketChatHandler {
         chatMessage.setType(MatchChatMessageDto.MessageType.ENTER);
         chatMessage.setMessage(nickname + " 님이 입장했습니다.");
         messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, chatMessage);
-        System.out.println(nickname + " 님이 채팅방 " + chatRoomId + " 에 입장했습니다.");
 
         notificationService.markChatNotificationsAsRead(userId, chatRoomId);
     }

@@ -50,7 +50,7 @@
     color: white;
     background-color: #ff6b9d;
     padding: 10px 20px;
-    font-size: 36px;
+    font-size: 20px;
     font-weight: bold;
     text-decoration: none;
     border: none;
@@ -65,7 +65,7 @@
     color: white;
     background-color: #ff6b9d;
     padding: 10px 20px;
-    font-size: 36px;
+    font-size: 20px;
     font-weight: bold;
     text-decoration: none;
     border: none;
@@ -145,6 +145,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .card img {

@@ -51,8 +51,6 @@ public class MatchChatController {
         // 채팅방 정보 추가
         chatRoomService.addChatRoom(chatRoomId, participants);
 
-        System.out.println("채팅방 생성: " + chatRoomId + ", 참여자: " + currentUser.getNickName() + ", " + targetUser.getNickName());
-
         redirectAttributes.addAttribute("chatroomId", chatRoomId);
         return "redirect:/matchchat/room/{chatroomId}";
     }
@@ -115,8 +113,6 @@ public class MatchChatController {
         if (currentUser == null) {
             return "redirect:/login";
         }
-
-        System.out.println("사용자 " + currentUser.getNickName() + " 님이 채팅방 " + chatroomId + "에서 대화를 종료했습니다.");
 
         redirectAttributes.addFlashAttribute("message", "대화가 종료되었습니다.");
 

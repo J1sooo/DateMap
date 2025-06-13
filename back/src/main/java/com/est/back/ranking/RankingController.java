@@ -20,4 +20,15 @@ public class RankingController {
         return rankingService.getRanking();
     }
 
+    // 점수 랭킹
+    @GetMapping("/ranking/score")
+    public List<RankingDto> getScoreRankingApi() {
+        return rankingService.getRanking();
+    }
+
+    // 참여 횟수 랭킹
+    @GetMapping("/ranking/count")
+    public List<RankingDto> getCountRankingApi() {
+        return rankingService.getRankingByCount();
+    }
 }

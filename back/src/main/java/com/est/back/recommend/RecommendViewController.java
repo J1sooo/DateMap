@@ -34,12 +34,13 @@ public class RecommendViewController {
                 mapper.readValue(recommend.getContent4(), new TypeReference<>() {})
         );
         model.addAttribute("title", recommend.getTitle());
+        model.addAttribute("area", recommend.getArea());
         String imageUrl = recommend.getImageUrl().equals(
                 String.format("https://%s.s3.ap-northeast-2.amazonaws.com/noImage.jpg", bucketName))
                 ? "" : recommend.getImageUrl();
         model.addAttribute("imageUrl", imageUrl);
         model.addAttribute("labels", List.of("오전 장소", "점심 식사", "오후 장소", "저녁 식사"));
         model.addAttribute("contents", contents);
-        return "aiRecommend/recommendPlaceDetail";
+        return "recommendPlaceDetail";
     }
 }
