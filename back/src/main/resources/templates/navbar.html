@@ -41,7 +41,7 @@
         </a>
         <span>님 안녕하세요</span>
       </span>
-      <a href="/logout" th:href="@{/logout}" class="navbar-auth-button">로그아웃</a>
+      <a href="/logout" th:href="@{/logout}" class="navbar-logout-button">로그아웃</a>
     </th:block>
     <th:block th:if="${session.loggedInUser == null and currentPage != '/join' and currentPage != '/login'}">
       <a href="/login" th:href="@{/login}" class="navbar-auth-button">로그인</a>
