@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Service
-public class MatchChatRoomService {
+public class MatchChatRoomService {     // 모든 활성화된 채팅방을 Map에 저장(메모리 기반)
 
     private final Map<String, Map<String, String>> activeChatRooms = new ConcurrentHashMap<>();
     private final NotificationService notificationService;

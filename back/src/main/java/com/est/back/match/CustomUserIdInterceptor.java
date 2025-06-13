@@ -11,6 +11,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import java.util.Map;
 
 public class CustomUserIdInterceptor implements HandshakeInterceptor {
+    // WebSocket 연결 시 로그인 세션의 User 객체에서 userId를 꺼내서 attributes에 userId로 저장
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
                                    WebSocketHandler wsHandler, Map<String, Object> attributes) {

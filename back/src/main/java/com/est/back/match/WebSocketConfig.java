@@ -14,6 +14,8 @@ import java.util.UUID;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+//    핸드셰이크 시 CustomUserIdInterceptor 사용
+//    세션에서 userId를 Principal로 할당해서 1:1 알림(메시지/입장/퇴장) 가능하게 함
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/queue", "/topic", "/user");
