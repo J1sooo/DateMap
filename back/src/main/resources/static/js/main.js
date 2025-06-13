@@ -1,4 +1,4 @@
-function showModal(imageUrl, gender, ageGroup, personalType, hobby , partner) {
+function showModal(imageUrl, gender, ageGroup, personalType, hobby, partner) {
     document.getElementById("modal-img").src = imageUrl;
     const genderText = gender === 'male' ? '남성' : '여성';
     document.getElementById("modal-gender").innerText = "성별 : " + genderText;
@@ -28,9 +28,7 @@ function openModalFromCard(card) {
     showModal(imageUrl, gender, ageGroup, personalType, hobby);
 }
 
-function scrollToBottom() {
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth' // 부드럽게 스크롤
-    });
+function scrollToBottom(id) {
+    const x = document.getElementById(id);
+    x.scrollIntoView({behavior: 'smooth'});
 }

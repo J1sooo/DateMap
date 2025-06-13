@@ -10,7 +10,7 @@
 <body>
 
 
-<div th:replace="navbar :: navbar"></div>
+<div th:replace="~{navbar :: navbar}"></div>
 
 <!-- 소개팅 횟수 -->
 <div class="intro-count">소개팅 횟수 : <span th:text="${dto.count + '회'}"></span></div>
