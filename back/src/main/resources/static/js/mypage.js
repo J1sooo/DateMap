@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("JS 로드");
-
     const button = document.getElementById("analyze-btn");
     const count = parseInt(button.dataset.count, 10); // 소개팅 횟수
     const today = new Date();
@@ -34,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: 'DELETE'
                 }).then(response => {
                     if (response.ok) {
-                        console.log("삭제 완료:", courseId);
                         this.closest(".course-card")?.remove();
                     } else {
                         alert("삭제에 실패했습니다.");
@@ -58,6 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
             updateOverlay.classList.remove('d-none');
         });
     });
+
+    document.getElementById("closeUpdate").addEventListener('click', () => {
+        updateOverlay.classList.add('d-none');
+    })
 
     document.getElementById("updateRecommend-btn").addEventListener('click', () => {
         const courseId = hiddenCourseIdInput.value;
@@ -86,11 +87,5 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(err => {
                 alert("수정 실패: " + err.message);
             });
-
     });
 });
-
-function closeSave() {
-    loadingOverlay.classList.add('d-none');
-}
-

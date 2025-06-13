@@ -46,7 +46,6 @@ function changeImage() {
     const randomImg = getRandomImage(gender);
     document.getElementById('preview').src = randomImg;
     document.getElementById('imageUrl').value = randomImg;
-    console.log(document.getElementById('imageUrl').value);
   }
 }
 

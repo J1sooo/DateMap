@@ -153,3 +153,19 @@
         gap: 15px;
     }
 }
+.notification-popup {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    width: 300px;
+}
+
+.notification-popup.show {
+    display: block;
+}

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+  <script th:src="@{/js/navbar.js}" defer></script>
 </head>
 <body>
 <div th:replace="~{navbar :: navbar}"></div>
@@ -17,9 +18,9 @@
   <div class="chat-layout">
     <div class="profile-area">
       <div class="profile-image-container">
-        <img th:src="${myProfile.profileImg}" alt="내 프로필 이미지" class="profile-photo"/>
-      </div>
-      <div class="profile-nickname" th:text="${myProfile.nickName} + ' 님'"></div>
+          <img th:src="${partnerProfile.profileImg}" alt="상대방 프로필 이미지" class="profile-photo"/>
+        </div>
+        <div class="profile-nickname" th:text="${partnerProfile.nickName} + ' 님'"></div>
     </div>
     <section class="chat-section">
       <h2 class="chat-title">일대일 채팅방</h2>
@@ -44,9 +45,9 @@
     </section>
     <div class="profile-area">
       <div class="profile-image-container">
-        <img th:src="${partnerProfile.profileImg}" alt="상대방 프로필 이미지" class="profile-photo"/>
+        <img th:src="${myProfile.profileImg}" alt="내 프로필 이미지" class="profile-photo"/>
       </div>
-      <div class="profile-nickname" th:text="${partnerProfile.nickName} + ' 님'"></div>
+      <div class="profile-nickname" th:text="${myProfile.nickName} + ' 님'"></div>
     </div>
   </div>
 </main>
@@ -59,4 +60,7 @@
 </script>
 <script src="/js/matchchat.js"></script>
 </body>
+<script th:inline="javascript">
+  window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
 </html>

@@ -46,6 +46,7 @@ public class WebSocketChatHandler {
             }
 
             if (recipientUserId != null) {
+
                 notificationService.sendAndStoreNotification(
                         recipientUserId,
                         NotificationMessageDto.NotificationType.CHAT_MESSAGE,
@@ -53,7 +54,10 @@ public class WebSocketChatHandler {
                         chatMessage.getMessage(),
                         "/matchchat/room/" + chatRoomId,
                         chatRoomId
+
                 );
+                System.out.println("🔗 링크 확인:/matchchat/room/" + chatRoomId);
+
             }
         }
     }
@@ -73,7 +77,6 @@ public class WebSocketChatHandler {
         chatMessage.setType(MatchChatMessageDto.MessageType.ENTER);
         chatMessage.setMessage(nickname + " 님이 입장했습니다.");
         messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, chatMessage);
-        System.out.println(nickname + " 님이 채팅방 " + chatRoomId + " 에 입장했습니다.");
 
         notificationService.markChatNotificationsAsRead(userId, chatRoomId);
     }

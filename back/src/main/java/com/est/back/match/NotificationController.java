@@ -1,7 +1,9 @@
 package com.est.back.match;
 
+import com.est.back.match.dto.NotificationMessageDto;
 import com.est.back.user.User;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,19 @@ public class NotificationController {
         long count = notificationService.getUnreadNotificationCount(loggedInUser.getUserId());
         return ResponseEntity.ok(count);
     }
+
+    @GetMapping("")
+    @ResponseBody
+    public ResponseEntity<List<NotificationMessageDto>> getAllNotifications(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        List<NotificationMessageDto> notifications = notificationService.getAllNotifications(loggedInUser.getUserId());
+        return ResponseEntity.ok(notifications);
+    }
+
 
     // 특정 알림을 읽음 처리
     @PostMapping("/mark-all-read")

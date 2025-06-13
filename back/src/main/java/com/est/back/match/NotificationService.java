@@ -37,15 +37,12 @@ public class NotificationService {
                 .build();
 
         userNotifications.computeIfAbsent(recipientUserId, k -> new CopyOnWriteArrayList<>()).add(notification);
-        System.out.println("NotificationService (메모리): " + recipientUserId + "에게 새 알림 저장됨: " + message + (chatRoomId != null ? " (채팅방: " + chatRoomId + ")" : ""));
-
 
         messagingTemplate.convertAndSendToUser(
                 recipientUserId,
                 "/queue/notifications",
                 notification
         );
-        System.out.println("NotificationService (웹소켓): " + recipientUserId + "에게 알림 푸시됨: " + message);
 
         getUnreadNotificationCount(recipientUserId);
     }
@@ -53,12 +50,16 @@ public class NotificationService {
     public void markAllNotificationsAsRead(String userId) {
         List<NotificationMessageDto> notifications = userNotifications.get(userId);
         if (notifications != null) {
-            notifications.forEach(n -> n.setRead(true));
-            System.out.println("NotificationService (메모리): " + userId + "의 모든 알림 읽음 처리.");
-            // 읽음 처리 후 읽지 않은 알림 개수를 푸시
+            // 삭제 방식: 읽은 알림은 리스트에서 제거
+            notifications.removeIf(NotificationMessageDto::isRead); // 기존 읽은 것 제거
+            notifications.forEach(n -> n.setRead(true));             // 새로 읽은 것으로 표시
+            notifications.removeIf(NotificationMessageDto::isRead); // 다시 제거
+
+            System.out.println("📭 읽은 알림 삭제됨 - 남은 개수: " + notifications.size());
             getUnreadNotificationCount(userId);
         }
     }
+
 
     // 특정 채팅방 관련 알림을 읽음 처리
     public void markChatNotificationsAsRead(String userId, String chatRoomId) {
@@ -74,7 +75,6 @@ public class NotificationService {
                 }
             }
             if (markedCount > 0) {
-                System.out.println("NotificationService (메모리): " + userId + "의 채팅방 " + chatRoomId + " 알림 " + markedCount + "개 읽음 처리.");
                 getUnreadNotificationCount(userId);
             }
         }
@@ -83,7 +83,6 @@ public class NotificationService {
     public int getUnreadNotificationCount(String userId) {
         List<NotificationMessageDto> notifications = userNotifications.getOrDefault(userId, Collections.emptyList());
         long unreadCount = notifications.stream().filter(n -> !n.isRead()).count();
-        System.out.println("NotificationService (메모리): " + userId + "의 읽지 않은 알림 개수: " + unreadCount);
 
         messagingTemplate.convertAndSendToUser(
                 userId,
@@ -92,4 +91,9 @@ public class NotificationService {
         );
         return (int) unreadCount;
     }
+
+    public List<NotificationMessageDto> getAllNotifications(String userId) {
+        return userNotifications.getOrDefault(userId, Collections.emptyList());
+    }
+
 }
