@@ -43,7 +43,10 @@
 <div th:replace="~{navbar :: navbar}"></div>
 
 <div class="container p-5">
-    <h4 class="mb-4 text-center" th:text="${title}">추천 코스 제목</h4>
+    <div class="mb-4 text-center">
+        <strong th:text="${area}">지역</strong>
+        <h4 th:text="${title}">추천 코스 제목</h4>
+    </div>
 
     <div class="text-center mb-4">
         <img th:if="${imageUrl != ''}"

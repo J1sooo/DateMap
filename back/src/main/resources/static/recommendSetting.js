@@ -147,7 +147,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     loadingOverlay.classList.remove('d-none');
 
     // 프롬프트 생성
-    const area = regions[document.getElementById("region").value] + document.getElementById("subregion").value;
+    const area = regions[document.getElementById("region").value] + " " + document.getElementById("subregion").value;
     const budget = document.getElementById("budget").value || 0;
     const hobbies = Array.from(selectedHobbies).join(",");
     const date = document.getElementById("date-picker").value;
@@ -165,6 +165,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             const jsonData = JSON.parse(rawJsonString); // json 변경
 
             sessionStorage.setItem("recommendArea", regions[document.getElementById("region").value]); // string
+            sessionStorage.setItem("areaDetail", area); // string
             sessionStorage.setItem("alanRequest", jsonData.content); // string
             loadingOverlay.classList.add('d-none');
             window.location.href = "/recommend/place";
