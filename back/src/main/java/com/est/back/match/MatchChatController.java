@@ -28,7 +28,7 @@ public class MatchChatController {
         this.chatRoomService = chatRoomService;
     }
 
-    @PostMapping("/createOrGetRoom")
+    @PostMapping("/createOrGetRoom")    // 채팅방 생성
     public String createOrGetMatchChatRoom(@RequestBody MatchChatRoomRequestDto matchChatRoomRequestDto,
                                            HttpSession session,
                                            RedirectAttributes redirectAttributes) {
@@ -57,7 +57,7 @@ public class MatchChatController {
         return "redirect:/matchchat/room/{chatroomId}";
     }
 
-    @GetMapping("/room/{chatroomId}")
+    @GetMapping("/room/{chatroomId}")   // 특정 채팅방
     public String getMatchChatRoom(@PathVariable String chatroomId, Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("loggedInUser");
         if (currentUser == null) {
@@ -107,7 +107,7 @@ public class MatchChatController {
         return "matchchat";
     }
 
-    @PostMapping("/{chatroomId}/end")
+    @PostMapping("/{chatroomId}/end")   // 대화종료
     public String handleChatFeedback(@PathVariable String chatroomId,
                                      HttpSession session,
                                      RedirectAttributes redirectAttributes) {

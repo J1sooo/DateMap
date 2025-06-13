@@ -18,6 +18,8 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+//        브라우저 종료/연결끊김 등 강제 퇴장시
+//        유저가 속한 채팅방 찾아서  메시지 전송 & 방 삭제
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
 
