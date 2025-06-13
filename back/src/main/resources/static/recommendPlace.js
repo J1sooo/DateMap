@@ -59,8 +59,11 @@ document.getElementById("saveRecommend-btn").addEventListener('click', () => {
         body: formData
     }).then(res => {
         if (!res.ok) throw new Error("저장 실패");
+        return res.json();
+    }).then(data =>{
+        const id = data.courseId;
         alert("저장되었습니다");
-        location.replace(`/index`); // 임시 경로
+        location.replace(`/recommend/place/${id}`);
     }).catch(e => {
         console.log(e.message);
         // alert("에러: " + e.message)
