@@ -46,6 +46,7 @@ public class WebSocketChatHandler {
             }
 
             if (recipientUserId != null) {
+
                 notificationService.sendAndStoreNotification(
                         recipientUserId,
                         NotificationMessageDto.NotificationType.CHAT_MESSAGE,
@@ -53,7 +54,10 @@ public class WebSocketChatHandler {
                         chatMessage.getMessage(),
                         "/matchchat/room/" + chatRoomId,
                         chatRoomId
+
                 );
+                System.out.println("🔗 링크 확인:/matchchat/room/" + chatRoomId);
+
             }
         }
     }
