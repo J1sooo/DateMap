@@ -116,7 +116,7 @@ function toggleSelection(set, btn, max) {
 
 // 버튼 이벤트 연결
 document.querySelectorAll(".hobby-btn").forEach(btn => {
-    btn.addEventListener("click", () => toggleSelection(selectedHobbies, btn, 3));
+    btn.addEventListener("click", () => toggleSelection(selectedHobbies, btn, 2));
 });
 document.querySelectorAll(".transport-btn").forEach(btn => {
     btn.addEventListener("click", () => toggleSelection(selectedTransports, btn));
