@@ -69,8 +69,7 @@ document.getElementById("saveRecommend-btn").addEventListener('click', () => {
         const id = data.courseId;
         alert("저장되었습니다");
         location.replace(`/recommend/place/${id}`);
-    }).catch(e => {
-        console.log(e.message);
-        // alert("에러: " + e.message)
+    }).catch(() => {
+        alert("에러가 발생했습니다")
     });
 })

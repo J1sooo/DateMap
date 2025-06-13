@@ -194,8 +194,6 @@ public class BlindChatService {
             .retrieve()
             .bodyToMono(String.class)
             .block();
-        System.out.println("Gemini 응답 원문: " + responseJson);
-
         String feedbackText = extractTextFromResponse(responseJson);
 
         String[] part = feedbackText.split("(?m)^\\s*\\d+\\.");  // "1.", "2.", "3."으로 자름
@@ -272,11 +270,6 @@ public class BlindChatService {
         if (feedbacks.isEmpty()) {
             throw new IllegalArgumentException("해당 유저의 피드백이 없습니다.");
         }
-        for (BlindDateFeedback feedback : feedbacks) {
-            System.out.println(">> 요약: " + feedback.getSummary());
-            System.out.println(">> 피드백: " + feedback.getFeedback());
-            System.out.println(">> 점수: " + feedback.getScore());
-        }
 
         String combined = feedbacks.stream()
             .map(f -> String.format("요약: %s\n피드백: %s\n점수: %d", f.getSummary(), f.getFeedback(),
@@ -293,7 +286,6 @@ public class BlindChatService {
 
         // Gemini API 요청 로직 호출
         String result = sendPromptToGemini(prompt + combined);
-        System.out.println(result);
         long count = blindDateFeedbackRepository.countByUsn(usn);
         return extractAnalysisFromResponse(count, result);
     }

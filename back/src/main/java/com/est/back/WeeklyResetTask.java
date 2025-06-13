@@ -23,7 +23,6 @@ public class WeeklyResetTask {
         blindDateFeedbackRepository.deleteAll();
         chatroomRepository.deleteAll();
         partnerRepository.deleteAllExceptFixedIds(); // 프리셋 1,2,3,4 빼고 데이터 삭제
-        System.out.println("테이블 데이터 초기화 완료");
     }
 }
 

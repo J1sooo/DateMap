@@ -42,8 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const preferAreaDetailInput = document.getElementById('preferAreaDetailInput');
     const regionCountMessage = document.getElementById('regionCountMessage');
 
-    console.log("Loaded userProfileUpdateDto:", userProfileUpdateDto);
-
     if (userProfileUpdateDto && userProfileUpdateDto.profileImageUrl && userProfileUpdateDto.profileImageUrl !== '/images/default_profile.png') {
         profileImagePreview.src = userProfileUpdateDto.profileImageUrl;
     } else {

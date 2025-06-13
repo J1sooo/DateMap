@@ -50,7 +50,6 @@ public class ImageUploadService {
 
     public void deleteFile(String imgUrl) {
         String key = extractKeyFromUrl(imgUrl);
-        System.out.println(key);
         if (key == null) return;
 
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()

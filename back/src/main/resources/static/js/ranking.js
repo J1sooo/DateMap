@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
                     .catch(error => {
                         if (error.message === "리다이렉션 성공") {
-                            console.log("채팅방으로 성공적으로 리다이렉트되었습니다.");
                         } else {
                             console.error('채팅 요청 중 오류 발생:', error);
                             alert('채팅 요청 중 오류가 발생했습니다: ' + error.message);
