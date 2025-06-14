@@ -1,6 +1,7 @@
 package com.est.back.match;
 
 import com.est.back.match.dto.MatchChatMessageDto;
+import com.est.back.match.service.MatchChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

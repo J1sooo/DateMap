@@ -1,4 +1,4 @@
-package com.est.back.match;
+package com.est.back.match.service;
 
 import com.est.back.user.User;
 import com.est.back.user.UserRepository;

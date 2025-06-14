@@ -1,5 +1,6 @@
-package com.est.back.match;
+package com.est.back.match.controller;
 
+import com.est.back.match.service.JoinedUserService;
 import com.est.back.user.User;
 import com.est.back.user.dto.UserInfoResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
