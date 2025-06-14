@@ -1,3 +1,9 @@
+body {
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .matching-modal-overlay {
     position: fixed;
     top: 0;
