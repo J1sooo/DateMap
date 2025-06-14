@@ -1,5 +1,7 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
     background: #fff;
@@ -233,4 +235,57 @@ body {
 
 .uniform-btn:hover {
     background-color: #e86492;
+}
+
+@media (max-width: 768px) {
+    .profile-header-section {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+        gap: 15px;
+    }
+
+    .profile-image-rect {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-name {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .profile-text {
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .button-group {
+        align-items: center;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .edit-btn,
+    .analyze-btn,
+    .matching-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .card-list img,
+    .clickable-card {
+        width: 120px;
+        height: 120px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .uniform-btn {
+        width: 100px;
+        height: 40px;
+    }
 }

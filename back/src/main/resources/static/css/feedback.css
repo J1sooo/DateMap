@@ -5,6 +5,9 @@ body {
     text-align: center;
     align-items: center;
     align-content: center;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .score {
@@ -65,3 +68,35 @@ body {
     margin-top: 10vh;
 }
 
+@media (max-width: 768px) {
+    .score {
+        font-size: 32px;
+        margin-top: 3vh;
+    }
+
+    .feedback-card {
+        width: 90vw;
+        height: auto;
+        padding: 20px 15px;
+    }
+
+    .card-title,
+    .card-subtitle {
+        font-size: 18px;
+        margin-top: 5vh;
+        margin-bottom: 12px;
+    }
+
+    .summary,
+    .feedback {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .out-button {
+        width: 60%;
+        font-size: 14px;
+        padding: 10px;
+        margin-top: 5vh;
+    }
+}
