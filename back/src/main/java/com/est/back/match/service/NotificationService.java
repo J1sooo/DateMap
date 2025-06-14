@@ -1,4 +1,4 @@
-package com.est.back.match;
+package com.est.back.match.service;
 
 import com.est.back.match.dto.NotificationMessageDto;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
