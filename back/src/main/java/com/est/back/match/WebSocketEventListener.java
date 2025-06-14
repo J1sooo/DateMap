@@ -33,7 +33,6 @@ public class WebSocketEventListener {
         // 메시지 알림 전송
         MatchChatMessageDto quitMessage = new MatchChatMessageDto();
         quitMessage.setChatRoomId(chatRoomId);
-        quitMessage.setMessage(userId + "님이 연결을 종료했습니다.");
         quitMessage.setType(MatchChatMessageDto.MessageType.QUIT);
 
         messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, quitMessage);

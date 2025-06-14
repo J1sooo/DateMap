@@ -1,0 +1,123 @@
+.matching-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.matching-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.matching-modal-content h2 {
+    text-align: center;
+    color: #e91e63;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.matching-modal-content .close-button {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.matching-modal-content .close-button:hover {
+    color: #e91e63;
+}
+
+.online-users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.online-user-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    transition: background-color 0.2s ease;
+}
+
+.online-user-item:hover {
+    background-color: #fff0f5;
+}
+
+.online-user-item .profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #ffc5d6;
+}
+
+.online-user-item .user-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.online-user-item .user-info .nickname {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.online-user-item .user-info .gender {
+    font-size: 14px;
+    color: #666;
+    margin-left: 5px;
+}
+
+.online-user-item .chat-button {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.online-user-item .chat-button:hover {
+    background-color: #d81b60;
+}
+
+.loading-message {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px;
+}
+
+.no-users-message {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+}

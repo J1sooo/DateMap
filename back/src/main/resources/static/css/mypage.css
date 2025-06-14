@@ -85,6 +85,18 @@ body {
     text-align: center;
 }
 
+.matching-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
 .analyze-btn:hover {
     background-color: #e86492;
     color: #ffffff;
@@ -92,6 +104,12 @@ body {
 }
 
 .edit-btn:hover {
+    background-color: #e86492;
+    color: #ffffff;
+    border-color: #e86492;
+}
+
+.matching-btn:hover {
     background-color: #e86492;
     color: #ffffff;
     border-color: #e86492;
@@ -123,15 +141,14 @@ body {
 .card-list {
     display: flex;
     gap: 20px;
-    overflow-x: auto;         /* 가로 스크롤 */
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     padding-bottom: 10px;
-    scrollbar-width: thin;         /* Firefox */
-    scrollbar-color: #999 #f0f0f0; /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #999 #f0f0f0;
 }
 
-/* 크롬/사파리용 스크롤바 스타일 */
 .card-list::-webkit-scrollbar {
     height: 8px;
 }
