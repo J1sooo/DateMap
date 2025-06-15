@@ -1,0 +1,291 @@
+body {
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #333;
+    overflow-y: scroll;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-header-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+    padding-left: 20px;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    gap: 30px;
+}
+
+.profile-image-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-rect {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.profile-info-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.profile-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.edit-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    /*display: none;*/
+    text-align: center;
+}
+.analyze-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    display: none;
+    text-align: center;
+}
+
+.matching-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.analyze-btn:hover {
+    background-color: #e86492;
+    color: #ffffff;
+    border-color: #e86492;
+}
+
+.edit-btn:hover {
+    background-color: #e86492;
+    color: #ffffff;
+    border-color: #e86492;
+}
+
+.matching-btn:hover {
+    background-color: #e86492;
+    color: #ffffff;
+    border-color: #e86492;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+}
+
+.modal-open {
+    padding-right: 0px !important;
+    overflow: hidden !important;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.section-title .inactive {
+    color: #ddd;
+    margin-left: 20px;
+}
+
+.card-list {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #999 #f0f0f0;
+}
+
+.card-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.card-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.card-list::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+
+
+.card-list img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-overlay {
+    position: relative;
+}
+
+.card-overlay .overlay-text {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    width: 100%;
+    font-size: 12px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 0 0 10px 10px;
+}
+
+.clickable-card {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.clickable-card:hover {
+    transform: scale(1.05);
+}
+
+.course-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.button-row-horizontal {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.uniform-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    width: 90px;
+    height: 38px;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uniform-btn:hover {
+    background-color: #e86492;
+}
+
+@media (max-width: 768px) {
+    .profile-header-section {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+        gap: 15px;
+    }
+
+    .profile-image-rect {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-name {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .profile-text {
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .button-group {
+        align-items: center;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .edit-btn,
+    .analyze-btn,
+    .matching-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .card-list img,
+    .clickable-card {
+        width: 120px;
+        height: 120px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .uniform-btn {
+        width: 100px;
+        height: 40px;
+    }
+}

@@ -1,0 +1,333 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h2 {
+    text-align: center;
+    padding: 20px;
+}
+
+.chat-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    gap: 20px;
+    position: relative;
+}
+
+.profile-photo {
+    width: 25vw;
+    height: 60vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.profile-hover-box {
+    position: relative;
+    display: inline-block;
+    width: 25vw;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 36px;
+    text-align: center;
+    padding: 10px;
+    white-space: pre-line;
+}
+
+.profile-hover-box:hover .profile-overlay {
+    opacity: 1;
+}
+
+
+
+.back-button {
+    margin-top : 40px;
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.0);
+    transition: background-color 0.2s ease;
+}
+
+.chat-section {
+    width: 40vw;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box {
+    max-height: 50vh;
+    padding: 20px;
+    height: 50vh;
+    overflow-y: auto;
+    border-bottom: 1px solid #eee;
+    font-size: 18px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+/* 왼쪽 정렬 (ai) */
+.user {
+    align-self: flex-end;
+    background-color: #f8d9ec;
+    color: #333;
+}
+
+/* 오른쪽 정렬 (user) */
+.ai {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    color: #111;
+}
+
+
+.input-form {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding: 10px 15px;
+    background-color: #f3f3f3;
+}
+
+.input-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-form button {
+    background-color: #ff71a4;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.end-button {
+    width: 100%;
+    background-color: #ff71a4;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px 8px 8px 8px;
+    margin-top : 20vh;
+}
+
+.tip-section {
+    margin-top : 40px;
+    margin-left: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 12vw;
+}
+
+.tip-section h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.tip-section ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+/*
+네비 바
+*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 30px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar-left .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar-center .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-center .nav-links a {
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+}
+
+.navbar-center .nav-links a:hover {
+    color: #38a169;
+}
+
+.navbar-right .login-btn {
+    padding: 6px 12px;
+    background-color: #ff71a4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.navbar-right .login-btn:hover {
+    background-color: #ff71a4;
+}
+
+@media (max-width: 768px) {
+    .chat-layout {
+        flex-direction: column;
+        padding: 20px;
+        align-items: center;
+    }
+
+    .profile-hover-box,
+    .profile-photo {
+        width: 90vw;
+        height: auto;
+        max-height: 50vh;
+    }
+
+    .chat-section {
+        width: 95vw;
+        margin-top: 20px;
+    }
+
+    .chat-box {
+        max-height: 40vh;
+        height: 40vh;
+        font-size: 16px;
+    }
+
+    .message {
+        max-width: 85%;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .input-form {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .input-form input[type="text"] {
+        width: 100%;
+    }
+
+    .input-form button {
+        width: 100%;
+        margin: 0;
+    }
+
+    .end-button {
+        margin-top: 40px;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .tip-section {
+        width: 90vw;
+        margin: 30px auto 0;
+        font-size: 14px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .navbar-center .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .navbar-left,
+    .navbar-center,
+    .navbar-right {
+        width: 100%;
+        text-align: left;
+    }
+
+    .navbar-right .login-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

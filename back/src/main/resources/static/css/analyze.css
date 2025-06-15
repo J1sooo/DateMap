@@ -1,0 +1,123 @@
+body {
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.oneLiner {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.analyze {
+    font-size: 24px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.out-button {
+    width: 20%;
+    display: inline-block;
+    background-color: #ff71a4;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.analyze-layout {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+.score {
+    align-items: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    margin-top: 5vh;
+}
+
+.analyze-card {
+    width: 80%;
+    height: 40vh;
+    border-radius: 16px;
+    padding: 40px 30px;
+    margin: 0 auto;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.card-subtitle {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.intro-count {
+    text-align: right;
+    font-size: 14px;
+    color: #333;
+    margin: 10px 30px 0 0;
+}
+
+.notice-text {
+    color: #777;
+    font-size: 14px;
+    margin-top: 10vh;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .oneLiner {
+        font-size: 16px;
+    }
+
+    .analyze {
+        font-size: 18px;
+    }
+
+    .out-button {
+        width: 60%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .score {
+        font-size: 32px;
+    }
+
+    .card-title,
+    .card-subtitle {
+        font-size: 18px;
+    }
+
+    .intro-count {
+        font-size: 12px;
+        margin-right: 10px;
+    }
+
+    .notice-text {
+        font-size: 12px;
+    }
+
+    .analyze-card {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+}

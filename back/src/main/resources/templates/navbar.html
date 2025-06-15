@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>네비게이션 바</title>
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar-container">
+  <div class="navbar-left">
+    <a href="/main" th:href="@{/main}">
+      <img th:src="@{/images/logo.png}" alt="데이트맵 로고" class="navbar-logo">
+    </a>
+    <a href="/main" th:href="@{/main}" class="navbar-logo-text">데이트맵</a>
+  </div>
+  <div class="navbar-center-wrapper">
+    <div class="navbar-center-buttons" th:if="${session.loggedInUser != null}">
+      <a href="/chat" th:href="@{/partner-setting}" class="navbar-icon-button" title="채팅">
+        <i class="fas fa-comment-dots"></i>
+      </a>
+      <a href="/recommend/setting" th:href="@{/recommend/setting}" class="navbar-icon-button" title="데이트코스추천">
+        <i class="fas fa-calendar-alt"></i>
+      </a>
+      <a href="/ranking" th:href="@{/ranking}" class="navbar-icon-button" title="랭킹">
+        <i class="fas fa-trophy"></i>
+      </a>
+      <a href="" id="notification-bell" class="navbar-icon-button" title="알림">
+        <i class="fas fa-bell"></i>
+        <span id="notification-count" class="notification-badge">0</span>
+      </a>
+    </div>
+  </div>
+  <div class="navbar-right">
+    <th:block th:if="${session.loggedInUser != null}">
+      <span class="navbar-user-info">
+        <a href="/mypage" th:href="@{/mypage}" class="navbar-user-nickname">
+          <span th:text="${session.loggedInUser.nickName}"></span>
+        </a>
+        <span>님 안녕하세요</span>
+      </span>
+      <a href="/logout" th:href="@{/logout}" class="navbar-logout-button">로그아웃</a>
+    </th:block>
+    <th:block th:if="${session.loggedInUser == null and currentPage != '/join' and currentPage != '/login'}">
+      <a href="/login" th:href="@{/login}" class="navbar-auth-button">로그인</a>
+    </th:block>
+    <th:block th:if="${session.loggedInUser == null and currentPage == '/login'}">
+      <span class="navbar-message">썸에서 연애까지, 데이트맵과 함께 하세요!</span>
+    </th:block>
+  </div>
+  <div id="notificationPopup" class="notification-popup">
+    <ul id="notificationList"></ul>
+    <div id="noNotificationsMessage" class="no-notifications" style="display: none;">알림이 없습니다.</div>
+    <button id="markAllAsReadButton" class="mark-as-read-button" style="display: none;">모든 알림 삭제</button>
+  </div>
+
+</nav>
+
+
+<script th:inline="javascript">
+  window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
+<script th:src="@{/js/navbar.js}"></script>
+</body>
+</html>
