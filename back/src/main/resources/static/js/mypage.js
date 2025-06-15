@@ -7,14 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const storageKey = `buttonClicked-${dateKey}`;
 
     // 조건: 일요일 , 소개팅 5회 이상 , 아직 클릭 안 함
-    // if (day === 0 && count >= 5 && !localStorage.getItem(storageKey)) {
-    // button.style.display = "inline-block";
-    //
-    //   button.addEventListener("click", () => {
-    //     localStorage.setItem(storageKey, "true");
-    //     button.style.display = "none";
-    //   });
-    // }
+    if (day === 0 && count >= 5 && !localStorage.getItem(storageKey)) {
+    button.style.display = "inline-block";
+
+      button.addEventListener("click", () => {
+        localStorage.setItem(storageKey, "true");
+        button.style.display = "none";
+      });
+    }
     if (count >= 0) {
         button.style.display = "inline-block";
 
