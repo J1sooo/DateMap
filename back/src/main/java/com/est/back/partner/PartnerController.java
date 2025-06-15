@@ -16,13 +16,6 @@ public class PartnerController {
         this.partnerService = partnerService;
     }
 
-    // POST /api/partner
-    // ChatroomController에서 처리함.
-//    @PostMapping
-//    public Partner createPartner(@ModelAttribute Partner partner) {
-//        partner.setCreatedAt(LocalDateTime.now());
-//        return partnerService.savePartner(partner);
-//    }
 
     // GET /api/partner/{id}
     @GetMapping("/{id}")

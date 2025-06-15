@@ -1,6 +1,7 @@
 package com.est.back.match;
 
 import com.est.back.match.dto.MatchChatMessageDto;
+import com.est.back.match.service.MatchChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -33,7 +34,6 @@ public class WebSocketEventListener {
         // 메시지 알림 전송
         MatchChatMessageDto quitMessage = new MatchChatMessageDto();
         quitMessage.setChatRoomId(chatRoomId);
-        quitMessage.setMessage(userId + "님이 연결을 종료했습니다.");
         quitMessage.setType(MatchChatMessageDto.MessageType.QUIT);
 
         messagingTemplate.convertAndSend("/topic/matchchat/" + chatRoomId, quitMessage);

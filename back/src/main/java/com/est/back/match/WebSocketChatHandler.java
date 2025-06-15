@@ -2,6 +2,8 @@ package com.est.back.match;
 
 import com.est.back.match.dto.MatchChatMessageDto;
 import com.est.back.match.dto.NotificationMessageDto;
+import com.est.back.match.service.MatchChatRoomService;
+import com.est.back.match.service.NotificationService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -46,6 +48,7 @@ public class WebSocketChatHandler {
             }
 
             if (recipientUserId != null) {
+
                 notificationService.sendAndStoreNotification(
                         recipientUserId,
                         NotificationMessageDto.NotificationType.CHAT_MESSAGE,
@@ -53,7 +56,10 @@ public class WebSocketChatHandler {
                         chatMessage.getMessage(),
                         "/matchchat/room/" + chatRoomId,
                         chatRoomId
+
                 );
+                System.out.println("🔗 링크 확인:/matchchat/room/" + chatRoomId);
+
             }
         }
     }

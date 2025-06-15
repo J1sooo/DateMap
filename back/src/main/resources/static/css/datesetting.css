@@ -1,5 +1,7 @@
 body {
-    font-family: sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background: white;
     margin: 0;
     padding: 0;
@@ -107,4 +109,51 @@ body {
     font-size: 16px;
     cursor: pointer;
     width: 30vw;
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .profile-img {
+        width: 80vw;
+        height: auto;
+        max-height: 60vh;
+    }
+
+    .form-section {
+        width: 80vw;
+    }
+
+    .submit-btn {
+        width: 80vw;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .option-btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    .options.center-fit {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-box {
+        align-items: center;
+    }
+
+    .form-section label {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 20px;
+    }
 }

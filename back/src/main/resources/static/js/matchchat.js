@@ -17,7 +17,7 @@ function onConnected() {
 }
 
 function onError(error) {
-    alert('WebSocket 연결에 실패했습니다. 페이지를 새로고침해주세요.');
+    alert.error('WebSocket 연결에 실패했습니다. 페이지를 새로고침해주세요.', error);
 }
 
 function sendMessage(event) {
@@ -57,8 +57,9 @@ function onMessageReceived(payload) {
         messageElement.classList.add('system');
         messageElement.textContent = message.message;
         chatBox.appendChild(messageElement);
-        if (message.senderNickname !== myNickname) {
-            alert(message.message);
+
+        if (message.senderNickname !== myNickname && !hasQuit) {
+            alert(message.message); // 상대방이 나갔을 때만 표시
             document.getElementById('messageInput').disabled = true;
             document.querySelector('.input-form button[type="submit"]').disabled = true;
             setTimeout(() => {
@@ -87,13 +88,16 @@ function sendQuitMessage() {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.end-button').addEventListener('click', function() {
-        sendQuitMessage();
-        window.location.href = '/main';
+        if (confirm("정말 대화를 종료하시겠습니까?")) {
+            sendQuitMessage();
+            window.location.href = '/main';
+        }
     });
 });
 
 window.addEventListener('beforeunload', function() {
-    if (stompClient && chatroomId && myNickname) {
+    // 사용자가 브라우저 창을 닫거나 다른 페이지로 이동할 때
+    if (!hasQuit && stompClient && chatroomId && myNickname) {
         const quitMessage = {
             chatRoomId: chatroomId,
             senderNickname: myNickname,
@@ -105,29 +109,37 @@ window.addEventListener('beforeunload', function() {
     }
 });
 
+
 function startSpeechRecognition() {
     if (!('webkitSpeechRecognition' in window)) {
         alert("이 브라우저는 음성 인식을 지원하지 않습니다. 크롬을 사용해주세요.");
         return;
     }
+
     const input = document.getElementById("messageInput");
     const recognition = new webkitSpeechRecognition();
     recognition.lang = "ko-KR";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
+
     input.placeholder = "🎙️ 음성 인식 중...";
+
     recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
         input.value = transcript;
-        input.placeholder = "메시지를 입력하세요";
+        input.placeholder = "메시지를 입력하세요";  // 다시 원래대로
     };
+
     recognition.onerror = function(event) {
+        console.error("음성 인식 오류:", event.error);
         alert("음성 인식에 실패했어요. 다시 시도해 주세요.");
     };
+
     recognition.onend = function() {
         if (!input.value) {
-            input.placeholder = "메시지를 입력하세요";
+            input.placeholder = "메시지를 입력하세요";  // 결과가 없을 때도 복원
         }
     };
+
     recognition.start();
 }

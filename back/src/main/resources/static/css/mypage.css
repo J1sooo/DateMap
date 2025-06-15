@@ -1,5 +1,7 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
     background: #fff;
@@ -85,6 +87,18 @@ body {
     text-align: center;
 }
 
+.matching-btn {
+    background-color: #FF78A5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
 .analyze-btn:hover {
     background-color: #e86492;
     color: #ffffff;
@@ -92,6 +106,12 @@ body {
 }
 
 .edit-btn:hover {
+    background-color: #e86492;
+    color: #ffffff;
+    border-color: #e86492;
+}
+
+.matching-btn:hover {
     background-color: #e86492;
     color: #ffffff;
     border-color: #e86492;
@@ -123,8 +143,28 @@ body {
 .card-list {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #999 #f0f0f0;
 }
+
+.card-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.card-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.card-list::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+
 
 .card-list img {
     width: 150px;
@@ -195,4 +235,57 @@ body {
 
 .uniform-btn:hover {
     background-color: #e86492;
+}
+
+@media (max-width: 768px) {
+    .profile-header-section {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+        gap: 15px;
+    }
+
+    .profile-image-rect {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-name {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .profile-text {
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .button-group {
+        align-items: center;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .edit-btn,
+    .analyze-btn,
+    .matching-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .card-list img,
+    .clickable-card {
+        width: 120px;
+        height: 120px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .uniform-btn {
+        width: 100px;
+        height: 40px;
+    }
 }
