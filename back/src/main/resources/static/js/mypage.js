@@ -5,20 +5,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const day = today.getDay()
     const dateKey = today.toISOString().slice(0, 10);
     const storageKey = `buttonClicked-${dateKey}`;
-  const analyzeButton = document.getElementById("analyze-btn");
+
+    const timestampKey = "weeklyClickTimestamp";
+
+// 날짜 관련 처리
+    const now = Date.now();
+    const lastClicked = localStorage.getItem(timestampKey);
+
+// 7일(일주일) = 7 * 24 * 60 * 60 * 1000
+    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+
+// 일주일 지났으면 초기화
+    if (lastClicked && now - parseInt(lastClicked) > oneWeek) {
+        localStorage.removeItem(storageKey);
+        localStorage.removeItem(timestampKey);
+    }
 
     // 조건: 일요일 , 소개팅 5회 이상 , 아직 클릭 안 함
     if (day === 0 && count >= 5 && !localStorage.getItem(storageKey)) {
-    button.style.display = "inline-block";
+        button.style.display = "inline-block";
 
-      button.addEventListener("click", () => {
-        localStorage.setItem(storageKey, "true");
-        button.style.display = "none";
-      });
-    }
-    if (count >= 0) {
-      analyzeButton.style.display = "inline-block";
-
+        button.addEventListener("click", () => {
+            localStorage.setItem(storageKey, "true");
+            button.style.display = "none";
+        });
     }
 
     // 삭제 버튼 이벤트
@@ -54,7 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 수정 버튼 클릭 (나의 데이트 코스)
-    const courseEditButtons = document.querySelectorAll("div.course-card > .button-row-horizontal > button.edit-btn");
+    const courseEditButtons = document.querySelectorAll(
+        "div.course-card > .button-row-horizontal > button.edit-btn");
     const hiddenCourseIdInput = document.getElementById("selected-course-id");
     const updateOverlay = document.getElementById("update-overlay");
 
@@ -71,28 +82,29 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("formFile").value = '';
     })
 
-    document.getElementById("updateRecommend-btn").addEventListener('click', () => {
-        const courseId = hiddenCourseIdInput.value;
-        const imageInput = document.getElementById("formFile");
-        const image = imageInput?.files[0];
+    document.getElementById("updateRecommend-btn").addEventListener('click',
+        () => {
+            const courseId = hiddenCourseIdInput.value;
+            const imageInput = document.getElementById("formFile");
+            const image = imageInput?.files[0];
 
-        if (!courseId) {
-            alert("수정할 코스 ID가 선택되지 않았습니다.");
-            return;
-        }
+            if (!courseId) {
+                alert("수정할 코스 ID가 선택되지 않았습니다.");
+                return;
+            }
 
-        if (!image) {
-            alert("수정할 이미지를 선택해주세요.");
-            return;
-        }
+            if (!image) {
+                alert("수정할 이미지를 선택해주세요.");
+                return;
+            }
 
-        const formData = new FormData();
-        formData.append("image", image);
+            const formData = new FormData();
+            formData.append("image", image);
 
-        fetch(`/api/recommend/${courseId}`, {
-            method: "PATCH",
-            body: formData
-        })
+            fetch(`/api/recommend/${courseId}`, {
+                method: "PATCH",
+                body: formData
+            })
             .then(res => {
                 if (!res.ok) {
                     return res.json().then(errorData => {
@@ -109,17 +121,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("수정 실패: " + err.message);
                 console.error("수정 실패:", err);
             });
-    });
+        });
 
     // 매칭 서비스
     const matchServiceBtn = document.getElementById('matchServiceBtn');
     const matchingServiceModal = document.getElementById('matchingServiceModal');
-    const closeMatchModalBtn = matchingServiceModal.querySelector('.close-button');
+    const closeMatchModalBtn = matchingServiceModal.querySelector(
+        '.close-button');
     const onlineUsersListDiv = document.getElementById('onlineUsersList');
 
     // 나이 계산
     function calculateAge(dateOfBirth) {
-        if (!dateOfBirth) return '정보 없음';
+        if (!dateOfBirth) {
+            return '정보 없음';
+        }
         const birthDate = new Date(dateOfBirth);
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
@@ -154,7 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        console.log(`Sending chat request for nickname: ${targetNickname}, usn: ${targetUsn}, currentUsn: ${currentLoggedInUserUsn}`);
+        console.log(
+            `Sending chat request for nickname: ${targetNickname}, usn: ${targetUsn}, currentUsn: ${currentLoggedInUserUsn}`);
 
         try {
             const response = await fetch('/matchchat/createOrGetRoom', {
@@ -234,7 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     const userItem = document.createElement('div');
                     userItem.className = 'online-user-item';
                     userItem.innerHTML = `
-                        <img src="${user.profileImg || '/images/default_profile.png'}" alt="프로필" class="profile-img">
+                        <img src="${user.profileImg
+                    || '/images/default_profile.png'}" alt="프로필" class="profile-img">
                         <div class="user-info">
                             <span class="nickname">${user.nickName}</span>
                             <span class="details">${userGender} · ${userAge}세</span> </div>
