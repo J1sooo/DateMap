@@ -6,7 +6,9 @@
     background-color: #fff;
     border-bottom: 1px solid #e0e0e0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    font-family: Arial, sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     width: 100%;
     box-sizing: border-box;
     position: relative;
@@ -119,40 +121,6 @@
     border-color: #000000;
 }
 
-@media (max-width: 768px) {
-    .navbar-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-        height: auto;
-        position: static;
-    }
-
-    .navbar-left,
-    .navbar-right {
-        position: static;
-        transform: none;
-        width: 100%;
-        justify-content: flex-start;
-        margin-top: 10px;
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .navbar-left {
-        margin-top: 0;
-    }
-
-    .navbar-center-wrapper {
-        width: 100%;
-        justify-content: flex-start;
-        margin-top: 10px;
-    }
-
-    .navbar-center-buttons {
-        gap: 15px;
-    }
-}
 .notification-popup {
     display: none;
     position: absolute;
@@ -168,4 +136,68 @@
 
 .notification-popup.show {
     display: block;
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+        height: auto;
+    }
+
+    .navbar-left,
+    .navbar-right,
+    .navbar-center-wrapper {
+        position: static;
+        transform: none;
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+        padding: 0;
+    }
+
+    .navbar-left {
+        margin-top: 0;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navbar-logo {
+        height: 24px;
+        margin-right: 10px;
+    }
+
+    .navbar-logo-text {
+        font-size: 20px;
+    }
+
+    .navbar-center-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .navbar-icon-button {
+        font-size: 20px;
+    }
+
+    .navbar-user-info {
+        font-size: 14px;
+    }
+
+    .navbar-auth-button,
+    .navbar-logout-button {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .notification-popup {
+        width: 90%;
+        right: 5%;
+        top: auto;
+        bottom: 10px;
+        max-height: 50vh;
+        overflow-y: auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
 }

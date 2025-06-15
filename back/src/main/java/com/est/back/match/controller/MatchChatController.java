@@ -1,5 +1,6 @@
-package com.est.back.match;
+package com.est.back.match.controller;
 
+import com.est.back.match.service.MatchChatRoomService;
 import com.est.back.match.dto.MatchChatMessageDto;
 import com.est.back.match.dto.MatchChatRoomRequestDto;
 import com.est.back.user.User;

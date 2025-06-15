@@ -1,5 +1,6 @@
-package com.est.back.match;
+package com.est.back.match.controller;
 
+import com.est.back.match.service.NotificationService;
 import com.est.back.match.dto.NotificationMessageDto;
 import com.est.back.user.User;
 import jakarta.servlet.http.HttpSession;
