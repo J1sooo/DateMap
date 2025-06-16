@@ -78,6 +78,11 @@ class RankingServiceTest {
     // --- 유저 삽입 메서드 ---
     private void insertUser(Long usn, String userId, String password, String nickName,
                             String email, String gender, String profileImg) {
+
+        em.createNativeQuery("DELETE FROM USER WHERE usn = ?")
+                .setParameter(1, usn)
+                .executeUpdate();
+
         em.createNativeQuery("""
             INSERT INTO USER (
                 usn, user_id, password, nickName, email, gender,
@@ -124,13 +129,12 @@ class RankingServiceTest {
                 .executeUpdate();
 
         em.createNativeQuery("""
-        INSERT INTO blind_date_character (
-            char_id, gender, age_group, personal_type, hobby, image_url, created_at
-        )
-        VALUES (?, 'FEMALE', '20대', 'ENFP', '영화보기', 'partner.jpg', now())
-    """)
+            INSERT INTO blind_date_character (
+                char_id, gender, age_group, personal_type, hobby, image_url, created_at
+            )
+            VALUES (?, 'FEMALE', '20대', 'ENFP', '영화보기', 'partner.jpg', now())
+        """)
                 .setParameter(1, charId)
                 .executeUpdate();
     }
-
 }
