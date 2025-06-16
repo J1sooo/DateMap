@@ -83,7 +83,7 @@ body {
     cursor: pointer;
     margin-bottom: 10px;
     text-decoration: none;
-    display: none;
+    display: inline-block;
     text-align: center;
 }
 

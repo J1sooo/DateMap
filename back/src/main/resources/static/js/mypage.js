@@ -1,35 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const button = document.getElementById("analyze-btn");
-    const count = parseInt(button.dataset.count, 10); // 소개팅 횟수
-    const today = new Date();
-    const day = today.getDay()
-    const dateKey = today.toISOString().slice(0, 10);
-    const storageKey = `buttonClicked-${dateKey}`;
+    // const button = document.getElementById("analyze-btn");
+    // const count = parseInt(button.dataset.count, 10); // 소개팅 횟수
+    // const today = new Date();
+    // const day = today.getDay()
+    // const dateKey = today.toISOString().slice(0, 10);
+    // const storageKey = `buttonClicked-${dateKey}`;
 
-    const timestampKey = "weeklyClickTimestamp";
+    // const timestampKey = "weeklyClickTimestamp";
 
-// 날짜 관련 처리
-    const now = Date.now();
-    const lastClicked = localStorage.getItem(timestampKey);
-
-// 7일(일주일) = 7 * 24 * 60 * 60 * 1000
-    const oneWeek = 7 * 24 * 60 * 60 * 1000;
-
-// 일주일 지났으면 초기화
-    if (lastClicked && now - parseInt(lastClicked) > oneWeek) {
-        localStorage.removeItem(storageKey);
-        localStorage.removeItem(timestampKey);
-    }
-
-    // 조건: 일요일 , 소개팅 5회 이상 , 아직 클릭 안 함
-    if (day === 0 && count >= 5 && !localStorage.getItem(storageKey)) {
-        button.style.display = "inline-block";
-
-        button.addEventListener("click", () => {
-            localStorage.setItem(storageKey, "true");
-            button.style.display = "none";
-        });
-    }
+// // 날짜 관련 처리
+//     const now = Date.now();
+//     const lastClicked = localStorage.getItem(timestampKey);
+//
+// // 7일(일주일) = 7 * 24 * 60 * 60 * 1000
+//     const oneWeek = 7 * 24 * 60 * 60 * 1000;
+//
+// // 일주일 지났으면 초기화
+//     if (lastClicked && now - parseInt(lastClicked) > oneWeek) {
+//         localStorage.removeItem(storageKey);
+//         localStorage.removeItem(timestampKey);
+//     }
+//
+//     // 조건: 일요일 , 소개팅 5회 이상 , 아직 클릭 안 함
+//     if (day === 0 && count >= 5 && !localStorage.getItem(storageKey)) {
+//         button.style.display = "inline-block";
+//
+//         button.addEventListener("click", () => {
+//             localStorage.setItem(storageKey, "true");
+//             button.style.display = "none";
+//         });
+//     }
 
     // 삭제 버튼 이벤트
     const deleteButtons = document.querySelectorAll("button.delete-btn");
