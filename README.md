@@ -73,8 +73,8 @@ DateMap은 AI 기반 가상 소개팅과 데이트 장소 추천을 통해 사�
   AWS EC2, S3 (배포 및 저장소)
 
 ---
-
-## 📑 기능 명세서
+<details>
+<summary> 📑 기능 명세서 </summary>
 
 네비바
 
@@ -202,10 +202,10 @@ DateMap은 AI 기반 가상 소개팅과 데이트 장소 추천을 통해 사�
 | 65 | 소개팅 상대 | 지금까지 한 ai 소개팅 상대 & 피드백 |
 | 66 | 매칭 서비스 | 현재 가입되어 있는 이성의 사용자들과 일대일 채팅 가능 |
 
+</details>
 
----
-
-## API 명세서
+<details>
+<summary> 📖 API 명세서 </summary>
 
 회원 CRUD(로그인/회원가입/마이페이지)
 
@@ -318,10 +318,10 @@ MyPage
 | 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
 | --- | --- | --- | --- |
 | 마이페이지 보기 | GET | /mypage | 로그인한 유저의 프로필, 평가, 추천 코스 등을 마이페이지에 표시 |
-
 ---
-
-## ERD
+</details>
+<details> 
+<summary>📊 ERD </summary>
 
 ![image](https://github.com/user-attachments/assets/a5393814-80eb-4321-93ee-8a4a7ed5340e)
 
@@ -422,8 +422,7 @@ MyPage
 | score | INT UNSIGNED | NOT NULL | 점수 |
 | achieved_time | TIMESTAMP | NOT NULL | 달성 시각 |
 
-
----
+</details>
 
 ## 📁 프로젝트 구조
 
