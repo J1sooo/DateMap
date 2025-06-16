@@ -32,10 +32,13 @@ class RankingServiceTest {
         insertUser(1L, "user1", "pass", "수지", "수지@example.com", "FEMALE", "수지.jpg");
         insertUser(2L, "user2", "pass", "진구", "진구@example.com", "MALE", "진구.jpg");
 
+        insertPartner(1L);
+        insertPartner(2L);
+        insertPartner(3L);
+
         insertFeedback(1L, 1L, LocalDateTime.now(), "summary", "feedback", 95);
         insertFeedback(1L, 2L, LocalDateTime.now(), "summary", "feedback", 98);
         insertFeedback(2L, 3L, LocalDateTime.now(), "summary", "feedback", 90);
-
 
         // when
         List<RankingDto> ranking = rankingService.getRanking();
@@ -53,6 +56,11 @@ class RankingServiceTest {
         insertUser(1L, "user1", "pass", "수지", "수지@example.com", "FEMALE", "수지.jpg");
         insertUser(2L, "user2", "pass", "진구", "진구@example.com", "MALE", "진구.jpg");
 
+        insertPartner(1L);
+        insertPartner(2L);
+        insertPartner(3L);
+        insertPartner(4L);
+
         insertFeedback(1L, 1L, LocalDateTime.now(), "summary", "feedback", 95);
         insertFeedback(1L, 2L, LocalDateTime.now(), "summary", "feedback", 90);
         insertFeedback(1L, 3L, LocalDateTime.now(), "summary", "feedback", 80);
@@ -67,8 +75,7 @@ class RankingServiceTest {
         assertThat(result.get(0).getCount()).isEqualTo(3);
     }
 
-    // --- 리팩토링된 테스트용 SQL 삽입 메서드 ---
-
+    // --- 유저 삽입 메서드 ---
     private void insertUser(Long usn, String userId, String password, String nickName,
                             String email, String gender, String profileImg) {
         em.createNativeQuery("""
@@ -92,6 +99,7 @@ class RankingServiceTest {
                 .executeUpdate();
     }
 
+    // --- 피드백 삽입 메서드 ---
     private void insertFeedback(Long usn, Long charId, LocalDateTime createdAt,
                                 String summary, String feedback, int score) {
         em.createNativeQuery("""
@@ -108,4 +116,21 @@ class RankingServiceTest {
                 .setParameter(6, score)
                 .executeUpdate();
     }
+
+    // --- 캐릭터 삽입 메서드 ---
+    private void insertPartner(Long charId) {
+        em.createNativeQuery("DELETE FROM blind_date_character WHERE char_id = ?")
+                .setParameter(1, charId)
+                .executeUpdate();
+
+        em.createNativeQuery("""
+        INSERT INTO blind_date_character (
+            char_id, gender, age_group, personal_type, hobby, image_url, created_at
+        )
+        VALUES (?, 'FEMALE', '20대', 'ENFP', '영화보기', 'partner.jpg', now())
+    """)
+                .setParameter(1, charId)
+                .executeUpdate();
+    }
+
 }
