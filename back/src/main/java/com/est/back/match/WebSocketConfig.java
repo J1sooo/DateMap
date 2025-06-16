@@ -34,6 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         return () -> (String) attributes.getOrDefault("userId", UUID.randomUUID().toString());
                     }
                 })
+                .setAllowedOrigins("https://www.est-datemap.com")
                 .withSockJS();
 
         // 채팅용 엔드포인트
@@ -45,6 +46,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         return () -> (String) attributes.getOrDefault("userId", UUID.randomUUID().toString());
                     }
                 })
+                .setAllowedOrigins("https://www.est-datemap.com")
                 .withSockJS();
     }
 }
