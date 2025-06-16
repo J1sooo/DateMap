@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", function () {
             hiddenCourseIdInput.value = this.getAttribute("data-course-id");
             updateOverlay.classList.remove('d-none');
-            console.log('코스 수정 버튼 클릭됨, Course ID:', hiddenCourseIdInput.value);
         });
     });
 
@@ -169,9 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        console.log(
-            `Sending chat request for nickname: ${targetNickname}, usn: ${targetUsn}, currentUsn: ${currentLoggedInUserUsn}`);
-
         try {
             const response = await fetch('/matchchat/createOrGetRoom', {
                 method: 'POST',
@@ -185,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (response.redirected) {
-                console.log("서버에서 직접 리다이렉션 요청. URL:", response.url);
                 window.location.href = response.url;
                 return;
             }
@@ -236,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const matchableUsers = await response.json();
-            console.log("매칭 가능한 사용자:", matchableUsers);
 
             onlineUsersListDiv.innerHTML = '';
 

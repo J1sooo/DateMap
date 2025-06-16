@@ -50,8 +50,6 @@ window.updateNotificationCount = function updateNotificationCount(count, isDelta
         currentCount = count;
     }
 
-    console.log("🧮 계산된 알림 개수:", currentCount);
-
     if (currentCount > 0) {
         notificationCountSpan.textContent = String(currentCount);
         notificationCountSpan.style.display = 'inline-block';
