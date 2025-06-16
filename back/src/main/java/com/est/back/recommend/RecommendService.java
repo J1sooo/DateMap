@@ -5,6 +5,7 @@ import com.est.back.recommend.dto.RecommendResponseDto;
 import com.est.back.s3.ImageUploadService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -99,4 +100,47 @@ public class RecommendService {
         recommend.setImageUrl(imageUploadService.uploadFile(image));
         return RecommendResponseDto.fromRecommend(recommend);
     }
+
+    @Transactional
+    public List<RecommendResponseDto> getRecommendsByArea(String area, String areaDetail) {
+        List<Recommend> recommends = new ArrayList<>();
+
+        boolean hasArea = area != null && !area.isEmpty();
+        boolean hasAreaDetail = areaDetail != null && !areaDetail.isEmpty();
+
+        if (hasArea && hasAreaDetail) {
+            // 둘 다 있을 때
+            recommends = repository.findByAreaContainingOrAreaContainingOrderBySavedAtDesc(area, areaDetail);
+        } else if (hasArea) {
+            // 선호지역1만 있을 때
+            recommends = repository.findByAreaContainingOrderBySavedAtDesc(area);
+        } else if (hasAreaDetail) {
+            // 선호지역2만 있을 때
+            recommends = repository.findByAreaContainingOrderBySavedAtDesc(areaDetail);
+        }
+
+        // 위 조건에서 4개 미만이면 최신순으로 부족한 만큼 채움
+        if (recommends.size() < 4) {
+            List<Recommend> fallback = repository.findTop10ByOrderBySavedAtDesc();
+
+            for (Recommend rec : fallback) {
+                if (recommends.size() >= 4) break;
+                if (!recommends.contains(rec)) {
+                    recommends.add(rec);
+                }
+            }
+        }
+
+        // 둘 다 없어서 recommends가 아직 비어있다면
+        if (recommends.isEmpty()) {
+            recommends = repository.findTop10ByOrderBySavedAtDesc();
+        }
+
+        return recommends.stream()
+            .map(RecommendResponseDto::new)
+            .collect(Collectors.toList());
+    }
+
+
+
 }
