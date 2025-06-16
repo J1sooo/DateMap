@@ -5,6 +5,13 @@
 DateMap은 AI 기반 가상 소개팅과 데이트 장소 추천을 통해 사용자들의 연애 경험을 돕는 서비스입니다. AI 캐릭터와의 소개팅, 사용자간 일대일 매칭, 데이트 코스 추천, 랭킹 시스템 등 다양한 기능을 통해 연애 콘텐츠를 손쉽고 재미있게 체험할 수 있습니다.
 
 ---
+# 🎥 시연 영상
+
+![2025-06-16-14-25-19 (1)](https://github.com/user-attachments/assets/ed82df7c-f60d-465a-8bdc-129a1e29bf55)
+
+[YouTube](https://www.youtube.com/watch?v=00T_Zzqtlj8)
+
+---
 
 ## 📌 주요 기능
 
