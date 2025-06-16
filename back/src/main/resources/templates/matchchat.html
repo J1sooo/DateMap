@@ -18,9 +18,12 @@
   <div class="chat-layout">
     <div class="profile-area">
       <div class="profile-image-container">
-          <img th:src="${partnerProfile.profileImg}" alt="상대방 프로필 이미지" class="profile-photo"/>
-        </div>
-        <div class="profile-nickname" th:text="${partnerProfile.nickName} + ' 님'"></div>
+        <img th:src="${partnerProfile.profileImg != null and !partnerProfile.profileImg.isEmpty()
+              ? partnerProfile.profileImg
+              : 'images/default_profile.png'}"
+             alt="상대방 프로필 이미지" class="profile-photo"/>
+      </div>
+      <div class="profile-nickname" th:text="${partnerProfile.nickName} + ' 님'"></div>
     </div>
     <section class="chat-section">
       <h2 class="chat-title">일대일 채팅방</h2>
@@ -45,7 +48,10 @@
     </section>
     <div class="profile-area">
       <div class="profile-image-container">
-        <img th:src="${myProfile.profileImg}" alt="내 프로필 이미지" class="profile-photo"/>
+        <img th:src="${myProfile.profileImg != null and !myProfile.profileImg.isEmpty()
+              ? myProfile.profileImg
+              : '/images/default_profile.png'}"
+             alt="내 프로필 이미지" class="profile-photo"/>
       </div>
       <div class="profile-nickname" th:text="${myProfile.nickName} + ' 님'"></div>
     </div>
