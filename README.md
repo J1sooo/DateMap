@@ -227,16 +227,16 @@ User
 | 로그아웃 | GET | /logout | 세션 무효화 후 메인 페이지로 이동 |
 | 회원가입 페이지 진입 | GET | /join | 회원가입 입력 폼 페이지 렌더링 |
 | 회원가입 요청 처리 | POST | /join | 회원가입 입력 검증 및 가입 처리 |
-| 아이디 중복 확인 | GET | /api/user/checkUserId | userId 중복 여부 확인 |
-| 닉네임 중복 확인 | GET | /api/user/checkNickName | nickName 중복 여부 확인 |
-| 이메일 중복 확인 | GET | /api/user/checkEmail | email 중복 여부 확인 |
-| 회원가입 API 처리 | POST | /api/user | 회원가입 요청 처리 (API 방식) |
-| 아이디 찾기 | POST | /api/user/findId | 이름과 이메일로 아이디 찾기 |
-| 비밀번호 재설정 본인확인 | POST | /api/user/verifyPassword | 아이디+이메일로 비밀번호 재설정 본인 확인 |
-| 비밀번호 재설정 | POST | /api/user/resetPassword | usn으로 비밀번호 변경 |
-| 내 프로필 조회 | GET | /api/user/profile | 로그인된 유저의 정보 반환 (API) |
-| 내 프로필 수정 | PATCH | /api/user/profile | 유저 정보 및 이미지 수정 (multipart/form-data) |
-| 회원 탈퇴 | DELETE | /api/user/{usn} | 로그인 유저 본인의 계정 탈퇴 처리 |
+| 아이디 중복 확인 | GET | /api/users/availability/user-id | userId 중복 여부 확인 |
+| 닉네임 중복 확인 | GET | /api/users/availability/nickname | nickName 중복 여부 확인 |
+| 이메일 중복 확인 | GET | /api/users/availability/email | email 중복 여부 확인 |
+| 회원가입 API 처리 | POST | /api/users | 회원가입 요청 처리 (API 방식) |
+| 아이디 찾기 | POST | /api/users/id-recovery | 이름과 이메일로 아이디 찾기 |
+| 비밀번호 재설정 본인확인 | POST | /api/users/verify-password | 아이디+이메일로 비밀번호 재설정 본인 확인 |
+| 비밀번호 재설정 | POST | /api/users/password-reset | usn으로 비밀번호 변경 |
+| 내 프로필 조회 | GET | /api/users/profile | 로그인된 유저의 정보 반환 (API) |
+| 내 프로필 수정 | PATCH | /api/users/profile | 유저 정보 및 이미지 수정 (multipart/form-data) |
+| 회원 탈퇴 | DELETE | /api/users/{usn} | 로그인 유저 본인의 계정 탈퇴 처리 |
 | 프로필 수정 페이지 진입 | GET | /profile/edit | 현재 유저의 정보를 폼에 미리 담아 렌더링 |
 
 blind_date 소개팅 상대 CRUD
@@ -297,7 +297,7 @@ matching_chat
 
 | 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
 | --- | --- | --- | --- |
-| 일대일 채팅방 생성 또는 조회 | POST | /matchchat/createOrGetRoom | 상대 닉네임 기반으로 채팅방 생성 또는 기존 방 반환 |
+| 일대일 채팅방 생성 또는 조회 | POST | /matchchat/room | 상대 닉네임 기반으로 채팅방 생성 |
 | 일대일 채팅방 입장 | GET | /matchchat/room/{chatroomId} | 채팅방 입장 및 상대방 프로필, 메시지 출력 |
 | 일대일 채팅 종료 처리 | POST | /matchchat/{chatroomId}/end | 채팅 종료 후 채팅방 제거 및 메인으로 리다이렉트 |
 | 매칭 가능한 사용자 목록 조회 | GET | /api/matchableUsers | 가입되어있는 이성의 사용자 목록 조회  |
