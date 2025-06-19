@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PartnerViewController {
-    @GetMapping("/partner-setting")
+    @GetMapping("/partners/setting")
     public String viewPartnerSetting(HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         if(user == null){

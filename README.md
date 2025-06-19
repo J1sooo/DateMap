@@ -241,11 +241,11 @@ User
 
 blind_date 소개팅 상대 CRUD
 
-| 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
-| --- | --- | --- | --- |
-| 파트너 조회 | GET | /api/partner/{id} | ID로 특정 파트너 정보 조회 |
-| 파트너 삭제 | DELETE | /api/partner/{id} | ID로 특정 파트너 삭제 (채팅방과 연결된 경우 주의 필요) |
-| 파트너 조건 설정 페이지  | GET | /partner-setting | 로그인한 사용자가 데이트 조건 설정 페이지로 이동 |
+| 🏷NAME | ⚙METHOD | 📎URL              | 📖DESCRIPTION |
+| --- | --- |--------------------| --- |
+| 파트너 조회 | GET | /api/partners/{id} | ID로 특정 파트너 정보 조회 |
+| 파트너 삭제 | DELETE | /api/partners/{id} | ID로 특정 파트너 삭제 (채팅방과 연결된 경우 주의 필요) |
+| 파트너 조건 설정 페이지  | GET | /partners/setting  | 로그인한 사용자가 데이트 조건 설정 페이지로 이동 |
 
 date_recommend
 
