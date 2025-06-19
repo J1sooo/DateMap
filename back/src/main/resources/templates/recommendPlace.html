@@ -66,7 +66,7 @@
                     대표 사진을 선택해주세요<br>
                     <small>(없을 시 기본 사진이 됩니다)</small>
                 </label>
-                <input class="form-control" type="file" id="formFile">
+                <input class="form-control" type="file" id="formFile" accept="image/*">
             </div>
             <label for="title"></label>
             <input type="text" id="title" class="form-control mb-3" placeholder="제목을 입력하세요"/>
@@ -76,7 +76,6 @@
 
 </div>
 <script src="/js/recommendPlace.js" defer></script>
-<script src="/recommendPlace.js" defer></script>
 <script th:inline="javascript">
   window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
 </script>

@@ -8,6 +8,8 @@ const container = document.getElementById("result");
 
 const titleMap = ["오전 장소", "점심 식사", "오후 장소", "저녁 식사"];
 
+const max_size = 10 * 1024 * 1024; // 10MB
+
 // AI 응답 출력
 document.addEventListener("DOMContentLoaded", () => {
     const topTitle = document.getElementById("top");
@@ -47,13 +49,22 @@ function closeSave() {
     saveOverlay.classList.add('d-none');
 }
 
+const fileInput = document.getElementById("formFile");
+fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (file && file.size > max_size) {
+        alert("10MB 이하의 이미지만 업로드 가능합니다.");
+        fileInput.value = "";
+    }
+});
+
 document.getElementById("saveRecommend-btn").addEventListener('click', () => {
     const title = document.getElementById("title").value;
     const file = document.getElementById("formFile")?.files[0];
     if (!title) return alert("제목을 입력해주세요")
 
     const formData = new FormData();
-    formData.append("image", file); // 파일 전송
+    if (file) formData.append("image", file); // 파일 전송
     formData.append("title", title);
     formData.append("area", areaDetail);
     Object.values(contentJsonData).forEach((item, index) => {
