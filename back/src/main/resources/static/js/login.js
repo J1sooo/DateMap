@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const name = findIdNameInput.value;
             const email = findIdEmailInput.value;
 
-            fetch('/api/user/findId', {
+            fetch('/api/users/id-recovery', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, email: email })
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const username = findPwdUsernameInput.value;
             const email = findPwdEmailInput.value;
 
-            fetch('/api/user/verifyPassword', {
+            fetch('/api/users/verify-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: username, email: email })
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            fetch('/api/user/resetPassword', {
+            fetch('/api/users/password-reset', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ usn: usn, newPassword: newPassword })

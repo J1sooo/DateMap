@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // 중복 확인
-    async function checkDuplication(type, value, statusElement) {
+    async function checkDuplication(type, value, statusElement, usnToExclude) {
         if (!value.trim()) {
             if (statusElement) {
                 statusElement.textContent = '';
@@ -516,77 +516,57 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         let validationMessage = '';
-        if (type === 'userId') {
-            validationMessage = validateUserId(value);
-            if (validationMessage) {
-                if (userIdValidationMessage) {
-                    userIdValidationMessage.textContent = validationMessage;
-                    userIdValidationMessage.style.color = 'red';
-                }
-                if (statusElement) statusElement.textContent = '';
-                return false;
-            } else {
-                if (userIdValidationMessage) userIdValidationMessage.textContent = '';
-            }
-        } else if (type === 'nickName') {
+        if (type === 'nickName') {
             validationMessage = validateNickName(value);
             if (validationMessage) {
-                if (nickNameValidationMessage) {
-                    nickNameValidationMessage.textContent = validationMessage;
-                    nickNameValidationMessage.style.color = 'red';
-                }
-                if (statusElement) statusElement.textContent = '';
+                nickNameValidationMessage.textContent = validationMessage;
+                nickNameValidationMessage.style.color = 'red';
+                statusElement.textContent = '';
                 return false;
             } else {
-                if (nickNameValidationMessage) nickNameValidationMessage.textContent = '';
+                nickNameValidationMessage.textContent = '';
             }
         } else if (type === 'email') {
             validationMessage = validateEmailFormat(value);
             if (validationMessage) {
-                if (emailValidationMessage) {
-                    emailValidationMessage.textContent = validationMessage;
-                    emailValidationMessage.style.color = 'red';
-                }
-                if (statusElement) statusElement.textContent = '';
+                emailValidationMessage.textContent = validationMessage;
+                emailValidationMessage.style.color = 'red';
+                statusElement.textContent = '';
                 return false;
             } else {
-                if (emailValidationMessage) emailValidationMessage.textContent = '';
+                emailValidationMessage.textContent = '';
             }
         }
 
+        const endpointMap = {
+            userId: "/api/users/availability/user-id",
+            nickName: "/api/users/availability/nickname",
+            email: "/api/users/availability/email"
+        };
+
         try {
-            const usn = null;
-            const response = await fetch(`/api/user/check${capitalizeFirstLetter(type)}?${type}=${value}&usn=${usn || ''}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            const params = new URLSearchParams({ [type]: value });
+            if (usnToExclude) params.append("usn", usnToExclude);
+
+            const response = await fetch(`${endpointMap[type]}?${params.toString()}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
 
             if (data.exists) {
-                if (statusElement) {
-                    statusElement.textContent = `이미 사용 중인 ${getKoreanName(type)}입니다.`;
-                    statusElement.className = 'text-danger mt-1';
-                }
+                statusElement.textContent = `이미 사용 중인 ${getKoreanName(type)}입니다.`;
+                statusElement.className = 'text-danger mt-1';
                 return false;
             } else {
-                if (statusElement) {
-                    statusElement.textContent = `사용 가능한 ${getKoreanName(type)}입니다.`;
-                    statusElement.className = 'text-success mt-1';
-                }
+                statusElement.textContent = `사용 가능한 ${getKoreanName(type)}입니다.`;
+                statusElement.className = 'text-success mt-1';
                 return true;
             }
         } catch (error) {
             console.error(`Error checking ${type} duplication:`, error);
-            if (statusElement) {
-                statusElement.textContent = `중복 확인 중 오류가 발생했습니다.`;
-                statusElement.className = 'text-danger mt-1';
-            }
+            statusElement.textContent = `중복 확인 중 오류가 발생했습니다.`;
+            statusElement.className = 'text-danger mt-1';
             return false;
         }
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     function getKoreanName(type) {

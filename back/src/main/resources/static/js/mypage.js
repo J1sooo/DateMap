@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch('/matchchat/createOrGetRoom', {
+            const response = await fetch('/matchchat/room', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
