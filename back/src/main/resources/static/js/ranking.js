@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const rankingList = await response.json();
-            console.log("랭킹 데이터:", rankingList);
 
             // Top 3 렌더링
             renderTop3(rankingList, valueUnit, type);
@@ -149,10 +148,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        console.log(`Sending chat request for nickname: ${targetNickname}, usn: ${targetUsn}`);
-
         try {
-            const response = await fetch('/matchchat/createOrGetRoom', {
+            const response = await fetch('/matchchat/room', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -164,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (response.redirected) {
-                console.log("서버에서 직접 리다이렉션 요청. URL:", response.url);
                 window.location.href = response.url;
                 return;
             }

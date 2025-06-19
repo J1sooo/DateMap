@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(`Sending chat request for nickname: ${targetNickname}, usn: ${targetUsn}, currentUsn: ${currentLoggedInUserUsn}`);
 
         try {
-            const response = await fetch('/matchchat/createOrGetRoom', {
+            const response = await fetch('/matchchat/room', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
