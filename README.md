@@ -261,12 +261,12 @@ date_recommend
 
 ranking
 
-| 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
-| --- | --- | --- | --- |
-| 전체 랭킹 조회 | GET | /api/ranking | 기본 랭킹 정보 조회 |
-| 점수 기반 랭킹 조회 | GET | /api/ranking/score | 점수 기준 랭킹 정보 조회 |
-| 참여 횟수 랭킹 조회 | GET | /api/ranking/count | 소개팅 참여 횟수 기준 랭킹 조회 |
-| 랭킹 페이지 진입 | GET | /ranking | 점수 기준 랭킹 리스트를 HTML 페이지로 렌더링 |
+| 🏷NAME | ⚙METHOD | 📎URL               | 📖DESCRIPTION |
+| --- | --- |---------------------| --- |
+| 전체 랭킹 조회 | GET | /api/rankings       | 기본 랭킹 정보 조회 |
+| 점수 기반 랭킹 조회 | GET | /api/rankings/score | 점수 기준 랭킹 정보 조회 |
+| 참여 횟수 랭킹 조회 | GET | /api/rankings/count | 소개팅 참여 횟수 기준 랭킹 조회 |
+| 랭킹 페이지 진입 | GET | /rankings           | 점수 기준 랭킹 리스트를 HTML 페이지로 렌더링 |
 
 analyze
 

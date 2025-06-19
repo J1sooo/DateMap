@@ -17,7 +17,7 @@ public class RankingViewController {
     @Autowired
     public RankingViewController(RankingService service) { this.service = service; }
 
-    @GetMapping("/ranking")
+    @GetMapping("/rankings")
     public String viewRanking(Model model) {
         List<RankingDto> rankings = service.getRanking();
         model.addAttribute("rankingList", rankings);

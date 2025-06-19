@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let valueUnit = '';
 
         if (type === 'score') {
-            apiUrl = '/api/ranking/score';
+            apiUrl = '/api/rankings/score';
             valueLabel = '점수';
             valueUnit = '점';
         } else if (type === 'count') {
-            apiUrl = '/api/ranking/count';
+            apiUrl = '/api/rankings/count';
             valueLabel = '소개팅 횟수';
             valueUnit = '회';
         }
