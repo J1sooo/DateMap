@@ -13,6 +13,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +23,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
+@RequiredArgsConstructor
 @Controller
-@RequestMapping("/api/chatroom")
+@RequestMapping("/api/chatrooms")
 public class ChatroomController {
-
     private final ChatroomService chatroomService;
     private final PartnerService partnerService;
-
-    @Autowired
-    public ChatroomController(ChatroomService chatroomService, PartnerService partnerService) {
-        this.chatroomService = chatroomService;
-        this.partnerService = partnerService;
-    }
-
-
 
     @PostMapping
     public String createChatroom(@ModelAttribute Partner partner,HttpSession session) {
@@ -60,7 +54,7 @@ public class ChatroomController {
         // 4. Gemini에게 첫 메시지 전송 → chatMessage 저장
         chatroomService.firstSendToGemini(chatroomDto.getId(), savedPartner, nickName);
         // 5. chatroomId 반환
-        return "redirect:/chat/" + chatroomDto.getId();
+        return "redirect:/chatrooms/" + chatroomDto.getId();
     }
 
 

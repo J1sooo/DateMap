@@ -54,7 +54,7 @@
     </div>
     <div class="card-list">
       <a th:each="partner : ${partnerList}"
-         th:href="@{'/chat/' + ${partner.chatId} + '/feedback'}">
+         th:href="@{'/chatrooms/' + ${partner.chatId} + '/feedback'}">
         <img th:src="${partner.imageUrl != null and !partner.imageUrl.isEmpty() ? partner.imageUrl : '/images/default_profile.png'}" alt="코스 썸네일" class="clickable-card">
       </a>
     </div>

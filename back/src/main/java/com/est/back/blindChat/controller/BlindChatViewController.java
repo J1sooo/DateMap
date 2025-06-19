@@ -25,7 +25,7 @@ public class BlindChatViewController {
     private final BlindChatService blindChatService;
     private final PartnerRepository partnerRepository;
 
-    @GetMapping("/chat/{chatroomId}")
+    @GetMapping("/chatrooms/{chatroomId}")
     public String showChatRoom(@PathVariable Long chatroomId, Model model , HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         if(user == null){
@@ -45,7 +45,7 @@ public class BlindChatViewController {
         return "chat";
     }
 
-    @GetMapping("/chat/{chatroomId}/feedback")
+    @GetMapping("/chatrooms/{chatroomId}/feedback")
     public String showFeedback(@PathVariable Long chatroomId, Model model,HttpSession session) {
         FeedbackDto dto = blindChatService.getFeedbackByChatroomId(chatroomId); // DB 조회
         User user = (User) session.getAttribute("loggedInUser");

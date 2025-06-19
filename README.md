@@ -278,20 +278,20 @@ blind_date_chat
 
 | 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
 | --- | --- | --- | --- |
-| 메시지 전송 | POST | /api/chat/{chatroomId} | 사용자의 메시지를 Gemini에게 보내고 저장 |
-| 채팅방 삭제 | DELETE | /api/chat/{chatroomId} | 채팅방 및 메시지 삭제 |
-| 피드백 생성 요청 | POST | /api/chat/{chatroomId}/feedback | Gemini에게 피드백 생성 요청 후 저장 및 리다이렉트 |
-| 채팅방 보기 | GET | /chat/{chatroomId} | 채팅 메시지와 상대방 정보 출력 |
-| 피드백 보기 | GET | /chat/{chatroomId}/feedback | 해당 채팅방의 Gemini 피드백 결과 출력 |
+| 메시지 전송 | POST | /api/chatrooms/{chatroomId} | 사용자의 메시지를 Gemini에게 보내고 저장 |
+| 채팅방 삭제 | DELETE | /api/chatrooms/{chatroomId} | 채팅방 및 메시지 삭제 |
+| 피드백 생성 요청 | POST | /api/chatrooms/{chatroomId}/feedback | Gemini에게 피드백 생성 요청 후 저장 및 리다이렉트 |
+| 채팅방 보기 | GET | /chatrooms/{chatroomId} | 채팅 메시지와 상대방 정보 출력 |
+| 피드백 보기 | GET | /chatrooms/{chatroomId}/feedback | 해당 채팅방의 Gemini 피드백 결과 출력 |
 
 Chatroom
 
-| 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
-| --- | --- | --- | --- |
-| 채팅방 생성 및 시작 | POST | /api/chatroom | Partner 저장 후 채팅방 생성 + 첫 메시지 전송 |
-| 모든 채팅방 목록 조회 | GET | /api/chatroom | 전체 채팅방 목록을 조회 |
-| 특정 채팅방 상세 조회 | GET | /api/chatroom/{id} | ID로 특정 채팅방 정보 조회 |
-| 특정 채팅방 삭제 | DELETE | /api/chatroom/{id} | ID로 채팅방 삭제 (Partner 삭제 예정 포함) |
+| 🏷NAME | ⚙METHOD | 📎URL               | 📖DESCRIPTION |
+| --- | --- |---------------------| --- |
+| 채팅방 생성 및 시작 | POST | /api/chatrooms      | Partner 저장 후 채팅방 생성 + 첫 메시지 전송 |
+| 모든 채팅방 목록 조회 | GET | /api/chatrooms      | 전체 채팅방 목록을 조회 |
+| 특정 채팅방 상세 조회 | GET | /api/chatrooms/{id} | ID로 특정 채팅방 정보 조회 |
+| 특정 채팅방 삭제 | DELETE | /api/chatrooms/{id} | ID로 채팅방 삭제 (Partner 삭제 예정 포함) |
 
 matching_chat
 

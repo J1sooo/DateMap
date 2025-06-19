@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data && data.chatId) {
                 alert(`${data.chatRoomName || '채팅방'}으로 이동합니다.`);
-                window.location.href = '/chat/' + data.chatId;
+                window.location.href = '/chatrooms/' + data.chatId;
             } else {
                 alert('채팅방 정보를 받아오지 못했습니다. (예상치 못한 응답)');
                 console.error('Invalid response data for chat room:', data);
