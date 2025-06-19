@@ -29,10 +29,10 @@ public class MatchChatController {
         this.chatRoomService = chatRoomService;
     }
 
-    @PostMapping("/createOrGetRoom")    // 채팅방 생성
-    public String createOrGetMatchChatRoom(@RequestBody MatchChatRoomRequestDto matchChatRoomRequestDto,
-                                           HttpSession session,
-                                           RedirectAttributes redirectAttributes) {
+    @PostMapping("/room")    // 채팅방 생성
+    public String createMatchChatRoom(@RequestBody MatchChatRoomRequestDto matchChatRoomRequestDto,
+                                      HttpSession session,
+                                      RedirectAttributes redirectAttributes) {
         User currentUser = (User) session.getAttribute("loggedInUser");
         if (currentUser == null) {
             return "redirect:/login";

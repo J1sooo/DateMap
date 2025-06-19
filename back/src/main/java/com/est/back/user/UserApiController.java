@@ -17,25 +17,25 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("/checkUserId")
-    public Map<String, Boolean> checkUserId(@RequestParam String userId) {
+    @GetMapping("/availability/user-id")
+    public Map<String, Boolean> checkUserIdAvailability(@RequestParam String userId) {
         boolean exists = userService.existsByUserId(userId);
         return Map.of("exists", exists);
     }
 
-    @GetMapping("/checkNickName")
-    public Map<String, Boolean> checkNickName(@RequestParam String nickName) {
+    @GetMapping("/availability/nickname")
+    public Map<String, Boolean> checkNicknameAvailability(@RequestParam String nickName) {
         boolean exists = userService.existsByNickName(nickName);
         return Map.of("exists", exists);
     }
 
-    @GetMapping("/checkEmail")
-    public Map<String, Boolean> checkEmail(@RequestParam String email) {
+    @GetMapping("/availability/email")
+    public Map<String, Boolean> checkEmailAvailability(@RequestParam String email) {
         boolean exists = userService.existsByEmail(email);
         return Map.of("exists", exists);
     }
@@ -53,8 +53,8 @@ public class UserApiController {
         }
     }
 
-    @PostMapping("/findId")
-    public ResponseEntity<Map<String, Object>> findId(@RequestBody Map<String, String> request) {
+    @PostMapping("/id-recovery")
+    public ResponseEntity<Map<String, Object>> recoverUserId(@RequestBody Map<String, String> request) {
         String name = request.get("name");
         String email = request.get("email");
 
@@ -76,7 +76,7 @@ public class UserApiController {
         }
     }
 
-    @PostMapping("/verifyPassword")
+    @PostMapping("/verify-password")
     public ResponseEntity<Map<String, Object>> verifyUserForPasswordReset(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String email = request.get("email");
@@ -99,7 +99,7 @@ public class UserApiController {
         }
     }
 
-    @PostMapping("/resetPassword")
+    @PostMapping("/password-reset")
     public ResponseEntity<Map<String, Object>> resetPasswordDirectly(@RequestBody Map<String, String> request) {
         Long usn = Long.parseLong(request.get("usn"));
         String newPassword = request.get("newPassword");
