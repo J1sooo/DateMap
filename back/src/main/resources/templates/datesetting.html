@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <title>소개팅 설정</title>
     <link rel="stylesheet" th:href="@{/css/datesetting.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script th:src="@{/js/navbar.js}" defer></script>
 </head>
 <body>
+
+<div th:replace="~{navbar :: navbar}"></div>
 <div class="container">
-    <h2>소개팅 상대방 설정</h2>
+    <h2>AI 소개팅 상대방 설정</h2>
 
     <div class="content">
         <div class="image-box">
             <img th:src="@{/images/default-date-img.png}" id="preview" alt="프로필"
                  class="profile-img">
-            <button type="button" class="image-btn" onclick="changeImage()">📸</button>
+            <button type="button" class="image-btn" onclick="changeImage()">🔄</button>
 
         </div>
         <form class="form-box" th:action="@{/api/chatroom}" method="post">
@@ -25,6 +30,7 @@
                 <div class="options" id="gender-options">
                     <button type="button" class="option-btn" data-gender="male">남성</button>
                     <button type="button" class="option-btn" data-gender="female">여성</button>
+                    <input type="hidden" id="genderInput" name="gender" />
                 </div>
 
             </div>
@@ -47,6 +53,7 @@
                 <div class="options">
                     <button type="button" class="option-btn">내향적</button>
                     <button type="button" class="option-btn">외향적</button>
+                    <input type="hidden" name="personalType">
                 </div>
             </div>
 
@@ -55,18 +62,29 @@
                 <label>취미</label>
                 <div class="options multi">
                     <button type="button" class="option-btn">운동</button>
-                    <button type="button" class="option-btn">반려동물</button>
                     <button type="button" class="option-btn">게임</button>
-                    <button type="button" class="option-btn">드라이브</button>
-                    <button type="button" class="option-btn">술</button>
+                    <button type="button" class="option-btn">요리</button>
+                    <button type="button" class="option-btn">공예</button>
+                    <button type="button" class="option-btn">예술</button>
+                    <button type="button" class="option-btn">음악</button>
+                    <button type="button" class="option-btn">춤</button>
+                    <button type="button" class="option-btn">사진</button>
+                    <button type="button" class="option-btn">영화</button>
                     <button type="button" class="option-btn">독서</button>
+                    <button type="button" class="option-btn">여행</button>
+                    <button type="button" class="option-btn">자연/야외 활동</button>
+                    <button type="button" class="option-btn">동물</button>
+                    <button type="button" class="option-btn">힐링/명상</button>
+                    <button type="button" class="option-btn">수집</button>
+                    <button type="button" class="option-btn">체험</button>
+                    <button type="button" class="option-btn">패션/뷰티</button>
+                    <button type="button" class="option-btn">봉사</button>
+                    <input type="hidden" name="hobby">
+
                 </div>
             </div>
 
-            <input type="hidden" name="personalType">
-            <input type="hidden" id="genderInput" name="gender" />
             <input type="hidden" name="imageUrl" id="imageUrl" th:value="@{/images/default-date-img.png}"/>
-            <input type="hidden" name="hobby">
 
             <button type="submit" class="submit-btn">대화 시작</button>
         </form>
@@ -75,4 +93,7 @@
 
 <script th:src="@{/js/datesetting.js}"></script>
 </body>
+<script th:inline="javascript">
+  window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
 </html>

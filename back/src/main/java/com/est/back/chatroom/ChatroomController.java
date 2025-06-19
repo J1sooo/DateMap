@@ -40,8 +40,11 @@ public class ChatroomController {
     public String createChatroom(@ModelAttribute Partner partner,HttpSession session) {
 
         User user = (User) session.getAttribute("loggedInUser");
+        if(user == null){
+            return "redirect:/login";
+        }
         Long usn = user.getUsn();
-
+        String nickName = user.getNickName();
 
         // 1. Partner 저장
         partner.setCreatedAt(LocalDateTime.now());
@@ -55,9 +58,7 @@ public class ChatroomController {
         ChatroomDto chatroomDto = chatroomService.save(chatroom);
 
         // 4. Gemini에게 첫 메시지 전송 → chatMessage 저장
-        chatroomService.firstSendToGemini(chatroomDto.getId(), savedPartner);
-        System.out.println("받은 imageUrl = " + partner.getImageUrl());
-
+        chatroomService.firstSendToGemini(chatroomDto.getId(), savedPartner, nickName);
         // 5. chatroomId 반환
         return "redirect:/chat/" + chatroomDto.getId();
     }

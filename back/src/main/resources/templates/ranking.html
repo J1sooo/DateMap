@@ -2,64 +2,51 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>소개팅 랭킹</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주간 랭킹</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/ranking.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script th:src="@{/js/navbar.js}" defer></script>
 </head>
 <body>
 
-<div class="container">
+<div th:replace="~{navbar :: navbar}"></div>
 
-    <div class="section-title">주간 랭킹</div>
+<main class="container">
 
-    <div class="top3">
+    <header class="ranking-header">
+        <h1 class="section-title">주간 랭킹 TOP 10</h1>
+        <h2 class="section-subtitle">매주 월요일 0시에 초기화 됩니다.</h2>
+    </header>
 
-        <div class="card second" th:if="${rankingList.size() > 1}" th:object="${rankingList.get(1)}">
-            <div class="rank-badge">🥈</div>
-            <img th:src="*{profileImg}" alt="프로필">
-            <div class="title" th:text="*{nickname}">닉네임</div>
-            <div class="subtitle" th:text="*{score + '점'}">점수</div>
-        </div>
-
-        <div class="card first" th:if="${rankingList.size() > 0}" th:object="${rankingList.get(0)}">
-            <div class="rank-badge">🥇</div>
-            <img th:src="*{profileImg}" alt="프로필">
-            <div class="title" th:text="*{nickname}">닉네임</div>
-            <div class="subtitle" th:text="*{score + '점'}">점수</div>
-            <small class="subtitle" style="display:block; margin-top:4px;">매주 갱신됩니다.</small>
-        </div>
-
-        <div class="card third" th:if="${rankingList.size() > 2}" th:object="${rankingList.get(2)}">
-            <div class="rank-badge">🥉</div>
-            <img th:src="*{profileImg}" alt="프로필">
-            <div class="title" th:text="*{nickname}">닉네임</div>
-            <div class="subtitle" th:text="*{score + '점'}">점수</div>
-        </div>
+    <div class="ranking-buttons">
+        <button id="scoreRankingBtn" class="ranking-button active">최고 점수</button>
+        <button id="countRankingBtn" class="ranking-button">소개팅 횟수</button>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>순위</th>
-            <th>프로필</th>
-            <th>닉네임</th>
-            <th>성별</th>
-            <th>점수</th>
-<!--            <th>달성 시각</th>-->
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="rank, stat : ${rankingList}" th:if="${stat.index >= 3}">
-            <td th:text="${stat.index + 1}">4</td>
-            <td><img th:src="${rank.profileImg}" class="profile-img" /></td>
-            <td th:text="${rank.nickname}">닉네임</td>
-            <td th:text="${rank.gender}" class="gender">성별</td>
-            <td th:text="${rank.score + '점'}">100점</td>
-<!--            <td th:text="${rank.achievedTime}">2025-06-01</td>-->
-        </tr>
-        </tbody>
-    </table>
+    <section class="top3" id="top3Ranking"></section>
 
-</div>
+    <section class="ranking-table">
+        <table>
+            <thead>
+            <tr>
+                <th>순위</th>
+                <th>프로필</th>
+                <th>닉네임</th>
+                <th>성별</th>
+                <th id="rankingValueHeader">점수</th> </tr>
+            </thead>
+            <tbody id="rankingTableBody">
+            </tbody>
+        </table>
+    </section>
 
+</main>
+
+<script th:src="@{/js/ranking.js}"></script>
 </body>
+<script th:inline="javascript">
+  window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
 </html>

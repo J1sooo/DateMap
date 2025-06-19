@@ -1,5 +1,7 @@
 body {
-    font-family: sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background: white;
     margin: 0;
     padding: 0;
@@ -23,8 +25,8 @@ body {
 }
 
 .profile-img {
-    width: 200px;
-    height: 260px;
+    width: 20vw;
+    height: 70vh;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -33,10 +35,10 @@ body {
     bottom: 10px;
     right: 10px;
     background: white;
-    border: 1px solid #ccc;
     border-radius: 50%;
     padding: 8px;
     cursor: pointer;
+    border: 2px solid white;
 }
 
 .form-box {
@@ -46,21 +48,41 @@ body {
 }
 
 .form-section {
-    margin-bottom: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+    width : 30vw;
+    text-align: center;
+    align-items: center;
 }
 
 .form-section label {
+    display: block;
     font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 6px;
-    display: inline-block;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
+.form-section:last-child {
+    border-bottom: none;
+}
+
 
 .options {
     display: flex;
+    justify-content: center; /* 버튼을 수평 가운데로 */
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    width: 100%;
 }
+
+.options.center-fit {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    width: fit-content; /* 버튼 묶음 너비에 맞춤 */
+    margin: 0 auto;     /* 중앙 정렬 */
+}
+
 
 .option-btn {
     padding: 8px 14px;
@@ -86,4 +108,52 @@ body {
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
+    width: 30vw;
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .profile-img {
+        width: 80vw;
+        height: auto;
+        max-height: 60vh;
+    }
+
+    .form-section {
+        width: 80vw;
+    }
+
+    .submit-btn {
+        width: 80vw;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .option-btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    .options.center-fit {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-box {
+        align-items: center;
+    }
+
+    .form-section label {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 20px;
+    }
 }

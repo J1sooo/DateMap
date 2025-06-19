@@ -1,90 +1,103 @@
 package com.est.back.ranking;
 
-import com.est.back.ranking.domain.Ranking;
 import com.est.back.ranking.dto.RankingDto;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.scheduling.annotation.Scheduled;
+import jakarta.persistence.EntityManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class RankingService {
 
-    private final RankingRepository repository;
-
     @PersistenceContext
     private EntityManager em;
 
-    public RankingService(RankingRepository repository) {
-        this.repository = repository;
+    // 이번 주 월요일 00:00
+    private LocalDateTime getWeekStartTime() {
+        return LocalDate.now()
+                .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+                .atStartOfDay(); //.atTime(LocalTime.of(5, 15)); //Mon. 05:15
     }
 
-    public List<RankingDto> getTop10() {
-        return repository.findTop10ByOrderByScoreDescAchievedTimeAsc()
-                .stream()
-                .map(r -> RankingDto.builder()
-                        .usn(r.getUsn())
-                        .nickname(r.getNickname())
-                        .gender(r.getGender())
-                        .profileImg(r.getProfileImg())
-                        .score(r.getScore())
-                        .achievedTime(r.getAchievedTime().toString())
-                        .build())
-                .collect(Collectors.toList());
-    }
-
-    public void overwriteRankings(List<Ranking> newRankings) {
-        repository.deleteAllInBatch();
-        repository.saveAll(newRankings);
-    }
-
-    // 주간 랭킹 갱신 로직 (스케줄러에서 호출)
-    public List<Ranking> calculateWeeklyTop10() {
+    //랭킹 조회
+    @Cacheable(value = "Ranking", key = "'top10'")
+    public List<RankingDto> getRanking() {
         String query = """
-            SELECT u.usn, u.nickName, u.gender, u.profileImg, f.score, MIN(f.createdAt) as achievedTime
-            FROM BlindDateFeedback f
-            JOIN User u ON f.usn = u.usn
-            WHERE f.createdAt >= :oneWeekAgo
-            GROUP BY u.usn, u.nickName, u.gender, u.profileImg, f.score
-            HAVING f.score = MAX(f.score)
-            ORDER BY f.score DESC, achievedTime ASC
+            SELECT f.usn, u.nickName, u.gender, u.profile_img, f.score, f.created_at
+            FROM blind_date_feedback f
+            JOIN USER u ON f.usn = u.usn
+            WHERE f.created_at >= :weekStart
+              AND f.score = (
+                SELECT MAX(f2.score)
+                FROM blind_date_feedback f2
+                WHERE f2.usn = f.usn AND f2.created_at >= :weekStart
+              )
+              AND f.created_at = (
+                SELECT MIN(f3.created_at)
+                FROM blind_date_feedback f3
+                WHERE f3.usn = f.usn AND f3.score = f.score AND f3.created_at >= :weekStart
+              )
+            GROUP BY f.usn, u.nickName, u.gender, u.profile_img, f.score, f.created_at
+            ORDER BY f.score DESC, f.created_at ASC
+            LIMIT 10
         """;
 
-        List<Object[]> result = em.createQuery(query, Object[].class)
-                .setParameter("oneWeekAgo", LocalDateTime.now().minusDays(7))
-                .setMaxResults(10)
+        List<Object[]> result = em.createNativeQuery(query)
+                .setParameter("weekStart", getWeekStartTime())
                 .getResultList();
 
-        return result.stream().map(row -> Ranking.builder()
-                        .usn((Long) row[0])
-                        .nickname((String) row[1])
-                        .gender((String) row[2])
-                        .profileImg((String) row[3])
-                        .score((Integer) row[4])
-                        .achievedTime((LocalDateTime) row[5])
-                        .build())
-                .collect(Collectors.toList());
+        return result.stream().map(row -> RankingDto.builder()
+                .usn(((Number) row[0]).longValue())
+                .nickname((String) row[1])
+                .gender((String) row[2])
+                .profileImg((String) row[3])
+                .score(((Number) row[4]).intValue())
+                .achievedTime(row[5].toString())
+                .build()
+        ).collect(Collectors.toList());
     }
 
-    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 자정에 실행
-    @Transactional
-    public void updateWeeklyRanking() {
-        List<Ranking> top10 = calculateWeeklyTop10();
+    // 소개팅 참여 횟수
+    @Cacheable(value = "Ranking", key = "'top10ByCount'")
+    public List<RankingDto> getRankingByCount() {
+        String query = """
+            SELECT
+                u.usn,
+                u.nickName,
+                u.gender,
+                u.profile_img,
+                MAX(f.score) AS max_score,           
+                MIN(f.created_at) AS first_feedback_time, 
+                COUNT(f.id) AS feedback_count      -- 각 사용자의 피드백 제출 횟수
+            FROM blind_date_feedback f
+            JOIN USER u ON f.usn = u.usn
+            WHERE f.created_at >= :weekStart
+            GROUP BY u.usn, u.nickName, u.gender, u.profile_img
+            -- 피드백 횟수 내림차순
+            ORDER BY feedback_count DESC, max_score DESC, u.nickName ASC
+            LIMIT 10
+        """;
 
-        // 유효한 usn만 필터링
-        List<Long> validUsns = em.createQuery("SELECT u.usn FROM User u", Long.class).getResultList();
+        List<Object[]> result = em.createNativeQuery(query)
+                .setParameter("weekStart", getWeekStartTime())
+                .getResultList();
 
-        List<Ranking> filtered = top10.stream()
-                .filter(r -> validUsns.contains(r.getUsn()))
-                .collect(Collectors.toList());
-        //todo 랭킹 산정 시 회원 탈되된 랭커는 어떻게 처리?
-
-        overwriteRankings(filtered);
-
+        return result.stream().map(row -> RankingDto.builder()
+                .usn(((Number) row[0]).longValue())
+                .nickname((String) row[1])
+                .gender((String) row[2])
+                .profileImg((String) row[3])
+                .score(((Number) row[4]).intValue())
+                .achievedTime(row[5].toString())
+                .count(((Number) row[6]).longValue())
+                .build()
+        ).collect(Collectors.toList());
     }
 }

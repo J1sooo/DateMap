@@ -1,4 +1,4 @@
-package com.est.back.Config;
+package com.est.back.alan;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

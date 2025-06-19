@@ -1,8 +1,10 @@
-
 body {
     margin: 0;
     padding: 0;
     background-color: #fff;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h2 {
@@ -25,6 +27,47 @@ h2 {
     object-fit: cover;
     border-radius: 10px;
 }
+.profile-hover-box {
+    position: relative;
+    display: inline-block;
+    width: 25vw;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 36px;
+    text-align: center;
+    padding: 10px;
+    white-space: pre-line;
+}
+
+.profile-hover-box:hover .profile-overlay {
+    opacity: 1;
+}
+
+
 
 .back-button {
     margin-top : 40px;
@@ -204,4 +247,87 @@ h2 {
 
 .navbar-right .login-btn:hover {
     background-color: #ff71a4;
+}
+
+@media (max-width: 768px) {
+    .chat-layout {
+        flex-direction: column;
+        padding: 20px;
+        align-items: center;
+    }
+
+    .profile-hover-box,
+    .profile-photo {
+        width: 90vw;
+        height: auto;
+        max-height: 50vh;
+    }
+
+    .chat-section {
+        width: 95vw;
+        margin-top: 20px;
+    }
+
+    .chat-box {
+        max-height: 40vh;
+        height: 40vh;
+        font-size: 16px;
+    }
+
+    .message {
+        max-width: 85%;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .input-form {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .input-form input[type="text"] {
+        width: 100%;
+    }
+
+    .input-form button {
+        width: 100%;
+        margin: 0;
+    }
+
+    .end-button {
+        margin-top: 40px;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .tip-section {
+        width: 90vw;
+        margin: 30px auto 0;
+        font-size: 14px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .navbar-center .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .navbar-left,
+    .navbar-center,
+    .navbar-right {
+        width: 100%;
+        text-align: left;
+    }
+
+    .navbar-right .login-btn {
+        width: 100%;
+        text-align: center;
+    }
 }

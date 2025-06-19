@@ -38,8 +38,24 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+//	aws
+	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.2")
+	implementation "io.awspring.cloud:spring-cloud-aws-starter-parameter-store"
+
 //	WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+//	S3 image upload
+	implementation platform("software.amazon.awssdk:bom:2.25.4")
+	implementation "software.amazon.awssdk:s3"
+	implementation "software.amazon.awssdk:apache-client"
+
+	//Caffeine cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'com.github.ben-manes.caffeine:caffeine'
+
+	// websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {

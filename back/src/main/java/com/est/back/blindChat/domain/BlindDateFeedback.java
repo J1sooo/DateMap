@@ -10,13 +10,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Table(name= "blind_date_feedback")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BlindDateFeedback {
 
     @Id

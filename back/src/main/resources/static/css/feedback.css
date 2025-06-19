@@ -1,57 +1,3 @@
-/*
-네비 바
-*/
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 10px 30px;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.navbar-left .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-}
-
-.navbar-center .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
-}
-
-.navbar-center .nav-links a {
-    text-decoration: none;
-    color: #444;
-    font-weight: 500;
-}
-
-.navbar-center .nav-links a:hover {
-    color: #38a169;
-}
-
-.navbar-right .login-btn {
-    padding: 6px 12px;
-    background-color: #ff71a4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.navbar-right .login-btn:hover {
-    background-color: #ff71a4;
-}
-
-
 body {
     margin: 0;
     padding: 0;
@@ -59,6 +5,9 @@ body {
     text-align: center;
     align-items: center;
     align-content: center;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .score {
@@ -70,13 +19,13 @@ body {
     margin-top : 5vh;
 }
 .feedback-card {
-    background: #e0e3e8;
-    border-radius: 16px;
+    /*background: #e0e3e8;*/
+    /*border-radius: 16px;*/
     padding: 40px 30px;
     margin: 0 auto;
-    width: 80%;
-    max-width: 700px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 80vw;
+    height: 50vh;
+    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);*/
 }
 
 .card-title {
@@ -86,16 +35,20 @@ body {
 }
 .card-subtitle {
     font-size: 22px;
+    font-weight: bold;
+    margin-top: 10vh;
     margin-bottom: 16px;
 }
 
 .summary {
     font-weight: bold;
     font-size: 20px;
+    line-height: 1.7;
     margin-bottom: 10px;
 }
 .feedback {
     font-size: 20px;
+    font-weight: bold;
     line-height: 1.7;
     white-space: pre-line;
 }
@@ -115,3 +68,35 @@ body {
     margin-top: 10vh;
 }
 
+@media (max-width: 768px) {
+    .score {
+        font-size: 32px;
+        margin-top: 3vh;
+    }
+
+    .feedback-card {
+        width: 90vw;
+        height: auto;
+        padding: 20px 15px;
+    }
+
+    .card-title,
+    .card-subtitle {
+        font-size: 18px;
+        margin-top: 5vh;
+        margin-bottom: 12px;
+    }
+
+    .summary,
+    .feedback {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .out-button {
+        width: 60%;
+        font-size: 14px;
+        padding: 10px;
+        margin-top: 5vh;
+    }
+}

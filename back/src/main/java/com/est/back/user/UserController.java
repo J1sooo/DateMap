@@ -54,6 +54,7 @@ public class UserController {
         try {
             User user = userService.login(loginRequestDto);
             session.setAttribute("loggedInUser", user);
+            session.setAttribute("usn", user.getUsn());
 
             if (rememberMe) {
                 Cookie cookie = new Cookie("savedUserId", loginRequestDto.getUsername());
@@ -175,15 +176,5 @@ public class UserController {
         List<Integer> days = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31);
         model.addAttribute("months", months);
         model.addAttribute("days", days);
-    }
-
-    @GetMapping("/chat")
-    public String chatPage() {
-        return "datesetting"; // 실시간 채팅 html
-    }
-
-    @GetMapping("/calendar")
-    public String calendarPage() {
-        return "/aiRecommend/recommendSetting"; // 데이트 코스 추천 html
     }
 }

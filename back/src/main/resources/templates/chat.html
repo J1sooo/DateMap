@@ -6,18 +6,33 @@
     <link rel="stylesheet" th:href="@{/css/chat.css}">
     <script th:src="@{/js/chat.js}" defer></script>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script th:src="@{/js/navbar.js}" defer></script>
 </head>
 <body>
 
-<div th:replace="navbar :: navbar"></div>
+<div th:replace="~{navbar :: navbar}"></div>
 
 <div>
-<h2>AI 소개팅 채팅방</h2>
+    <h2>AI 소개팅 채팅방</h2>
     <a th:href="@{/main}" class="back-button">←</a>
 </div>
 <main class="chat-layout">
-    <img th:src="${partner.imageUrl}" alt="프로필" class="profile-photo" />
+    <div class="profile-hover-box">
+        <img th:src="${partner.imageUrl}" alt="프로필 이미지" class="profile-photo"/>
+        <div th:with="genderText=${partner.gender == 'male' ? '남성' : '여성'}"
+             th:utext="|
+        성별: ${genderText}<br/>
+        나이: ${partner.ageGroup}<br/>
+        성격: ${partner.personalType}<br/>
+        취미: ${partner.hobby}
+     |"
+             class="profile-overlay">
+        </div>
+
+
+    </div>
 
 
     <section class="chat-section">
@@ -30,9 +45,10 @@
         </div>
 
 
-        <form class="input-form" th:action="@{/api/chat/{chatroomId}(chatroomId=${chatroomId})}" method="post">
-            <button onclick="startSpeechRecognition()">🎤 말하기</button>
-            <input type="text" id="messageInput" name="message" placeholder="메시지를 입력하세요" required />
+        <form class="input-form" th:action="@{/api/chat/{chatroomId}(chatroomId=${chatroomId})}"
+              method="post">
+            <button type="button" onclick="startSpeechRecognition()">🎤 말하기</button>
+            <input type="text" id="messageInput" name="message" placeholder="메시지를 입력하세요" required/>
             <button type="submit">전송</button>
         </form>
 
@@ -48,7 +64,8 @@
             <li>말투 부드럽게</li>
             <li>적당한 리액션</li>
         </ul>
-        <form th:action="@{/api/chat/{chatroomId}/feedback(chatroomId=${chatroomId})}" method="post">
+        <form th:action="@{/api/chat/{chatroomId}/feedback(chatroomId=${chatroomId})}"
+              method="post">
             <button type="submit" class="end-button">종료(평가하기)</button>
         </form>
     </aside>
@@ -56,4 +73,7 @@
 </main>
 
 </body>
+<script th:inline="javascript">
+  window.loggedInUserId = /*[[${session.loggedInUser != null ? session.loggedInUser.userId : null}]]*/ null;
+</script>
 </html>

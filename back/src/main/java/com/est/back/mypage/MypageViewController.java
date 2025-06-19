@@ -25,11 +25,11 @@ public class MypageViewController {
     @GetMapping("/mypage")
     public String viewMypage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
-        Long usn = user.getUsn();
-
-        if (usn == null) {
+        if(user == null){
             return "redirect:/login";
         }
+        Long usn = user.getUsn();
+
 
         //프로필 정보
         UserInfoResponseDto userInfo = userService.getUserInfoDto(usn);
@@ -38,9 +38,13 @@ public class MypageViewController {
         //평가 받은 상대 정보
         List<MypagePartnerResponseDto> partners = mypageService.getMyPartners(usn);
         model.addAttribute("partnerList", partners);
+        model.addAttribute("partnerCount", partners.size());
+        //파트너 수
+//        int feedbackCount = mypageService.getFeedbackCount(usn);
+//        model.addAttribute("feedbackCount", feedbackCount);
 
         //내 코스 정보
-        List<RecommendResponseDto> recommends = recommendService.getRecommendsByUsn(usn);
+        List<RecommendResponseDto> recommends = recommendService.getUserCourses(usn);
         model.addAttribute("recommendList", recommends);
 
         return "mypage";

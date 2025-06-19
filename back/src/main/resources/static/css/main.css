@@ -20,21 +20,102 @@
     border-radius: 4px;
     text-decoration: none;
 }
-
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
 .banner {
     width: 100%;
-    max-height: 500px;
+    height: 100vh;
     object-fit: cover;
+    opacity: 1;
+}
+
+.dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* 어둡게! 숫자 키울수록 더 어두움 */
+    z-index: 1;
+}
+.banner-text-left {
+    position: absolute;
+    bottom: 30vh;
+    left: 40%;
+    transform: translateX(-50%);
+    color: white;
+    background-color: #ff6b9d;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    z-index: 2; /* 오버레이 위에 나오게 */
+}
+.banner-text-right {
+    position: absolute;
+    bottom: 30vh;
+    right: 25%;
+    transform: translateX(-50%);
+    color: white;
+    background-color: #ff6b9d;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    z-index: 2; /* 오버레이 위에 나오게 */
+}
+
+.banner-container h1,
+.banner-container h2 {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 80%;
+    margin: 0;
+}
+
+/* 각각의 위치를 다르게 지정 */
+.banner-container h1 {
+    top: 15%;
+    font-size: 2.7rem;
+}
+
+.banner-container h2:nth-of-type(1) {
+    top: 30%;
+    font-size: 1.7rem;
+}
+
+.banner-container h2:nth-of-type(2) {
+    top: 38%;
+    font-size: 1.7rem;
+}
+
+.banner-container h2:nth-of-type(3) {
+    top: 46%;
+    font-size: 1.7rem;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
     background-color: #ffeef2;
 }
-
 .container {
     width: 90%;
+    height: 95vh;
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 0;
@@ -57,14 +138,15 @@ body {
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
-    width: 150px;
-    height: 150px; /* 💡 높이도 고정 */
+    width: 100vw;
+    height: 40vh; /* 💡 높이도 고정 */
     text-align: center;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .card img {
@@ -120,8 +202,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 100vw;
+    height: 40vh;
     background-color: #ffc5d6;
     color: white;
     font-size: 48px;
@@ -164,7 +246,8 @@ body {
 .modal button {
     background-color: #ff6b9d;
     color: white;
-    padding: 5px 10px;
+    padding: 8px 17px;
+    font-size: 13px;
     border: none;
     border-radius: 4px;
 }
@@ -207,5 +290,6 @@ body {
 
     .banner {
         max-height: 250px;
+        opacity: 0;
     }
 }

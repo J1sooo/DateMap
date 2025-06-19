@@ -6,7 +6,9 @@
     background-color: #fff;
     border-bottom: 1px solid #e0e0e0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    font-family: Arial, sans-serif;
+    font-family: 'AppleSDGothicNeo', 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     width: 100%;
     box-sizing: border-box;
     position: relative;
@@ -88,50 +90,114 @@
 
 .navbar-auth-button {
     padding: 8px 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #FF78A5;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #FF78A5;
     cursor: pointer;
     font-size: 14px;
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
 }
 
 .navbar-auth-button:hover {
-    background-color: #f0f0f0;
+    background-color: #e86492;
+    border-color: #e86492;
+}
+
+.navbar-logout-button {
+    padding: 8px 15px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.navbar-logout-button:hover {
+    background-color: #f8f8f8;
+    color: #000000;
+    border-color: #000000;
+}
+
+.notification-popup {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    width: 300px;
+}
+
+.notification-popup.show {
+    display: block;
 }
 
 @media (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px;
+        padding: 10px 15px;
         height: auto;
-        position: static;
     }
 
     .navbar-left,
-    .navbar-right {
+    .navbar-right,
+    .navbar-center-wrapper {
         position: static;
         transform: none;
         width: 100%;
         justify-content: flex-start;
         margin-top: 10px;
-        padding-left: 0;
-        padding-right: 0;
+        padding: 0;
     }
 
     .navbar-left {
         margin-top: 0;
+        flex-direction: row;
+        align-items: center;
     }
 
-    .navbar-center-wrapper {
-        width: 100%;
-        justify-content: flex-start;
-        margin-top: 10px;
+    .navbar-logo {
+        height: 24px;
+        margin-right: 10px;
+    }
+
+    .navbar-logo-text {
+        font-size: 20px;
     }
 
     .navbar-center-buttons {
-        gap: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .navbar-icon-button {
+        font-size: 20px;
+    }
+
+    .navbar-user-info {
+        font-size: 14px;
+    }
+
+    .navbar-auth-button,
+    .navbar-logout-button {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .notification-popup {
+        width: 90%;
+        right: 5%;
+        top: auto;
+        bottom: 10px;
+        max-height: 50vh;
+        overflow-y: auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 }
