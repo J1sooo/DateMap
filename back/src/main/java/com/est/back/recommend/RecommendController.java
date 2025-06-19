@@ -16,7 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/recommend")
+@RequestMapping("/api/recommendations")
 public class RecommendController {
     private final RecommendService recommendService;
     private final ImageUploadService imageUploadService;

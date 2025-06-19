@@ -70,7 +70,7 @@ document.getElementById("saveRecommend-btn").addEventListener('click', () => {
     Object.values(contentJsonData).forEach((item, index) => {
         formData.append(`content${index + 1}`, JSON.stringify(item));
     })
-    fetch(`/api/recommend`, {
+    fetch(`/api/recommendations`, {
         method: 'POST',
         body: formData
     }).then(res => {
@@ -79,7 +79,7 @@ document.getElementById("saveRecommend-btn").addEventListener('click', () => {
     }).then(data =>{
         const id = data.courseId;
         alert("저장되었습니다");
-        location.replace(`/recommend/place/${id}`);
+        location.replace(`/recommendations/${id}`);
     }).catch(() => {
         alert("에러가 발생했습니다")
     });

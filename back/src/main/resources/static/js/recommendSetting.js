@@ -168,7 +168,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
             sessionStorage.setItem("areaDetail", area); // string
             sessionStorage.setItem("alanRequest", jsonData.content); // string
             loadingOverlay.classList.add('d-none');
-            window.location.href = "/recommend/place";
+            window.location.href = "/recommendations/place";
         })
         .catch(e => {
             console.error(e);

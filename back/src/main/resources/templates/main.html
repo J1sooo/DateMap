@@ -50,7 +50,7 @@
     <div id="scroll2" class="section-title">데이트 코스</div>
     <div class="card-list">
         <div class="card" th:each="recommend : ${recommends}">
-            <a th:href="@{'/recommend/place/' + ${recommend.courseId}}">
+            <a th:href="@{'/recommendations/' + ${recommend.courseId}}">
                 <img th:src="${recommend.imageUrl}" alt="데이트 코스 이미지"/>
             </a>
             <div class="info">
@@ -58,7 +58,7 @@
                 <div class="title" th:text="${recommend.title}">코스 제목</div>
             </div>
         </div>
-        <a href="/recommend/setting" class="add-card">+</a>
+        <a href="/recommendations/setting" class="add-card">+</a>
     </div>
 </div>
 

@@ -22,7 +22,7 @@ public class RecommendViewController {
     @Value("${AWS_S3_BUCKET}")
     private String bucketName;
 
-    @GetMapping("/recommend/place/{id}")
+    @GetMapping("/recommendations/{id}")
     public String recommendPlaceDetail(@PathVariable Long id, Model model) throws JsonProcessingException {
         RecommendResponseDto recommend = recommendService.getRecommendById(id);
 

@@ -251,13 +251,13 @@ date_recommend
 
 | 🏷NAME | ⚙METHOD | 📎URL | 📖DESCRIPTION |
 | --- | --- | --- | --- |
-| 추천 코스 생성 | POST | /api/recommend | 새로운 추천 코스 등록, 이미지 업로드 포함 |
-| 추천 코스 전체 조회 | GET | /api/recommend | 저장된 모든 추천 코스 목록 조회 |
-| 추천 코스 단건 조회 | GET | /api/recommend/{id} | ID로 특정 추천 코스 조회 |
-| 추천 코스 전체 삭제 | DELETE | /api/recommend | 모든 추천 코스를 삭제 |
-| 추천 코스 단건 삭제 | DELETE | /api/recommend/{id} | ID로 특정 추천 코스를 삭제 |
-| 추천 코스 이미지 수정 | PATCH | /api/recommend/{id} | ID로 특정 추천 코스의 이미지 파일 수정 |
-| 추천 코스 상세 페이지 보기 | GET | /recommend/place/{id} | 추천 코스 ID에 해당하는 상세 정보 페이지 렌더링 |
+| 추천 코스 생성 | POST | /api/recommendations | 새로운 추천 코스 등록, 이미지 업로드 포함 |
+| 추천 코스 전체 조회 | GET | /api/recommendations | 저장된 모든 추천 코스 목록 조회 |
+| 추천 코스 단건 조회 | GET | /api/recommendations/{id} | ID로 특정 추천 코스 조회 |
+| 추천 코스 전체 삭제 | DELETE | /api/recommendations | 모든 추천 코스를 삭제 |
+| 추천 코스 단건 삭제 | DELETE | /api/recommendations/{id} | ID로 특정 추천 코스를 삭제 |
+| 추천 코스 이미지 수정 | PATCH | /api/recommendations/{id} | ID로 특정 추천 코스의 이미지 파일 수정 |
+| 추천 코스 상세 페이지 보기 | GET | /recommendations/{id} | 추천 코스 ID에 해당하는 상세 정보 페이지 렌더링 |
 
 ranking
 
