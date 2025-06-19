@@ -493,12 +493,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        const endpointMap = {
+            userId: "/api/users/availability/user-id",
+            nickName: "/api/users/availability/nickname",
+            email: "/api/users/availability/email"
+        };
+
         try {
-            const response = await fetch(`/api/user/check${capitalizeFirstLetter(type)}?${type}=${value}&usn=${usnToExclude || ''}`);
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-            }
+            const params = new URLSearchParams({ [type]: value });
+            if (usnToExclude) params.append("usn", usnToExclude);
+
+            const response = await fetch(`${endpointMap[type]}?${params.toString()}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
 
             if (data.exists) {
@@ -517,16 +523,13 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error(`Error checking ${type} duplication:`, error);
             if (statusElement) {
-                statusElement.textContent = `중복 확인 중 오류가 발생했습니다. ${error.message ? `(${error.message})` : ''}`;
+                statusElement.textContent = `중복 확인 중 오류가 발생했습니다.`;
                 statusElement.className = 'text-danger mt-1';
             }
             return false;
         }
     }
 
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
 
     function getKoreanName(type) {
         switch (type) {
