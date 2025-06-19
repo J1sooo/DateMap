@@ -3,6 +3,7 @@ package com.est.back.ranking;
 import com.est.back.ranking.dto.RankingDto;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,14 @@ class RankingServiceTest {
 
     @Autowired
     private RankingService rankingService;
+
+    // 테스트 실행 전에 전체 테이블 초기화
+    @BeforeEach
+    void clearTables() {
+        em.createNativeQuery("DELETE FROM blind_date_feedback").executeUpdate();
+        em.createNativeQuery("DELETE FROM blind_date_character").executeUpdate();
+        em.createNativeQuery("DELETE FROM USER").executeUpdate();
+    }
 
     @Test
     @DisplayName("given 피드백 데이터가 있을 때, when getRanking 호출하면 then 최고 점수 기준으로 TOP10 반환")
