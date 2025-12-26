@@ -6,14 +6,16 @@ DateMap은 AI 기반 가상 소개팅과 데이트 장소 추천을 통해 사�
 
 https://www.est-datemap.com/main
 
----
 ## 🎥 시연 영상
 
 ![2025-06-16-14-25-19 (1)](https://github.com/user-attachments/assets/ed82df7c-f60d-465a-8bdc-129a1e29bf55)
 
 [YouTube](https://www.youtube.com/watch?v=00T_Zzqtlj8)
 
----
+## ⚙️ DateMap 시스템 다이어그램
+<p align="center">
+  <img width="634" height="515" alt="DateMap 시스템 다이어그램" src="https://github.com/user-attachments/assets/6c5f45ff-6fbe-42be-8d61-e3dbd095a7e1" />
+</p>
 
 ## 📌 주요 기능
 
@@ -69,8 +71,6 @@ https://www.est-datemap.com/main
 * 내가 설정한 AI 캐릭터 및 피드백 확인
 * 일대일 매칭 기능 연결
 
----
-
 ## ⚙️ 기술 스택
 
 * **Frontend**: html, css, Thymeleaf, Bootstrap, WebSocket (SockJS, STOMP.js)
@@ -81,7 +81,6 @@ https://www.est-datemap.com/main
   IntelliJ IDEA (IDE)
   AWS EC2, S3 (배포 및 저장소)
 
----
 <details>
 <summary> 📑 기능 명세서 </summary>
 
@@ -352,8 +351,6 @@ MyPage
 | profile_img | VARCHAR(255) | NOT NULL | 프로필 이미지 |
 | join_date | TIMESTAMP | NOT NULL | 가입일시 |
 
----
-
 ## 💬 chatroom (채팅방)
 
 | 제목 | 1열 | 2열 | 3열 |
@@ -362,8 +359,6 @@ MyPage
 | id | BIGINT | PK, AUTO_INCREMENT | 채팅방 ID |
 | usn | BIGINT | FK → user(usn) | 내 유저번호 |
 | partner_id | BIGINT | FK → user(usn) | 상대 유저번호 |
-
----
 
 ## 💬 chat_message (채팅 메시지)
 
@@ -374,8 +369,6 @@ MyPage
 | role | ENUM | NOT NULL | 발신자 역할 (USER/AI 등) |
 | message | TEXT | NOT NULL | 메시지 내용 |
 | created_at | TIMESTAMP | NOT NULL | 발신 시각 |
-
----
 
 ## 🧠 blind_data_character (소개팅 캐릭터)
 
@@ -389,8 +382,6 @@ MyPage
 | image_url | VARCHAR(255) | NOT NULL | 캐릭터 이미지 URL |
 | created_at | TIMESTAMP | NOT NULL | 생성일시 |
 
----
-
 ## 📝 blind_date_feedback (소개팅 평가)
 
 | 컬럼명 | 타입 | 제약조건 | 설명 |
@@ -403,8 +394,6 @@ MyPage
 | feedback | TEXT | NOT NULL | 피드백 내용 |
 | score | INT | NOT NULL | 점수 (평가) |
 
----
-
 ## 🧭 date_course (데이트 코스)
 
 | 컬럼명 | 타입 | 제약조건 | 설명 |
@@ -416,8 +405,6 @@ MyPage
 | content1 ~ 4 | LONGTEXT | NOT NULL | 코스 상세 설명 |
 | saved_at | TIMESTAMP | NOT NULL | 저장일시 |
 | area | VARCHAR(20) | NOT NULL | 지역 정보 |
-
----
 
 ## 🏆 ranking (랭킹)
 
@@ -446,8 +433,6 @@ MyPage
  ┗ 📂test
 ```
 
----
-
 ## 🙋‍♀️ 팀원 소개
 
 | 이름  | 역할                   |
@@ -456,5 +441,3 @@ MyPage
 | [문종일](https://github.com/tetsuya0083) | 전체적인 CRUD, 테스트 코드, 랭킹 시스템   |
 | [변규리](https://github.com/gyuri0124) | 회원 CRUD, 1대1 실시간 채팅 시스템   |
 | [이주학](https://github.com/wngkr38) | 제미나이 AI 담당, 가상 소개팅 시스템  |
-
----
